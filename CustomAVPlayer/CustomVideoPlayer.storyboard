@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Custom Video Player-->
+        <scene sceneID="s0d-6b-0kx">
+            <objects>
+                <viewController id="Y6W-OH-hqX" customClass="CustomVideoPlayer" customModule="CustomAVPlayer" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BQN-2a-83I">
+                                <rect key="frame" x="273" y="59" width="120" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Select Video"/>
+                                <connections>
+                                    <action selector="selectVideo:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="RnL-Ww-hx5"/>
+                                </connections>
+                            </button>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T2Y-o7-GHi">
+                                <rect key="frame" x="0.0" y="852" width="393" height="0.0"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mUW-v8-Gfe">
+                                <rect key="frame" x="171.66666666666666" y="408.66666666666669" width="50" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="play.circle.fill" catalog="system"/>
+                                <connections>
+                                    <action selector="playPauseButtonTapped:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="2ev-QJ-QUZ"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g6g-Bf-ycG">
+                                <rect key="frame" x="24.000000000000004" y="59" width="46.333333333333343" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="xmark" catalog="system"/>
+                                <connections>
+                                    <action selector="closeButtonTapped:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="iNm-Ig-75q"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g8P-S0-gOx">
+                                <rect key="frame" x="310" y="59" width="59" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="volume.3.fill" catalog="system"/>
+                                <connections>
+                                    <action selector="volumeControl:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="fDn-ks-GeY"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="mUW-v8-Gfe" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="6mA-iM-Y4s"/>
+                            <constraint firstAttribute="bottom" secondItem="T2Y-o7-GHi" secondAttribute="bottom" id="8O2-eo-9u0"/>
+                            <constraint firstItem="g8P-S0-gOx" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="AUw-Jz-oG4"/>
+                            <constraint firstItem="T2Y-o7-GHi" firstAttribute="top" secondItem="5EZ-qb-Rvc" secondAttribute="bottom" id="DuD-Eq-pEc"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="g8P-S0-gOx" secondAttribute="trailing" constant="24" id="Hud-sg-LGl"/>
+                            <constraint firstItem="g6g-Bf-ycG" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="RQK-t8-ALc"/>
+                            <constraint firstItem="mUW-v8-Gfe" firstAttribute="centerY" secondItem="5EZ-qb-Rvc" secondAttribute="centerY" id="RQQ-7j-TgO"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="BQN-2a-83I" secondAttribute="trailing" id="cvb-aw-WeX"/>
+                            <constraint firstItem="T2Y-o7-GHi" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="mUj-4N-qQG"/>
+                            <constraint firstItem="g6g-Bf-ycG" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="24" id="qBd-H1-grB"/>
+                            <constraint firstItem="BQN-2a-83I" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="rxu-aO-0e9"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="T2Y-o7-GHi" secondAttribute="trailing" id="wua-c6-77X"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="closeButton" destination="g6g-Bf-ycG" id="oJF-QR-OcN"/>
+                        <outlet property="playPauseButton" destination="mUW-v8-Gfe" id="xho-TM-10s"/>
+                        <outlet property="videoContainer" destination="5EZ-qb-Rvc" id="4oi-Gg-gUW"/>
+                        <outlet property="volumeButton" destination="g8P-S0-gOx" id="CD6-OU-aCO"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-114" y="5"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="play.circle.fill" catalog="system" width="128" height="123"/>
+        <image name="volume.3.fill" catalog="system" width="128" height="84"/>
+        <image name="xmark" catalog="system" width="128" height="113"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
