@@ -17,7 +17,7 @@ public class ForwardBackwardButton: UIButton {
     public var avPlayer: AVPlayer?
     public var forwardButton: ForwardButtonImage = .forwardButton
     public var backwardButton: BackwardButtonImage = .backwardButton
-    public var buffer: Double = 5.0
+    public var buffer: Double = 1.0
     public var isForward: Bool = true {
         didSet {
             if isForward {
