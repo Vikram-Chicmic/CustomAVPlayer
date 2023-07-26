@@ -11,8 +11,12 @@
 		6A6026052A6F919A002A4759 /* CustomAVPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A6025FA2A6F919A002A4759 /* CustomAVPlayer.framework */; };
 		6A60260A2A6F919A002A4759 /* CustomAVPlayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A6026092A6F919A002A4759 /* CustomAVPlayerTests.swift */; };
 		6A60260B2A6F919A002A4759 /* CustomAVPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 6A6025FD2A6F919A002A4759 /* CustomAVPlayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6A8BCCF92A6F99F6003A080E /* CustomVideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A8BCCF82A6F99F6003A080E /* CustomVideoPlayer.swift */; };
-		6A8BCCFB2A6F9B5A003A080E /* CustomVideoPlayer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A8BCCFA2A6F9B5A003A080E /* CustomVideoPlayer.storyboard */; };
+		933AE5992A71173900FB2285 /* MuteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933AE5932A71173900FB2285 /* MuteButton.swift */; };
+		933AE59A2A71173900FB2285 /* PlayPauseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933AE5942A71173900FB2285 /* PlayPauseButton.swift */; };
+		933AE59B2A71173900FB2285 /* ForwardBackwardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933AE5952A71173900FB2285 /* ForwardBackwardButton.swift */; };
+		933AE59C2A71173900FB2285 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933AE5962A71173900FB2285 /* Enums.swift */; };
+		933AE59D2A71173900FB2285 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933AE5972A71173900FB2285 /* Constants.swift */; };
+		933AE59E2A71173900FB2285 /* LockControlsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933AE5982A71173900FB2285 /* LockControlsButton.swift */; };
 		9343CD4B2A7011120060F9D8 /* CustomSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9343CD4A2A7011120060F9D8 /* CustomSlider.swift */; };
 		936F9F9F2A6FB017002139CD /* CustomSeekBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936F9F9E2A6FB017002139CD /* CustomSeekBar.swift */; };
 /* End PBXBuildFile section */
@@ -33,8 +37,13 @@
 		6A6025FE2A6F919A002A4759 /* CustomAVPlayer.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = CustomAVPlayer.docc; sourceTree = "<group>"; };
 		6A6026042A6F919A002A4759 /* CustomAVPlayerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CustomAVPlayerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A6026092A6F919A002A4759 /* CustomAVPlayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAVPlayerTests.swift; sourceTree = "<group>"; };
-		6A8BCCF82A6F99F6003A080E /* CustomVideoPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomVideoPlayer.swift; sourceTree = "<group>"; };
-		6A8BCCFA2A6F9B5A003A080E /* CustomVideoPlayer.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CustomVideoPlayer.storyboard; sourceTree = "<group>"; };
+		933AE5932A71173900FB2285 /* MuteButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MuteButton.swift; sourceTree = "<group>"; };
+		933AE5942A71173900FB2285 /* PlayPauseButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPauseButton.swift; sourceTree = "<group>"; };
+		933AE5952A71173900FB2285 /* ForwardBackwardButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForwardBackwardButton.swift; sourceTree = "<group>"; };
+		933AE5962A71173900FB2285 /* Enums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
+		933AE5972A71173900FB2285 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		933AE5982A71173900FB2285 /* LockControlsButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockControlsButton.swift; sourceTree = "<group>"; };
+		933AE5CE2A711E5000FB2285 /* CustomAVPlayer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = CustomAVPlayer.xcodeproj; sourceTree = "<group>"; };
 		9343CD4A2A7011120060F9D8 /* CustomSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSlider.swift; sourceTree = "<group>"; };
 		936F9F9E2A6FB017002139CD /* CustomSeekBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSeekBar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -64,6 +73,7 @@
 				6A6025FC2A6F919A002A4759 /* CustomAVPlayer */,
 				6A6026082A6F919A002A4759 /* CustomAVPlayerTests */,
 				6A6025FB2A6F919A002A4759 /* Products */,
+				933AE5CD2A711E4F00FB2285 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -79,10 +89,9 @@
 		6A6025FC2A6F919A002A4759 /* CustomAVPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				933AE5922A71172800FB2285 /* Controls */,
 				6A6025FD2A6F919A002A4759 /* CustomAVPlayer.h */,
 				6A6025FE2A6F919A002A4759 /* CustomAVPlayer.docc */,
-				6A8BCCF82A6F99F6003A080E /* CustomVideoPlayer.swift */,
-				6A8BCCFA2A6F9B5A003A080E /* CustomVideoPlayer.storyboard */,
 				936F9F9E2A6FB017002139CD /* CustomSeekBar.swift */,
 				9343CD4A2A7011120060F9D8 /* CustomSlider.swift */,
 			);
@@ -95,6 +104,32 @@
 				6A6026092A6F919A002A4759 /* CustomAVPlayerTests.swift */,
 			);
 			path = CustomAVPlayerTests;
+			sourceTree = "<group>";
+		};
+		933AE5922A71172800FB2285 /* Controls */ = {
+			isa = PBXGroup;
+			children = (
+				933AE5972A71173900FB2285 /* Constants.swift */,
+				933AE5962A71173900FB2285 /* Enums.swift */,
+				933AE5952A71173900FB2285 /* ForwardBackwardButton.swift */,
+				933AE5932A71173900FB2285 /* MuteButton.swift */,
+				933AE5942A71173900FB2285 /* PlayPauseButton.swift */,
+				933AE5982A71173900FB2285 /* LockControlsButton.swift */,
+			);
+			path = Controls;
+			sourceTree = "<group>";
+		};
+		933AE5CD2A711E4F00FB2285 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				933AE5CE2A711E5000FB2285 /* CustomAVPlayer.xcodeproj */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		933AE5CF2A711E5000FB2285 /* Products */ = {
+			isa = PBXGroup;
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -176,6 +211,12 @@
 			mainGroup = 6A6025F02A6F919A002A4759;
 			productRefGroup = 6A6025FB2A6F919A002A4759 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 933AE5CF2A711E5000FB2285 /* Products */;
+					ProjectRef = 933AE5CE2A711E5000FB2285 /* CustomAVPlayer.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				6A6025F92A6F919A002A4759 /* CustomAVPlayer */,
@@ -189,7 +230,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6A8BCCFB2A6F9B5A003A080E /* CustomVideoPlayer.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -209,8 +249,13 @@
 			files = (
 				936F9F9F2A6FB017002139CD /* CustomSeekBar.swift in Sources */,
 				6A6025FF2A6F919A002A4759 /* CustomAVPlayer.docc in Sources */,
-				6A8BCCF92A6F99F6003A080E /* CustomVideoPlayer.swift in Sources */,
 				9343CD4B2A7011120060F9D8 /* CustomSlider.swift in Sources */,
+				933AE59B2A71173900FB2285 /* ForwardBackwardButton.swift in Sources */,
+				933AE59A2A71173900FB2285 /* PlayPauseButton.swift in Sources */,
+				933AE59E2A71173900FB2285 /* LockControlsButton.swift in Sources */,
+				933AE59C2A71173900FB2285 /* Enums.swift in Sources */,
+				933AE5992A71173900FB2285 /* MuteButton.swift in Sources */,
+				933AE59D2A71173900FB2285 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -365,6 +410,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -392,6 +438,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
