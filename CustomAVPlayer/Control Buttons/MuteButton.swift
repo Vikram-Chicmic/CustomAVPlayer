@@ -10,18 +10,14 @@ import UIKit
 import AVKit
 import AVFoundation
 
-public class PlayPauseButton: UIButton {
+public class MuteButton: UIButton {
     public var xCoordinate: Int = 100
     public var yCoordinate: Int = 100
     public var iconColor: UIColor = .white
     public var avPlayer: AVPlayer?
-    public var playButtonImage: PlayButtonImage = .playCircle
-    public var pauseButtonImage: PauseButtonImage = .pauseCircle
-    public var replayButtonImage: ReplayButtonImage = .goforward
-    private var kvoRateContext = 0
-    private var isPlaying: Bool {
-        return avPlayer?.rate != 0 && avPlayer?.error == nil
-    }
+    public var muteButtonImage: MuteButtonImage = .speakerSlashFill
+    public var unmuteButtonImage: UnmuteButtonImage = .speakerFill
+
     private override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
@@ -48,49 +44,22 @@ public class PlayPauseButton: UIButton {
                             height: size)
     }
     private func updateStatus() {
-        if isPlaying {
-            avPlayer?.pause()
-        } else {
-            if avPlayer?.currentTime() == avPlayer?.currentItem?.duration {
-                avPlayer?.seek(to: CMTime.zero)
-            }
-            avPlayer?.play()
-        }
+        avPlayer?.isMuted.toggle()
+        updateUI()
     }
     public func setup() {
         self.addTarget(self, action: #selector(handleTapGesture), for: .touchUpInside)
         setIconSize(size: ButtonSize.medium.rawValue)
-        addObservers()
         updateUI()
     }
     @objc func handleTapGesture(_ sender: UITapGestureRecognizer) {
         self.updateStatus()
     }
-    private func addObservers() {
-        avPlayer?.addObserver(self, forKeyPath: ControlConstants.rate, options: .new, context: &kvoRateContext)
-    }
-    private func handleRateChanged() {
-        updateUI()
-    }
     private func updateUI() {
-        if isPlaying {
-            setBackgroundImage(name: self.pauseButtonImage.rawValue)
-        }else if avPlayer?.currentTime() == avPlayer?.currentItem?.duration {
-            setBackgroundImage(name: self.replayButtonImage.rawValue)
+        if avPlayer?.isMuted == true {
+            self.setBackgroundImage(name: self.muteButtonImage.rawValue)
         } else {
-            setBackgroundImage(name: self.playButtonImage.rawValue)
-        }
-    }
-    public override func observeValue(forKeyPath keyPath: String?,
-                                      of object: Any?,
-                                      change: [NSKeyValueChangeKey: Any]?,
-                                      context: UnsafeMutableRawPointer?) {
-        guard let context = context else { return }
-        switch context {
-        case &kvoRateContext:
-            handleRateChanged()
-        default:
-            break
+            self.setBackgroundImage(name: self.unmuteButtonImage.rawValue)
         }
     }
     private func setBackgroundImage(name: String) {

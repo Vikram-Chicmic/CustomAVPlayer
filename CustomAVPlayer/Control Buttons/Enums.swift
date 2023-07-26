@@ -34,3 +34,29 @@ public enum PauseButtonImage: String {
     case pauseRectangle       = "pause.rectangle"
     case pauseRectangleFill   = "pause.rectangle.fill"
 }
+
+public enum ReplayButtonImage: String {
+    case goforward            = "goforward"
+}
+
+public enum MuteButtonImage: String {
+    case speakerSlash           = "speaker.slash"
+    case speakerSlashFill       = "speaker.slash.fill"
+    case speakerSlashCircle     = "speaker.slash.circle"
+    case speakerSlashCircleFill = "speaker.slash.circle.fill"
+}
+
+public enum UnmuteButtonImage: String {
+    case speaker                = "speaker.wave.2"
+    case speakerFill            = "speaker.wave.2.fill"
+    case speakerCircle          = "speaker.wave.2.circle"
+    case speakerCircleFill      = "speaker.wave.2.circle.fill"
+}
+
+public enum ForwardButtonImage: String {
+    case forwardButton          = "forward"
+}
+
+public enum BackwardButtonImage: String {
+    case backwardButton         = "backward"
+}

@@ -10,18 +10,16 @@ import UIKit
 import AVKit
 import AVFoundation
 
-public class PlayPauseButton: UIButton {
+public class ForwardBackwardButton: UIButton {
     public var xCoordinate: Int = 100
     public var yCoordinate: Int = 100
     public var iconColor: UIColor = .white
     public var avPlayer: AVPlayer?
-    public var playButtonImage: PlayButtonImage = .playCircle
-    public var pauseButtonImage: PauseButtonImage = .pauseCircle
-    public var replayButtonImage: ReplayButtonImage = .goforward
-    private var kvoRateContext = 0
-    private var isPlaying: Bool {
-        return avPlayer?.rate != 0 && avPlayer?.error == nil
-    }
+    public var forwardButton: ForwardButtonImage = .forwardButton
+    public var backwardButton: BackwardButtonImage = .backwardButton
+    public var buffer: Double = 5.0
+    public var isForward: Bool = true
+
     private override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
@@ -48,51 +46,33 @@ public class PlayPauseButton: UIButton {
                             height: size)
     }
     private func updateStatus() {
-        if isPlaying {
-            avPlayer?.pause()
+        if self.isForward {
+            if Int((avPlayer?.currentItem?.duration.seconds)!) - Int((avPlayer?.currentTime().seconds)!) > Int(self.buffer) {
+                avPlayer?.seek(to: CMTime(seconds:(avPlayer?.currentTime().seconds)! + self.buffer, preferredTimescale: 1))
+            } else {
+                avPlayer?.seek(to: (avPlayer?.currentItem!.duration)!)
+            }
         } else {
-            if avPlayer?.currentTime() == avPlayer?.currentItem?.duration {
+            if Int((avPlayer?.currentTime().seconds)!) > Int(self.buffer) {
+                avPlayer?.seek(to: CMTime(seconds:(avPlayer?.currentTime().seconds)! - self.buffer, preferredTimescale: 1))
+            } else {
                 avPlayer?.seek(to: CMTime.zero)
             }
-            avPlayer?.play()
         }
     }
     public func setup() {
         self.addTarget(self, action: #selector(handleTapGesture), for: .touchUpInside)
         setIconSize(size: ButtonSize.medium.rawValue)
-        addObservers()
-        updateUI()
+        if self.isForward {
+            setBackgroundImage(name: self.forwardButton.rawValue)
+        } else {
+            setBackgroundImage(name: self.backwardButton.rawValue)
+        }
     }
     @objc func handleTapGesture(_ sender: UITapGestureRecognizer) {
         self.updateStatus()
     }
-    private func addObservers() {
-        avPlayer?.addObserver(self, forKeyPath: ControlConstants.rate, options: .new, context: &kvoRateContext)
-    }
-    private func handleRateChanged() {
-        updateUI()
-    }
-    private func updateUI() {
-        if isPlaying {
-            setBackgroundImage(name: self.pauseButtonImage.rawValue)
-        }else if avPlayer?.currentTime() == avPlayer?.currentItem?.duration {
-            setBackgroundImage(name: self.replayButtonImage.rawValue)
-        } else {
-            setBackgroundImage(name: self.playButtonImage.rawValue)
-        }
-    }
-    public override func observeValue(forKeyPath keyPath: String?,
-                                      of object: Any?,
-                                      change: [NSKeyValueChangeKey: Any]?,
-                                      context: UnsafeMutableRawPointer?) {
-        guard let context = context else { return }
-        switch context {
-        case &kvoRateContext:
-            handleRateChanged()
-        default:
-            break
-        }
-    }
+  
     private func setBackgroundImage(name: String) {
         UIGraphicsBeginImageContext(frame.size)
         UIImage(systemName: name)?.withTintColor(iconColor).draw(in: bounds)
