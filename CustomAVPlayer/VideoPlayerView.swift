@@ -25,6 +25,8 @@ public class VideoPlayerView: UIViewController {
     public var textColor: UIColor = .white
     public var iconColor: UIColor = .white
     
+    var isSliderDragged = false
+    
     /// font
     public var textFont: UIFont = .systemFont(ofSize: 14)
     
