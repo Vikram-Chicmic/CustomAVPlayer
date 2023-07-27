@@ -9,6 +9,9 @@
 import UIKit
 
 public class CustomSlider: UISlider {
+    
+    private var isSliding = false
+    
     // slider width
     private var sliderWidth: CGFloat = 200 {
         didSet {
@@ -142,14 +145,37 @@ public class CustomSlider: UISlider {
     
     
     // MARK: - Function to recognize tap and drag gesture and call function for .valueChanged for seek
-    public override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
-          let point = touch.location(in: self)
-          let percentage = Float(point.x / self.frame.width)
-          let range = self.maximumValue - self.minimumValue
-          let value = self.minimumValue + range * percentage
-          self.setValue(value, animated: true)
-          sendActions(for: .valueChanged)
-          return true
-      }
+//    public override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
+//          let point = touch.location(in: self)
+//          let percentage = Float(point.x / self.frame.width)
+//          let range = self.maximumValue - self.minimumValue
+//          let value = self.minimumValue + range * percentage
+//          self.setValue(value, animated: true)
+//          sendActions(for: .valueChanged)
+//          return true
+//      }
   
+    
+    public override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
+         isSliding = true
+         
+         // Jump to the touched position during a single tap
+         let point = touch.location(in: self)
+         let percentage = Float(point.x / self.frame.width)
+         let range = maximumValue - minimumValue
+         let value = minimumValue + range * percentage
+         setValue(value, animated: true)
+         sendActions(for: .valueChanged)
+         
+         return true
+     }
+     
+    public override func endTracking(_ touch: UITouch?, with event: UIEvent?) {
+         isSliding = false
+         super.endTracking(touch, with: event)
+     }
+     
+     func isTracking() -> Bool {
+         return isSliding
+     }
 }

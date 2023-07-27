@@ -29,7 +29,9 @@ extension VideoPlayerView {
         player.addPeriodicTimeObserver(forInterval: interval, queue: DispatchQueue.main, using: { (progressTime) in
             let seconds = CMTimeGetSeconds(progressTime)
 //            self.currentTime.text = Helper.getTimeString(seconds: seconds)
-            self.slider.setValue(Float(seconds), animated: true)
+            if !self.isSliderDragged {
+                self.slider.setValue(Float(seconds), animated: true)
+            }
         })
         
         let seconds = CMTimeGetSeconds(player.currentItem?.asset.duration ?? CMTime(seconds: .zero, preferredTimescale: .zero))
@@ -63,20 +65,24 @@ extension VideoPlayerView {
     }
     
 
-    @objc func playbackSliderValueChanged(_ playbackSlider:UISlider)
+    @objc func playbackSliderValueChanged(_ playbackSlider:UISlider, event: UISlider.State)
         {
             print(slider.value)
+            isSliderDragged = true
             avPlayerLayer.player?.pause()
+            
             let seconds : Int64 = Int64(slider.value)
             let targetTime:CMTime = CMTimeMake(value: seconds, timescale: 1)
             
             avPlayerLayer.player?.seek(to: targetTime)
             
-            if avPlayerLayer.player?.rate == 0
-            {
-                print(slider.value)
-                avPlayerLayer.player?.play()
-            }
+            if slider.isTracking() {
+                        // If the slider is being touched, pause the video
+                avPlayerLayer.player?.pause()
+                    } else {
+                        // If the slider is not being touched, resume the video
+                        avPlayerLayer.player?.play()
+                    }
         }
     
     // MARK: - slider gestures
