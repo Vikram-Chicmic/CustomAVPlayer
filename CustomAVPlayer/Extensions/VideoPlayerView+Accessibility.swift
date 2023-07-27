@@ -14,23 +14,19 @@ extension VideoPlayerView {
     }
     
     // MARK: - show/hide components
-    func timerViewShowHide() {
-        timeStackView.isHidden = timerViewIsHidden
-    }
+//    func timerViewShowHide() {
+//        timeStackView.isHidden = timerViewIsHidden
+//    }
     
     // MARK: - change color
     func setPlayerTint(color: UIColor) {
         setIconColor(color: color)
         setTextColor(color: color)
-        setSliderColor(color: color)
-        setThumbColor(color: color)
     }
     
     func setColors() {
         setIconColor(color: iconColor)
         setTextColor(color: textColor)
-        setSliderColor(color: sliderProgressTint)
-        setThumbColor(color: thumbColor)
     }
     
     func setIconColor(color: UIColor) {
@@ -39,22 +35,14 @@ extension VideoPlayerView {
     
     func setTextColor(color: UIColor) {
         videoTitleLabel.textColor = color
-        currentTime.textColor = color
-        duration.textColor = color
-    }
-    
-    func setSliderColor(color: UIColor) {
-        slider.progressBarColor = color
-    }
-    
-    func setThumbColor(color: UIColor) {
-        slider.thumbColor = color
+//        currentTime.textColor = color
+//        duration.textColor = color
     }
     
     // MARK: - change font
     func setTextFont() {
         videoTitleLabel.font = textFont
-        currentTime.font = textFont
-        duration.font = textFont
+//        currentTime.font = textFont
+//        duration.font = textFont
     }
 }

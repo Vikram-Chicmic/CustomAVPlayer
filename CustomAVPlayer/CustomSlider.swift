@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CustomSlider: UISlider {
+public class CustomSlider: UISlider {
     // slider width
     private var sliderWidth: CGFloat = 200 {
         didSet {
@@ -23,34 +23,34 @@ class CustomSlider: UISlider {
     }
     
     // progress tint
-    var progressBarColor: UIColor = .white {
+    public var progressBarColor: UIColor = .white {
         didSet {
             updateProgressBarColor()
         }
     }
     
-    var thumbColor: UIColor = .white {
+    public var thumbColor: UIColor = .white {
         didSet {
             setThumbColor()
         }
     }
     
     // visibility
-    var hideProgressBar: Bool = false {
+    public var hideProgressBar: Bool = false {
         didSet {
             showSlider()
         }
     }
     
     // slider interaction
-    var interactionEnabled: Bool = true {
+    public var interactionEnabled: Bool = true {
         didSet {
             setUserInteraction()
         }
     }
     
     // override content size
-    override var intrinsicContentSize: CGSize {
+    public override var intrinsicContentSize: CGSize {
         return CGSize(width: sliderWidth, height: sliderHeight)
     }
     
@@ -86,7 +86,7 @@ class CustomSlider: UISlider {
     }
     
     // slider thumb
-    func setThumbImage(image: UIImage, state: UIControl.State = .normal, size: IconSize = .medium, color: UIColor = .white) {
+    public func setThumbImage(image: UIImage, state: UIControl.State = .normal, size: IconSize = .medium, color: UIColor = .white) {
         
         var resizedImage = image
         resizedImage = resizeThumbImage(image: image, to: CGSize(width: size.rawValue, height: size.rawValue))
@@ -110,33 +110,46 @@ class CustomSlider: UISlider {
         return resizedImage ?? image
     }
     
-    func setThumbColor() {
+    public func setThumbColor() {
         self.thumbTintColor = thumbColor
     }
     
-    func hideSliderThumb() {
+    public func hideSliderThumb() {
         self.setThumbImage(UIImage(), for: .highlighted)
         self.setThumbImage(UIImage(), for: .normal)
     }
     
     // slider interactions
-    private func enableTapGestureJump() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(sliderTapped(_:)))
-        self.addGestureRecognizer(tapGesture)
-    }
+//    public func enableTapGestureJump() {
+//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(sliderTapped(_:)))
+//        self.addGestureRecognizer(tapGesture)
+//    }
     
     private func setUserInteraction() {
         self.isUserInteractionEnabled = interactionEnabled
     }
     
-    @objc func sliderTapped(_ gestureRecognizer: UITapGestureRecognizer) {
-         // calculate the value of the UISlider based on the location of the tap
-         let point = gestureRecognizer.location(in: self)
-         let percentage = Float(point.x / self.frame.width)
-         let range = self.maximumValue - self.minimumValue
-         let value = self.minimumValue + range * percentage
-
-         // set the value of the UISlider to the calculated value
-         self.setValue(value, animated: true)
-     }
+//    @objc func sliderTapped(_ gestureRecognizer: UITapGestureRecognizer) {
+//         // calculate the value of the UISlider based on the location of the tap
+//         let point = gestureRecognizer.location(in: self)
+//         let percentage = Float(point.x / self.frame.width)
+//         let range = self.maximumValue - self.minimumValue
+//         let value = self.minimumValue + range * percentage
+//
+//         // set the value of the UISlider to the calculated value
+//         self.setValue(value, animated: true)
+//     }
+    
+    
+    // MARK: - Function to recognize tap and drag gesture and call function for .valueChanged for seek
+    public override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
+          let point = touch.location(in: self)
+          let percentage = Float(point.x / self.frame.width)
+          let range = self.maximumValue - self.minimumValue
+          let value = self.minimumValue + range * percentage
+          self.setValue(value, animated: true)
+          sendActions(for: .valueChanged)
+          return true
+      }
+  
 }

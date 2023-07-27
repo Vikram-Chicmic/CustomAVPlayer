@@ -18,14 +18,12 @@ public class VideoPlayerView: UIViewController {
     /// instace for av player layer
     let avPlayerLayer = AVPlayerLayer()
     /// instace for custom slider
-    let slider = CustomSlider(frame: CGRect(x: 0, y: 0, width: 200, height: 30))
+    public let slider = CustomSlider(frame: CGRect(x: 0, y: 0, width: 200, height: 30))
     
     /// colors
     public var playerTint: UIColor?
     public var textColor: UIColor = .white
     public var iconColor: UIColor = .white
-    public var thumbColor: UIColor = .white
-    public var sliderProgressTint: UIColor = .white
     
     /// font
     public var textFont: UIFont = .systemFont(ofSize: 14)
@@ -40,25 +38,19 @@ public class VideoPlayerView: UIViewController {
     @IBOutlet weak var videoContainer: UIView!
     @IBOutlet weak var resetZoomButton: UIButton!
     
-    @IBOutlet weak var timeStackView: UIStackView!
-    @IBOutlet weak var currentTime: UILabel!
-    @IBOutlet weak var duration: UILabel!
     
     @IBOutlet weak var videoTitleLabel: UILabel!
     
     public override func viewDidLoad() {
         super.viewDidLoad()
         setAvPlayerLayer()
-        
         setColors()
-        
         if let playerTint {
             setPlayerTint(color: playerTint)
         }
-        
         setTextFont()
         
-        timerViewShowHide()
+
     }
 
     public init(url: URL, title: String = "") {

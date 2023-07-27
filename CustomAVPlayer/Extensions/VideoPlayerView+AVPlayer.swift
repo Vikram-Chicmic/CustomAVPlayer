@@ -8,6 +8,10 @@
 import UIKit
 import AVFoundation
 
+// MARK: - Time observer to jump in video
+
+
+
 extension VideoPlayerView {
     
     // MARK: - ui setup for av player
@@ -24,19 +28,19 @@ extension VideoPlayerView {
         let interval = CMTime(value: 1, timescale: 1)
         player.addPeriodicTimeObserver(forInterval: interval, queue: DispatchQueue.main, using: { (progressTime) in
             let seconds = CMTimeGetSeconds(progressTime)
-            self.currentTime.text = Helper.getTimeString(seconds: seconds)
+//            self.currentTime.text = Helper.getTimeString(seconds: seconds)
             self.slider.setValue(Float(seconds), animated: true)
         })
         
         let seconds = CMTimeGetSeconds(player.currentItem?.asset.duration ?? CMTime(seconds: .zero, preferredTimescale: .zero))
-        self.duration.text = Helper.getTimeString(seconds: seconds)
+//        self.duration.text = Helper.getTimeString(seconds: seconds)
         slider.maximumValue = Float(seconds)
         
         avPlayerLayer.player = player
         
         self.videoContainer.layer.addSublayer(avPlayerLayer)
         
-        setSlider(slider: slider)
+        setSlider()
         
         setPinchToZoomGesture()
         
@@ -44,32 +48,36 @@ extension VideoPlayerView {
     }
     
     // MARK: - slider
-    func setSlider(slider: CustomSlider) {
+    func setSlider() {
         
-        videoContainer.addSubview(slider)
-        
-//        slider.addTarget(self, action: #selector(self.sliderValueDidChange), for: .valueChanged)
+        view.addSubview(slider)
+       
+//        slider.addTarget(self, action: #selector(self.touchUpInsideSlider), for: .)
+        slider.addTarget(self, action: #selector(self.playbackSliderValueChanged),for: .valueChanged)
+     
         
         slider.translatesAutoresizingMaskIntoConstraints = false
-
-        switch sliderPosition {
-        case .defaultPosition:
-            slider.leadingAnchor.constraint(equalTo:timeStackView.leadingAnchor, constant: 0).isActive = true
-            slider.trailingAnchor.constraint(equalTo:timeStackView.trailingAnchor, constant: 0).isActive = true
-            slider.bottomAnchor.constraint(equalTo:timeStackView.topAnchor, constant: -10).isActive = true
-        case .bottomSticked:
-            timerViewIsHidden = true
-            timerViewShowHide()
-            slider.hideSliderThumb()
-            slider.leadingAnchor.constraint(equalTo:videoContainer.leadingAnchor, constant: 0).isActive = true
-            slider.trailingAnchor.constraint(equalTo:videoContainer.trailingAnchor, constant: 0).isActive = true
-            slider.bottomAnchor.constraint(equalTo:videoContainer.bottomAnchor, constant: -10).isActive = true
-        case .hidden:
-            slider.hideProgressBar = true
-            timerViewIsHidden = true
-            timerViewShowHide()
-        }
+        slider.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
+        slider.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
+        slider.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30).isActive = true
     }
+    
+
+    @objc func playbackSliderValueChanged(_ playbackSlider:UISlider)
+        {
+            print(slider.value)
+            avPlayerLayer.player?.pause()
+            let seconds : Int64 = Int64(slider.value)
+            let targetTime:CMTime = CMTimeMake(value: seconds, timescale: 1)
+            
+            avPlayerLayer.player?.seek(to: targetTime)
+            
+            if avPlayerLayer.player?.rate == 0
+            {
+                print(slider.value)
+                avPlayerLayer.player?.play()
+            }
+        }
     
     // MARK: - slider gestures
     @objc func sliderValueDidChange() {

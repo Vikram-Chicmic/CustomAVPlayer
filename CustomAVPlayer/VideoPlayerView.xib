@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -10,10 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="VideoPlayerView" customModule="CustomAVPlayer" customModuleProvider="target">
             <connections>
-                <outlet property="currentTime" destination="yNu-k7-5R8" id="HuV-9N-Vvr"/>
-                <outlet property="duration" destination="7cs-pE-nYh" id="x3N-lL-Ija"/>
                 <outlet property="resetZoomButton" destination="6dW-Fb-Kem" id="XHq-Vm-3Cr"/>
-                <outlet property="timeStackView" destination="9jh-ZB-uHD" id="Ti1-65-rlY"/>
                 <outlet property="videoContainer" destination="OvJ-hR-fGh" id="wew-u3-alT"/>
                 <outlet property="videoTitleLabel" destination="k9U-i8-i6U" id="JAK-cO-KlK"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -42,23 +40,6 @@
                         <action selector="resetZoomTapped:" destination="-1" eventType="touchUpInside" id="ROK-Rw-e5L"/>
                     </connections>
                 </button>
-                <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="9jh-ZB-uHD">
-                    <rect key="frame" x="24" y="778.33333333333337" width="345" height="15.666666666666629"/>
-                    <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yNu-k7-5R8">
-                            <rect key="frame" x="0.0" y="0.0" width="36.333333333333336" height="15.666666666666666"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                            <color key="textColor" systemColor="systemGray4Color"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7cs-pE-nYh">
-                            <rect key="frame" x="308.66666666666669" y="0.0" width="36.333333333333314" height="15.666666666666666"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                            <color key="textColor" systemColor="systemGray4Color"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                    </subviews>
-                </stackView>
                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Video Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k9U-i8-i6U">
                     <rect key="frame" x="156" y="83" width="81" height="34.333333333333343"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -74,12 +55,9 @@
                 <constraint firstItem="OvJ-hR-fGh" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="5P8-R6-Phr"/>
                 <constraint firstAttribute="bottom" secondItem="OvJ-hR-fGh" secondAttribute="bottom" id="HWJ-pF-KDU"/>
                 <constraint firstItem="OvJ-hR-fGh" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="L2r-87-EN3"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="9jh-ZB-uHD" secondAttribute="bottom" constant="24" id="Xbq-2X-D3N"/>
                 <constraint firstItem="k9U-i8-i6U" firstAttribute="top" secondItem="6dW-Fb-Kem" secondAttribute="top" id="YOh-Ol-9CG"/>
                 <constraint firstItem="6dW-Fb-Kem" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="24" id="cEW-h7-ypC"/>
                 <constraint firstItem="6dW-Fb-Kem" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="eXw-xP-VdH"/>
-                <constraint firstItem="9jh-ZB-uHD" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="24" id="iPI-W2-gba"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="9jh-ZB-uHD" secondAttribute="trailing" constant="24" id="lwz-ef-Udg"/>
                 <constraint firstItem="k9U-i8-i6U" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="qye-jm-KbT"/>
             </constraints>
             <point key="canvasLocation" x="140" y="21"/>
