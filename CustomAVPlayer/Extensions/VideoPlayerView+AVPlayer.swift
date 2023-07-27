@@ -28,14 +28,14 @@ extension VideoPlayerView {
         let interval = CMTime(value: 1, timescale: 1)
         player.addPeriodicTimeObserver(forInterval: interval, queue: DispatchQueue.main, using: { (progressTime) in
             let seconds = CMTimeGetSeconds(progressTime)
-//            self.currentTime.text = Helper.getTimeString(seconds: seconds)
-            if !self.isSliderDragged {
+            self.customLabelsView.setCurrentTime(value: Helper.getTimeString(seconds: seconds))
+            if !self.slider.isTracking() {
                 self.slider.setValue(Float(seconds), animated: true)
             }
         })
         
         let seconds = CMTimeGetSeconds(player.currentItem?.asset.duration ?? CMTime(seconds: .zero, preferredTimescale: .zero))
-//        self.duration.text = Helper.getTimeString(seconds: seconds)
+        customLabelsView.setDuration(value: Helper.getTimeString(seconds: seconds))
         slider.maximumValue = Float(seconds)
         
         avPlayerLayer.player = player
@@ -56,11 +56,9 @@ extension VideoPlayerView {
        
 //        slider.addTarget(self, action: #selector(self.touchUpInsideSlider), for: .)
         slider.addTarget(self, action: #selector(self.playbackSliderValueChanged),for: .valueChanged)
-     
-        
         slider.translatesAutoresizingMaskIntoConstraints = false
-        slider.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
-        slider.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
+        slider.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
+        slider.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
         slider.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30).isActive = true
     }
     

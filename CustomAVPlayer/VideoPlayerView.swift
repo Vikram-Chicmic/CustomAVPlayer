@@ -51,8 +51,43 @@ public class VideoPlayerView: UIViewController {
             setPlayerTint(color: playerTint)
         }
         setTextFont()
-        
+        setUpBottomView()
 
+    }
+    
+    func setUpBottomView() {
+        let customStackView = CustomStackView()
+               // Add the custom view to the view controller's view
+               view.addSubview(customStackView)
+               // Set constraints for the custom view to fill the width of the screen
+               customStackView.translatesAutoresizingMaskIntoConstraints = false
+               NSLayoutConstraint.activate([
+                   customStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                   customStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                   customStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20)
+               ])
+
+               // Create two sample views and add them to the customStackView
+               let view1 = setUpTimeLabel()
+               view1.frame.size.height = 50
+    
+               view1.frame.size.width = view.bounds.width
+               customStackView.addFirstView(view1)
+
+               let view2 = slider
+                view2.frame.size.height = 50
+                view2.frame.size.width = view.bounds.width
+               customStackView.addSecondView(view2)
+        
+//        customStackView.hideBottomView()
+        //  M
+//        customStackView.reverseViewsInVerticalStack()
+    }
+    let customLabelsView = TimeLabelView()
+    
+    func setUpTimeLabel() -> UIView {
+        customLabelsView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: 40)
+        return customLabelsView
     }
 
     public init(url: URL, title: String = "") {
