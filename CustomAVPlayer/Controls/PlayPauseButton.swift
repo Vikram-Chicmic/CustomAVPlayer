@@ -12,7 +12,7 @@ import AVFoundation
 
 public class PlayPauseButton: UIButton {
     public var iconColor: UIColor = .systemBackground
-    public var avPlayer: AVPlayer?
+    private var avPlayer: AVPlayer?
     public var playButtonImage: PlayButtonImage = .playCircle
     public var pauseButtonImage: PauseButtonImage = .pauseCircle
     public var replayButtonImage: ReplayButtonImage = .goforward
@@ -26,6 +26,14 @@ public class PlayPauseButton: UIButton {
         didSet {
             setIconSize(size: size.rawValue)
         }
+    }
+    init(player: AVPlayer) {
+        super.init(frame: .zero)
+        self.avPlayer = player
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     private func setIconSize(size: Int) {
         self.frame.size = CGSize(width: size, height: size)

@@ -12,7 +12,7 @@ import AVFoundation
 
 public class ForwardBackwardButton: UIButton {
     public var iconColor: UIColor = .systemBackground
-    public var avPlayer: AVPlayer?
+    private var avPlayer: AVPlayer?
     public var forwardButton: ForwardButtonImage = .forwardButton
     public var backwardButton: BackwardButtonImage = .backwardButton
     public var buffer: Double = 2.0
@@ -36,6 +36,15 @@ public class ForwardBackwardButton: UIButton {
         didSet {
             setIconSize(size: size.rawValue)
         }
+    }
+    
+    init(player: AVPlayer) {
+        super.init(frame: .zero)
+        self.avPlayer = player
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     private func setIconSize(size: Int) {

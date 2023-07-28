@@ -12,7 +12,7 @@ import AVFoundation
 
 public class MuteButton: UIButton {
     public var iconColor: UIColor = .systemBackground
-    public var avPlayer: AVPlayer?
+    private var avPlayer: AVPlayer?
     public var muteButtonImage: MuteButtonImage = .speakerSlashFill
     public var unmuteButtonImage: UnmuteButtonImage = .speakerFill
 
@@ -20,6 +20,14 @@ public class MuteButton: UIButton {
         didSet {
             setIconSize(size: size.rawValue)
         }
+    }
+    init(player: AVPlayer) {
+        super.init(frame: .zero)
+        self.avPlayer = player
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     private func setIconSize(size: Int) {
         self.frame.size = CGSize(width: size, height: size)
