@@ -18,8 +18,8 @@ public class MuteButton: UIButton {
         }
     }
     
-    public var muteButtonImage: MuteButtonImage = .speakerSlashFill
-    public var unmuteButtonImage: UnmuteButtonImage = .speakerFill
+    public var muteButtonImage: MuteButtonImage = .speakerSlash
+    public var unmuteButtonImage: UnmuteButtonImage = .speaker
     public var size: ButtonSize = .small {
         didSet {
             setIconSize()
@@ -40,11 +40,8 @@ public class MuteButton: UIButton {
     }
     
     private func setIconSize() {
-        var extraWidth = 0.0
-        if let muted = avPlayer?.isMuted {
-            extraWidth += muted ? 0.0 : 8.0
-        }
-        self.frame.size = CGSize(width: size.rawValue + extraWidth, height: size.rawValue)
+        self.heightAnchor.constraint(equalToConstant: size.rawValue).isActive = true
+        self.widthAnchor.constraint(equalToConstant: size.rawValue).isActive = true
     }
     
     private func updateStatus() {
@@ -58,7 +55,6 @@ public class MuteButton: UIButton {
     
     private func updateUI() {
         guard let muted = avPlayer?.isMuted else { return }
-        Helper.setBackgroundImage(name: muted ? muteButtonImage.rawValue : unmuteButtonImage.rawValue, button: self, iconColor: iconColor)
-        setIconSize()
+        Helper.setBackgroundImage(name: muted ? muteButtonImage.rawValue : unmuteButtonImage.rawValue, button: self, iconColor: iconColor, size: size.rawValue)
     }
 }

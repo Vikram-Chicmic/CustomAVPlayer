@@ -36,7 +36,7 @@ public enum PauseButtonImage: String {
 }
 
 public enum ReplayButtonImage: String {
-    case goforward              = "goforward"
+    case goforward
 }
 
 public enum MuteButtonImage: String {

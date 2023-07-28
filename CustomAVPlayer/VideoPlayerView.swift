@@ -68,8 +68,7 @@ public class VideoPlayerView: UIViewController {
         startAvPlayer()
     }
     
-    public override func viewDidLayoutSubviews()
-    {
+    public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
         setAvPlayerLayer()

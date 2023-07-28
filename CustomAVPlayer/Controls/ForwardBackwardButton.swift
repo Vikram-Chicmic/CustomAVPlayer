@@ -59,19 +59,20 @@ public class ForwardBackwardButton: UIButton {
     }
     
     private func setIconSize() {
-        self.frame.size = CGSize(width: size.rawValue, height: size.rawValue)
+        self.heightAnchor.constraint(equalToConstant: size.rawValue).isActive = true
+        self.widthAnchor.constraint(equalToConstant: size.rawValue).isActive = true
     }
     
     private func updateStatus() {
         if self.isForward {
             if Int((avPlayer?.currentItem?.duration.seconds)!) - Int((avPlayer?.currentTime().seconds)!) > Int(self.buffer) {
-                avPlayer?.seek(to: CMTime(seconds:(avPlayer?.currentTime().seconds)! + self.buffer, preferredTimescale: 1))
+                avPlayer?.seek(to: CMTime(seconds: (avPlayer?.currentTime().seconds)! + self.buffer, preferredTimescale: 1))
             } else {
                 avPlayer?.seek(to: (avPlayer?.currentItem!.duration)!)
             }
         } else {
             if Int((avPlayer?.currentTime().seconds)!) > Int(self.buffer) {
-                avPlayer?.seek(to: CMTime(seconds:(avPlayer?.currentTime().seconds)! - self.buffer, preferredTimescale: 1))
+                avPlayer?.seek(to: CMTime(seconds: (avPlayer?.currentTime().seconds)! - self.buffer, preferredTimescale: 1))
             } else {
                 avPlayer?.seek(to: CMTime.zero)
             }
@@ -97,6 +98,6 @@ public class ForwardBackwardButton: UIButton {
     }
     
     private func updateUI() {
-        Helper.setBackgroundImage(name: isForward ? forwardButton.rawValue : backwardButton.rawValue, button: self, iconColor: iconColor)
+        Helper.setBackgroundImage(name: isForward ? forwardButton.rawValue : backwardButton.rawValue, button: self, iconColor: iconColor, size: size.rawValue)
     }
 }

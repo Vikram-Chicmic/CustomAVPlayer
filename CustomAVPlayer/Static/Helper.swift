@@ -16,14 +16,11 @@ class Helper {
         return "\(minutString):\(secondString)"
     }
     
-    static func setBackgroundImage(name: String, button: UIButton, iconColor: UIColor) {
+    static func setBackgroundImage(name: String, button: UIButton, iconColor: UIColor, size: Double) {
         let image = UIImage(systemName: name)
         button.setImage(image, for: .normal)
         button.imageView?.tintColor = iconColor
-        button.contentVerticalAlignment = .fill
-        button.contentHorizontalAlignment = .fill
-        button.contentMode = .scaleAspectFill
-//        button.contentHorizontalAlignment = .fill
-//        button.contentVerticalAlignment = .fill
+        button.imageView?.contentMode = .scaleAspectFill
+        button.imageEdgeInsets = UIEdgeInsets(top: size, left: size, bottom: size, right: size)
     }
 }

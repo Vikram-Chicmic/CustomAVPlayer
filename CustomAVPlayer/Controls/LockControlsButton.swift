@@ -34,7 +34,8 @@ public class LockControlsButton: UIButton {
         super.init(coder: coder)
     }
     private func setIconSize() {
-        self.frame.size = CGSize(width: size.rawValue + 3.0, height: size.rawValue)
+        self.heightAnchor.constraint(equalToConstant: size.rawValue).isActive = true
+        self.widthAnchor.constraint(equalToConstant: size.rawValue).isActive = true
     }
     
     private func updateStatus() {
@@ -52,6 +53,6 @@ public class LockControlsButton: UIButton {
     }
     
     private func updateUI() {
-        Helper.setBackgroundImage(name: lockButton.rawValue, button: self, iconColor: iconColor)
+        Helper.setBackgroundImage(name: lockButton.rawValue, button: self, iconColor: iconColor, size: size.rawValue)
     }
 }

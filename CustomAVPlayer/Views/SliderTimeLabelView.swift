@@ -56,7 +56,6 @@ class SliderTimeLabelView: UIStackView {
         }
     }
     
-    
     func addFirstView(_ view: UIView) {
         self.addArrangedSubview(view)
         topView = view

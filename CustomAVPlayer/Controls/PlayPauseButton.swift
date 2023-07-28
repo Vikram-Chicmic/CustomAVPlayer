@@ -64,11 +64,11 @@ public class PlayPauseButton: UIButton {
     
     private func updateUI() {
         if isPlaying {
-            Helper.setBackgroundImage(name: self.pauseButtonImage.rawValue, button: self, iconColor: iconColor)
-        }else if avPlayer?.currentTime() == avPlayer?.currentItem?.duration {
-            Helper.setBackgroundImage(name: self.replayButtonImage.rawValue, button: self, iconColor: iconColor)
+            Helper.setBackgroundImage(name: self.pauseButtonImage.rawValue, button: self, iconColor: iconColor, size: size.rawValue)
+        } else if avPlayer?.currentTime() == avPlayer?.currentItem?.duration {
+            Helper.setBackgroundImage(name: self.replayButtonImage.rawValue, button: self, iconColor: iconColor, size: size.rawValue)
         } else {
-            Helper.setBackgroundImage(name: self.playButtonImage.rawValue, button: self, iconColor: iconColor)
+            Helper.setBackgroundImage(name: self.playButtonImage.rawValue, button: self, iconColor: iconColor, size: size.rawValue)
         }
     }
     
@@ -80,7 +80,7 @@ public class PlayPauseButton: UIButton {
         avPlayer?.addObserver(self, forKeyPath: "timeControlStatus", options: [.old, .new], context: nil)
     }
     
-    public override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+    public override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
         updateUI()
     }
 }

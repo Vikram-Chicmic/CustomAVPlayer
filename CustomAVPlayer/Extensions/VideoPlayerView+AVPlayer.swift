@@ -8,10 +8,6 @@
 import UIKit
 import AVFoundation
 
-// MARK: - Time observer to jump in video
-
-
-
 extension VideoPlayerView {
     
     // MARK: - ui setup for av player
@@ -47,20 +43,20 @@ extension VideoPlayerView {
         
         forwardButton.translatesAutoresizingMaskIntoConstraints = false
         forwardButton.size = forwardButton.size
-        forwardButton.leadingAnchor.constraint(equalTo: playPauseButton.trailingAnchor, constant: 38).isActive = true
+        forwardButton.leadingAnchor.constraint(equalTo: playPauseButton.trailingAnchor, constant: 48).isActive = true
         forwardButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        
-        muteButton.translatesAutoresizingMaskIntoConstraints = false
-        muteButton.size = muteButton.size
-        muteButton.topAnchor.constraint(equalTo: closePlayerButton.topAnchor, constant: 0).isActive = true
-        muteButton.bottomAnchor.constraint(equalTo: closePlayerButton.bottomAnchor, constant: 0).isActive = true
-        muteButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -24).isActive = true
         
         lockControls.translatesAutoresizingMaskIntoConstraints = false
         lockControls.size = lockControls.size
         lockControls.topAnchor.constraint(equalTo: closePlayerButton.topAnchor, constant: 0).isActive = true
         lockControls.bottomAnchor.constraint(equalTo: closePlayerButton.bottomAnchor, constant: 0).isActive = true
-        lockControls.trailingAnchor.constraint(equalTo: muteButton.leadingAnchor, constant: -24).isActive = true
+        lockControls.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -25).isActive = true
+        
+        muteButton.translatesAutoresizingMaskIntoConstraints = false
+        muteButton.size = muteButton.size
+        muteButton.topAnchor.constraint(equalTo: closePlayerButton.topAnchor, constant: 0).isActive = true
+        muteButton.bottomAnchor.constraint(equalTo: closePlayerButton.bottomAnchor, constant: 0).isActive = true
+        muteButton.trailingAnchor.constraint(equalTo: lockControls.leadingAnchor, constant: -24).isActive = true
     }
     
     func startAvPlayer() {
@@ -89,21 +85,19 @@ extension VideoPlayerView {
         
         avPlayerLayer.player = avPlayerLayer.player
         
-        slider.addTarget(self, action: #selector(self.playbackSliderValueChanged),for: .valueChanged)
+        slider.addTarget(self, action: #selector(self.playbackSliderValueChanged), for: .valueChanged)
         
         setPinchToZoomGesture()
         
         avPlayerLayer.player?.play()
     }
     
-
-    @objc func playbackSliderValueChanged(_ playbackSlider:UISlider, event: UISlider.State)
-        {
+    @objc func playbackSliderValueChanged(_ playbackSlider: UISlider, event: UISlider.State) {
             print(slider.value)
             avPlayerLayer.player?.pause()
             
-            let seconds : Int64 = Int64(slider.value)
-            let targetTime:CMTime = CMTimeMake(value: seconds, timescale: 1)
+            let seconds: Int64 = Int64(slider.value)
+            let targetTime: CMTime = CMTimeMake(value: seconds, timescale: 1)
             
             avPlayerLayer.player?.seek(to: targetTime)
             

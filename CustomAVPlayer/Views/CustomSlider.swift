@@ -1,4 +1,3 @@
-
 //
 //  CustomSlider.swift
 //  CustomAVPlayer

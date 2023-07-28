@@ -40,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		07FDE80E8FD2A03C0BEE5412 /* Pods-CustomAVPlayer-CustomAVPlayerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CustomAVPlayer-CustomAVPlayerTests.debug.xcconfig"; path = "Target Support Files/Pods-CustomAVPlayer-CustomAVPlayerTests/Pods-CustomAVPlayer-CustomAVPlayerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6A6025FA2A6F919A002A4759 /* CustomAVPlayer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CustomAVPlayer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A6025FD2A6F919A002A4759 /* CustomAVPlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomAVPlayer.h; sourceTree = "<group>"; };
 		6A6025FE2A6F919A002A4759 /* CustomAVPlayer.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = CustomAVPlayer.docc; sourceTree = "<group>"; };
@@ -61,6 +62,9 @@
 		9343CD4A2A7011120060F9D8 /* CustomSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSlider.swift; sourceTree = "<group>"; };
 		93EE98602A7278250073D844 /* TimeLabels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLabels.swift; sourceTree = "<group>"; };
 		93EE98622A7283D80073D844 /* SliderTimeLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderTimeLabelView.swift; sourceTree = "<group>"; };
+		BB663C6DE198BBDBC2A3F941 /* Pods-CustomAVPlayer-CustomAVPlayerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CustomAVPlayer-CustomAVPlayerTests.release.xcconfig"; path = "Target Support Files/Pods-CustomAVPlayer-CustomAVPlayerTests/Pods-CustomAVPlayer-CustomAVPlayerTests.release.xcconfig"; sourceTree = "<group>"; };
+		E4FAAAEFC2CFC0C5BCDCACE9 /* Pods-CustomAVPlayer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CustomAVPlayer.release.xcconfig"; path = "Target Support Files/Pods-CustomAVPlayer/Pods-CustomAVPlayer.release.xcconfig"; sourceTree = "<group>"; };
+		FDC69F47A6387A9B9AAA2E2C /* Pods-CustomAVPlayer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CustomAVPlayer.debug.xcconfig"; path = "Target Support Files/Pods-CustomAVPlayer/Pods-CustomAVPlayer.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,13 +86,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		318883D2E3EA3154D6E8497A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				FDC69F47A6387A9B9AAA2E2C /* Pods-CustomAVPlayer.debug.xcconfig */,
+				E4FAAAEFC2CFC0C5BCDCACE9 /* Pods-CustomAVPlayer.release.xcconfig */,
+				07FDE80E8FD2A03C0BEE5412 /* Pods-CustomAVPlayer-CustomAVPlayerTests.debug.xcconfig */,
+				BB663C6DE198BBDBC2A3F941 /* Pods-CustomAVPlayer-CustomAVPlayerTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		6A6025F02A6F919A002A4759 = {
 			isa = PBXGroup;
 			children = (
 				6A6025FC2A6F919A002A4759 /* CustomAVPlayer */,
 				6A6026082A6F919A002A4759 /* CustomAVPlayerTests */,
 				6A6025FB2A6F919A002A4759 /* Products */,
-				933AE5CD2A711E4F00FB2285 /* Frameworks */,
+				318883D2E3EA3154D6E8497A /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -164,13 +179,6 @@
 			path = Controls;
 			sourceTree = "<group>";
 		};
-		933AE5CD2A711E4F00FB2285 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		93EE985F2A7277ED0073D844 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -199,10 +207,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6A60260E2A6F919A002A4759 /* Build configuration list for PBXNativeTarget "CustomAVPlayer" */;
 			buildPhases = (
+				4B38B26E3C3B03C11D513C72 /* [CP] Check Pods Manifest.lock */,
 				6A6025F52A6F919A002A4759 /* Headers */,
 				6A6025F62A6F919A002A4759 /* Sources */,
 				6A6025F72A6F919A002A4759 /* Frameworks */,
 				6A6025F82A6F919A002A4759 /* Resources */,
+				6A074E482A73B7BE007159A7 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -217,6 +227,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6A6026112A6F919A002A4759 /* Build configuration list for PBXNativeTarget "CustomAVPlayerTests" */;
 			buildPhases = (
+				E6E04ADCECDDF25BA7707FD0 /* [CP] Check Pods Manifest.lock */,
 				6A6026002A6F919A002A4759 /* Sources */,
 				6A6026012A6F919A002A4759 /* Frameworks */,
 				6A6026022A6F919A002A4759 /* Resources */,
@@ -285,6 +296,70 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4B38B26E3C3B03C11D513C72 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CustomAVPlayer-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6A074E482A73B7BE007159A7 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+		};
+		E6E04ADCECDDF25BA7707FD0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CustomAVPlayer-CustomAVPlayerTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6A6025F62A6F919A002A4759 /* Sources */ = {
@@ -451,6 +526,7 @@
 		};
 		6A60260F2A6F919A002A4759 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FDC69F47A6387A9B9AAA2E2C /* Pods-CustomAVPlayer.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -479,6 +555,7 @@
 		};
 		6A6026102A6F919A002A4759 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E4FAAAEFC2CFC0C5BCDCACE9 /* Pods-CustomAVPlayer.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -507,6 +584,7 @@
 		};
 		6A6026122A6F919A002A4759 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 07FDE80E8FD2A03C0BEE5412 /* Pods-CustomAVPlayer-CustomAVPlayerTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -523,6 +601,7 @@
 		};
 		6A6026132A6F919A002A4759 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BB663C6DE198BBDBC2A3F941 /* Pods-CustomAVPlayer-CustomAVPlayerTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
