@@ -19,6 +19,10 @@ public class VideoPlayerView: UIViewController {
     let avPlayerLayer = AVPlayerLayer()
     /// instace for custom slider
     public let slider = CustomSlider(frame: CGRect(x: 0, y: 0, width: 200, height: 30))
+    public let timeLabels = TimeLabels(frame: CGRect(x: 0, y: 0, width: 200, height: 30))
+    
+    let sliderTimeContainer = SliderTimeLabelView(frame: CGRect(x: 0, y: 0, width: 200, height: 30))
+    
     public let playPauseButton = PlayPauseButton()
     public let forwardButton = ForwardBackwardButton()
     public let backwardButton = ForwardBackwardButton()
@@ -45,6 +49,16 @@ public class VideoPlayerView: UIViewController {
     @IBOutlet weak var closePlayerButton: UIButton!
     @IBOutlet weak var videoTitleLabel: UILabel!
     
+    public init(url: URL, title: String = "") {
+        self.url = url
+        self.videoTitle = title
+        super.init(nibName: "VideoPlayerView", bundle: Bundle(for: VideoPlayerView.self))
+        self.modalPresentationStyle = .fullScreen
+    }
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     public override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -63,16 +77,21 @@ public class VideoPlayerView: UIViewController {
             setPlayerTint(color: playerTint)
         }
         setTextFont()
+        setUpBottomView()
     }
-
-    public init(url: URL, title: String = "") {
-        self.url = url
-        self.videoTitle = title
-        super.init(nibName: "VideoPlayerView", bundle: Bundle(for: VideoPlayerView.self))
-        self.modalPresentationStyle = .fullScreen
-    }
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    
+    func setUpBottomView() {
+        
+        sliderTimeContainer.addFirstView(timeLabels)
+        sliderTimeContainer.addSecondView(slider)
+        
+        self.view.addSubview(sliderTimeContainer)
+        sliderTimeContainer.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            sliderTimeContainer.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 24),
+            sliderTimeContainer.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -24),
+            sliderTimeContainer.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -24)
+        ])
     }
     
     // MARK: - ib actions
