@@ -20,7 +20,19 @@ class Helper {
         let image = UIImage(systemName: name)
         button.setImage(image, for: .normal)
         button.imageView?.tintColor = iconColor
-        button.imageView?.contentMode = .scaleAspectFill
+        button.imageView?.contentMode = .scaleToFill
         button.imageEdgeInsets = UIEdgeInsets(top: size, left: size, bottom: size, right: size)
+    }
+    
+    static func animateSeekButtons(button: UIButton, rotationStart: CGFloat, rotationCompletion: CGFloat) {
+        if button.isHidden {
+            button.isHidden = false
+        }
+        
+        let animation = CABasicAnimation(keyPath: "transform.rotation")
+        animation.duration = 0.3
+        animation.fromValue = rotationStart
+        animation.toValue = rotationCompletion
+        button.layer.add(animation, forKey: nil)
     }
 }

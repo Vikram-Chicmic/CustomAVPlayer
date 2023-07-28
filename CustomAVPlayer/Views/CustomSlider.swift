@@ -71,6 +71,8 @@ public class CustomSlider: UISlider {
     private func setupSlider() {
         updateSliderLayout()
         updateProgressBarColor()
+        
+        hideSliderThumb()
     }
     
     private func updateSliderLayout() {

@@ -22,7 +22,10 @@ extension VideoPlayerView {
         self.videoContainer.layer.addSublayer(avPlayerLayer)
         
         addControlsToSubview()
+        
         setControlConstraints()
+        
+        setUpBottomView()
     }
     
     func addControlsToSubview() {
@@ -71,9 +74,9 @@ extension VideoPlayerView {
             }
         })
         
-        let seconds = CMTimeGetSeconds(avPlayerLayer.player?.currentItem?.asset.duration ?? CMTime(seconds: .zero, preferredTimescale: .zero))
-        timeLabels.setDuration(value: Helper.getTimeString(seconds: seconds))
+        let seconds = CMTimeGetSeconds(self.avPlayerLayer.player?.currentItem?.asset.duration ?? CMTime(seconds: .zero, preferredTimescale: .zero))
         slider.maximumValue = Float(seconds)
+        self.timeLabels.setDuration(value: Helper.getTimeString(seconds: seconds))
         
         playPauseButton.avPlayer = avPlayerLayer.player
         forwardButton.avPlayer = avPlayerLayer.player
@@ -93,21 +96,11 @@ extension VideoPlayerView {
     }
     
     @objc func playbackSliderValueChanged(_ playbackSlider: UISlider, event: UISlider.State) {
-            print(slider.value)
-            avPlayerLayer.player?.pause()
             
             let seconds: Int64 = Int64(slider.value)
             let targetTime: CMTime = CMTimeMake(value: seconds, timescale: 1)
             
             avPlayerLayer.player?.seek(to: targetTime)
-            
-            if slider.isTracking() {
-                        // If the slider is being touched, pause the video
-                avPlayerLayer.player?.pause()
-                    } else {
-                        // If the slider is not being touched, resume the video
-                        avPlayerLayer.player?.play()
-                    }
         }
     
     // MARK: - slider gestures

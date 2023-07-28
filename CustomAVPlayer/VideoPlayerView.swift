@@ -34,6 +34,20 @@ public class VideoPlayerView: UIViewController {
     public var textColor: UIColor = .white
     public var iconColor: UIColor = .white
     
+    private var controlsHidden: Bool = true {
+        didSet {
+            self.showHideControls()
+            if !controlsHidden {
+                DispatchQueue.main.asyncAfter(deadline: .now()+3) {
+                    if !self.controlsHidden {
+                        self.controlsHidden = true
+                        self.showHideControls()
+                    }
+                }
+            }
+        }
+    }
+    
     /// font
     public var textFont: UIFont = .systemFont(ofSize: 14)
     
@@ -62,26 +76,81 @@ public class VideoPlayerView: UIViewController {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(seekVideoOnDoubleTap))
+        let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(videoContainerTapped))
+        
+        doubleTapGesture.numberOfTapsRequired = 2
+        singleTapGesture.require(toFail: doubleTapGesture)
+        
+        singleTapGesture.numberOfTapsRequired = 1
+        
+        self.videoContainer.addGestureRecognizer(singleTapGesture)
+        self.videoContainer.addGestureRecognizer(doubleTapGesture)
     }
     
     public override func viewDidAppear(_ animated: Bool) {
         startAvPlayer()
+        controlsHidden = false
     }
     
     public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
         setAvPlayerLayer()
+        
         setColors()
         if let playerTint {
             setPlayerTint(color: playerTint)
         }
         setTextFont()
-        setUpBottomView()
+    }
+    
+    @objc
+    func seekVideoOnDoubleTap(touch: UITapGestureRecognizer) {
+        let touchPoint = touch.location(in: self.view)
+        let player = avPlayerLayer.player
+        if touchPoint.x > 550 {
+            Helper.animateSeekButtons(button: forwardButton, rotationStart: 0, rotationCompletion: 2 * .pi)
+            DispatchQueue.main.asyncAfter(deadline: .now()+0.3) {
+                self.forwardButton.isHidden = self.controlsHidden
+            }
+            player?.seek(to: CMTime(seconds: (player?.currentTime().seconds)! + forwardButton.buffer, preferredTimescale: 1))
+        }
+        
+        if touchPoint.x < 300 {
+            Helper.animateSeekButtons(button: backwardButton, rotationStart: 2 * .pi, rotationCompletion: 0)
+            DispatchQueue.main.asyncAfter(deadline: .now()+0.3) {
+                self.backwardButton.isHidden = self.controlsHidden
+            }
+            player?.seek(to: CMTime(seconds: (player?.currentTime().seconds)! - forwardButton.buffer, preferredTimescale: 1))
+        }
+    }
+    
+    @objc
+    func videoContainerTapped(touch: UITapGestureRecognizer) {
+        controlsHidden = !controlsHidden
+    }
+    
+    func showHideControls() {
+        setView(view: playPauseButton)
+        setView(view: backwardButton)
+        setView(view: forwardButton)
+        
+        setView(view: closePlayerButton)
+        setView(view: muteButton)
+        setView(view: lockControls)
+        
+        setView(view: sliderTimeContainer)
+    }
+    
+    func setView(view: UIView) {
+        UIView.transition(with: self.view, duration: 0.3, options: .transitionCrossDissolve) {
+            view.isHidden = self.controlsHidden
+        }
     }
     
     func setUpBottomView() {
-        
         sliderTimeContainer.addFirstView(timeLabels)
         sliderTimeContainer.addSecondView(slider)
         

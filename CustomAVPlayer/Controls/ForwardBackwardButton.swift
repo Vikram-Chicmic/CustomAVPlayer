@@ -65,12 +65,14 @@ public class ForwardBackwardButton: UIButton {
     
     private func updateStatus() {
         if self.isForward {
+            Helper.animateSeekButtons(button: self, rotationStart: 0, rotationCompletion: 2 * .pi)
             if Int((avPlayer?.currentItem?.duration.seconds)!) - Int((avPlayer?.currentTime().seconds)!) > Int(self.buffer) {
                 avPlayer?.seek(to: CMTime(seconds: (avPlayer?.currentTime().seconds)! + self.buffer, preferredTimescale: 1))
             } else {
                 avPlayer?.seek(to: (avPlayer?.currentItem!.duration)!)
             }
         } else {
+            Helper.animateSeekButtons(button: self, rotationStart: 2 * .pi, rotationCompletion: 0)
             if Int((avPlayer?.currentTime().seconds)!) > Int(self.buffer) {
                 avPlayer?.seek(to: CMTime(seconds: (avPlayer?.currentTime().seconds)! - self.buffer, preferredTimescale: 1))
             } else {
