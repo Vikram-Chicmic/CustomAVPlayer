@@ -11,42 +11,24 @@ import AVKit
 import AVFoundation
 
 public class PlayPauseButton: UIButton {
-    public var xCoordinate: Int = 170
-    public var yCoordinate: Int = 300
-    public var iconColor: UIColor = .white
+    public var iconColor: UIColor = .systemBackground
     public var avPlayer: AVPlayer?
     public var playButtonImage: PlayButtonImage = .playCircle
     public var pauseButtonImage: PauseButtonImage = .pauseCircle
     public var replayButtonImage: ReplayButtonImage = .goforward
     private var kvoRateContext = 0
+
     private var isPlaying: Bool {
         return avPlayer?.rate != 0 && avPlayer?.error == nil
     }
-    private override init(frame: CGRect) {
-        super.init(frame: frame)
-        setup()
-    }
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-    }
     
-    public var size: ButtonSize = .medium {
+    private var size: ButtonSize = .medium {
         didSet {
-            switch size {
-            case .small:
-                setIconSize(size: ButtonSize.small.rawValue)
-            case .medium:
-                setIconSize(size: ButtonSize.medium.rawValue)
-            case .large:
-                setIconSize(size: ButtonSize.large.rawValue)
-            }
+            setIconSize(size: size.rawValue)
         }
     }
     private func setIconSize(size: Int) {
-        self.frame = CGRect(x: self.xCoordinate,
-                            y: self.yCoordinate,
-                            width: size,
-                            height: size)
+        self.frame.size = CGSize(width: size, height: size)
     }
     private func updateStatus() {
         if isPlaying {
@@ -54,6 +36,7 @@ public class PlayPauseButton: UIButton {
         } else {
             if avPlayer?.currentTime() == avPlayer?.currentItem?.duration {
                 avPlayer?.seek(to: CMTime.zero)
+                
             }
             avPlayer?.play()
         }
@@ -65,6 +48,7 @@ public class PlayPauseButton: UIButton {
         updateUI()
     }
     @objc func handleTapGesture(_ sender: UITapGestureRecognizer) {
+    
         self.updateStatus()
     }
     private func addObservers() {
@@ -76,7 +60,7 @@ public class PlayPauseButton: UIButton {
     private func updateUI() {
         if isPlaying {
             setBackgroundImage(name: self.pauseButtonImage.rawValue)
-        }else if avPlayer?.currentTime() == avPlayer?.currentItem?.duration {
+        } else if avPlayer?.currentTime() == avPlayer?.currentItem?.duration {
             setBackgroundImage(name: self.replayButtonImage.rawValue)
         } else {
             setBackgroundImage(name: self.playButtonImage.rawValue)
@@ -95,10 +79,7 @@ public class PlayPauseButton: UIButton {
         }
     }
     private func setBackgroundImage(name: String) {
-        UIGraphicsBeginImageContext(frame.size)
-        UIImage(systemName: name)?.withTintColor(iconColor).draw(in: bounds)
-        guard let image = UIGraphicsGetImageFromCurrentImageContext() else { return }
-        UIGraphicsEndImageContext()
-        backgroundColor = UIColor(patternImage: image)
+        self.setBackgroundImage(UIImage(systemName: name), for: .normal)
+        self.tintColor = iconColor
     }
 }

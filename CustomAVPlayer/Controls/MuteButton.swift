@@ -11,37 +11,18 @@ import AVKit
 import AVFoundation
 
 public class MuteButton: UIButton {
-    public var xCoordinate: Int = 100
-    public var yCoordinate: Int = 300
-    public var iconColor: UIColor = .white
+    public var iconColor: UIColor = .systemBackground
     public var avPlayer: AVPlayer?
     public var muteButtonImage: MuteButtonImage = .speakerSlashFill
     public var unmuteButtonImage: UnmuteButtonImage = .speakerFill
 
-    private override init(frame: CGRect) {
-        super.init(frame: frame)
-        setup()
-    }
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-    }
-    public var size: ButtonSize = .medium {
+    private var size: ButtonSize = .medium {
         didSet {
-            switch size {
-            case .small:
-                setIconSize(size: ButtonSize.small.rawValue)
-            case .medium:
-                setIconSize(size: ButtonSize.medium.rawValue)
-            case .large:
-                setIconSize(size: ButtonSize.large.rawValue)
-            }
+            setIconSize(size: size.rawValue)
         }
     }
     private func setIconSize(size: Int) {
-        self.frame = CGRect(x: self.xCoordinate,
-                            y: self.yCoordinate,
-                            width: size,
-                            height: size)
+        self.frame.size = CGSize(width: size, height: size)
     }
     private func updateStatus() {
         avPlayer?.isMuted.toggle()
@@ -63,10 +44,7 @@ public class MuteButton: UIButton {
         }
     }
     private func setBackgroundImage(name: String) {
-        UIGraphicsBeginImageContext(frame.size)
-        UIImage(systemName: name)?.withTintColor(iconColor).draw(in: bounds)
-        guard let image = UIGraphicsGetImageFromCurrentImageContext() else { return }
-        UIGraphicsEndImageContext()
-        backgroundColor = UIColor(patternImage: image)
+        self.setBackgroundImage(UIImage(systemName: name), for: .normal)
+        self.tintColor = iconColor
     }
 }
