@@ -21,7 +21,7 @@
 		933AE5992A71173900FB2285 /* MuteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933AE5932A71173900FB2285 /* MuteButton.swift */; };
 		933AE59A2A71173900FB2285 /* PlayPauseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933AE5942A71173900FB2285 /* PlayPauseButton.swift */; };
 		933AE59B2A71173900FB2285 /* ForwardBackwardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933AE5952A71173900FB2285 /* ForwardBackwardButton.swift */; };
-		933AE59C2A71173900FB2285 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933AE5962A71173900FB2285 /* Enums.swift */; };
+		933AE59C2A71173900FB2285 /* ControlButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933AE5962A71173900FB2285 /* ControlButtons.swift */; };
 		933AE59D2A71173900FB2285 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933AE5972A71173900FB2285 /* Constants.swift */; };
 		933AE59E2A71173900FB2285 /* LockControlsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933AE5982A71173900FB2285 /* LockControlsButton.swift */; };
 		9343CD4B2A7011120060F9D8 /* CustomSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9343CD4A2A7011120060F9D8 /* CustomSlider.swift */; };
@@ -55,7 +55,7 @@
 		933AE5932A71173900FB2285 /* MuteButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MuteButton.swift; sourceTree = "<group>"; };
 		933AE5942A71173900FB2285 /* PlayPauseButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPauseButton.swift; sourceTree = "<group>"; };
 		933AE5952A71173900FB2285 /* ForwardBackwardButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForwardBackwardButton.swift; sourceTree = "<group>"; };
-		933AE5962A71173900FB2285 /* Enums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
+		933AE5962A71173900FB2285 /* ControlButtons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlButtons.swift; sourceTree = "<group>"; };
 		933AE5972A71173900FB2285 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		933AE5982A71173900FB2285 /* LockControlsButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockControlsButton.swift; sourceTree = "<group>"; };
 		9343CD4A2A7011120060F9D8 /* CustomSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSlider.swift; sourceTree = "<group>"; };
@@ -128,6 +128,7 @@
 		6AACE9602A7115A700155C76 /* Static */ = {
 			isa = PBXGroup;
 			children = (
+				933AE5972A71173900FB2285 /* Constants.swift */,
 				6AACE9612A7115BF00155C76 /* Helper.swift */,
 			);
 			path = Static;
@@ -145,6 +146,7 @@
 		9330C0EC2A712C200016CB53 /* Enums */ = {
 			isa = PBXGroup;
 			children = (
+				933AE5962A71173900FB2285 /* ControlButtons.swift */,
 				9330C0EF2A712C3C0016CB53 /* SliderPosition.swift */,
 				9330C0ED2A712C370016CB53 /* IconSize.swift */,
 			);
@@ -154,8 +156,6 @@
 		933AE5922A71172800FB2285 /* Controls */ = {
 			isa = PBXGroup;
 			children = (
-				933AE5972A71173900FB2285 /* Constants.swift */,
-				933AE5962A71173900FB2285 /* Enums.swift */,
 				933AE5952A71173900FB2285 /* ForwardBackwardButton.swift */,
 				933AE5932A71173900FB2285 /* MuteButton.swift */,
 				933AE5942A71173900FB2285 /* PlayPauseButton.swift */,
@@ -304,7 +304,7 @@
 				933AE59A2A71173900FB2285 /* PlayPauseButton.swift in Sources */,
 				933AE59E2A71173900FB2285 /* LockControlsButton.swift in Sources */,
 				93EE98612A7278250073D844 /* TimeLabels.swift in Sources */,
-				933AE59C2A71173900FB2285 /* Enums.swift in Sources */,
+				933AE59C2A71173900FB2285 /* ControlButtons.swift in Sources */,
 				933AE5992A71173900FB2285 /* MuteButton.swift in Sources */,
 				933AE59D2A71173900FB2285 /* Constants.swift in Sources */,
 			);

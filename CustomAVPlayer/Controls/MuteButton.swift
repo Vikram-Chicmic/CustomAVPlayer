@@ -5,71 +5,60 @@
 //  Created by Chicmic on 25/07/23.
 //
 
-import Foundation
 import UIKit
-import AVKit
 import AVFoundation
 
 public class MuteButton: UIButton {
-    public var xCoordinate: Int = 100
-    public var yCoordinate: Int = 300
+    
     public var iconColor: UIColor = .white
-    public var avPlayer: AVPlayer? {
+    
+    var avPlayer: AVPlayer? {
         didSet {
             setup()
         }
     }
+    
     public var muteButtonImage: MuteButtonImage = .speakerSlashFill
     public var unmuteButtonImage: UnmuteButtonImage = .speakerFill
-
+    public var size: ButtonSize = .small {
+        didSet {
+            setIconSize()
+        }
+    }
+    
     private override init(frame: CGRect) {
         super.init(frame: frame)
     }
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-    public var size: ButtonSize = .small {
-        didSet {
-            switch size {
-            case .small:
-                setIconSize(size: ButtonSize.small.rawValue)
-            case .medium:
-                setIconSize(size: ButtonSize.medium.rawValue)
-            case .large:
-                setIconSize(size: ButtonSize.large.rawValue)
-            }
+    
+    public func setup() {
+        self.addTarget(self, action: #selector(handleTapGesture), for: .touchUpInside)
+        setIconSize()
+        updateUI()
+    }
+    
+    private func setIconSize() {
+        var extraWidth = 0.0
+        if let muted = avPlayer?.isMuted {
+            extraWidth += muted ? 0.0 : 8.0
         }
+        self.frame.size = CGSize(width: size.rawValue + extraWidth, height: size.rawValue)
     }
-    private func setIconSize(size: Int) {
-        self.frame = CGRect(x: self.xCoordinate,
-                            y: self.yCoordinate,
-                            width: size,
-                            height: size)
-    }
+    
     private func updateStatus() {
         avPlayer?.isMuted.toggle()
         updateUI()
     }
-    public func setup() {
-        self.addTarget(self, action: #selector(handleTapGesture), for: .touchUpInside)
-        setIconSize(size: self.size.rawValue)
-        updateUI()
-    }
+    
     @objc func handleTapGesture(_ sender: UITapGestureRecognizer) {
         self.updateStatus()
     }
+    
     private func updateUI() {
-        if avPlayer?.isMuted == true {
-            self.setBackgroundImage(name: self.muteButtonImage.rawValue)
-        } else {
-            self.setBackgroundImage(name: self.unmuteButtonImage.rawValue)
-        }
-    }
-    private func setBackgroundImage(name: String) {
-        UIGraphicsBeginImageContext(frame.size)
-        UIImage(systemName: name)?.withTintColor(iconColor).draw(in: bounds)
-        guard let image = UIGraphicsGetImageFromCurrentImageContext() else { return }
-        UIGraphicsEndImageContext()
-        backgroundColor = UIColor(patternImage: image)
+        guard let muted = avPlayer?.isMuted else { return }
+        Helper.setBackgroundImage(name: muted ? muteButtonImage.rawValue : unmuteButtonImage.rawValue, button: self, iconColor: iconColor)
+        setIconSize()
     }
 }

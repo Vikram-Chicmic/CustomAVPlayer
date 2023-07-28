@@ -5,27 +5,34 @@
 //  Created by Chicmic on 25/07/23.
 //
 
-import Foundation
 import UIKit
-import AVKit
 import AVFoundation
 
 public class PlayPauseButton: UIButton {
-    public var xCoordinate: Int = 0
-    public var yCoordinate: Int = 0
+    
     public var iconColor: UIColor = .white
-    public var avPlayer: AVPlayer? {
+    
+    var avPlayer: AVPlayer? {
         didSet {
             setup()
         }
     }
-    public var playButtonImage: PlayButtonImage = .playCircle
-    public var pauseButtonImage: PauseButtonImage = .pauseCircle
+    
+    public var playButtonImage: PlayButtonImage = .playFill
+    public var pauseButtonImage: PauseButtonImage = .pauseFill
     public var replayButtonImage: ReplayButtonImage = .goforward
+    public var size: ButtonSize = .medium {
+        didSet {
+            setIconSize()
+        }
+    }
+    
     private var kvoRateContext = 0
+    
     private var isPlaying: Bool {
         return avPlayer?.rate != 0 && avPlayer?.error == nil
     }
+    
     private override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -33,24 +40,17 @@ public class PlayPauseButton: UIButton {
         super.init(coder: coder)
     }
     
-    public var size: ButtonSize = .medium {
-        didSet {
-            switch size {
-            case .small:
-                setIconSize(size: ButtonSize.small.rawValue)
-            case .medium:
-                setIconSize(size: ButtonSize.medium.rawValue)
-            case .large:
-                setIconSize(size: ButtonSize.large.rawValue)
-            }
-        }
+    public func setup() {
+        self.addTarget(self, action: #selector(handleTapGesture), for: .touchUpInside)
+        setIconSize()
+        updateUI()
+        addObservers()
     }
-    private func setIconSize(size: Int) {
-        self.frame = CGRect(x: self.xCoordinate,
-                            y: self.yCoordinate,
-                            width: size,
-                            height: size)
+    
+    private func setIconSize() {
+        self.frame.size = CGSize(width: size.rawValue, height: size.rawValue)
     }
+    
     private func updateStatus() {
         if isPlaying {
             avPlayer?.pause()
@@ -61,39 +61,26 @@ public class PlayPauseButton: UIButton {
             avPlayer?.play()
         }
     }
-    public func setup() {
-        self.addTarget(self, action: #selector(handleTapGesture), for: .touchUpInside)
-        setIconSize(size: self.size.rawValue)
-        addObservers()
-        updateUI()
+    
+    private func updateUI() {
+        if isPlaying {
+            Helper.setBackgroundImage(name: self.pauseButtonImage.rawValue, button: self, iconColor: iconColor)
+        }else if avPlayer?.currentTime() == avPlayer?.currentItem?.duration {
+            Helper.setBackgroundImage(name: self.replayButtonImage.rawValue, button: self, iconColor: iconColor)
+        } else {
+            Helper.setBackgroundImage(name: self.playButtonImage.rawValue, button: self, iconColor: iconColor)
+        }
     }
+    
     @objc func handleTapGesture(_ sender: UITapGestureRecognizer) {
         self.updateStatus()
     }
+    
     private func addObservers() {
         avPlayer?.addObserver(self, forKeyPath: "timeControlStatus", options: [.old, .new], context: nil)
     }
     
-    private func updateUI() {
-        if isPlaying {
-            setBackgroundImage(name: self.pauseButtonImage.rawValue)
-        }else if avPlayer?.currentTime() == avPlayer?.currentItem?.duration {
-            setBackgroundImage(name: self.replayButtonImage.rawValue)
-        } else {
-            setBackgroundImage(name: self.playButtonImage.rawValue)
-        }
-    }
-    public override func observeValue(forKeyPath keyPath: String?,
-                               of object: Any?,
-                               change: [NSKeyValueChangeKey : Any]?,
-                               context: UnsafeMutableRawPointer?) {
+    public override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         updateUI()
-    }
-    private func setBackgroundImage(name: String) {
-        UIGraphicsBeginImageContext(frame.size)
-        UIImage(systemName: name)?.withTintColor(iconColor).draw(in: bounds)
-        guard let image = UIGraphicsGetImageFromCurrentImageContext() else { return }
-        UIGraphicsEndImageContext()
-        backgroundColor = UIColor(patternImage: image)
     }
 }

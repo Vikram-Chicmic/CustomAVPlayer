@@ -18,15 +18,16 @@ public class VideoPlayerView: UIViewController {
     /// instace for av player layer
     let avPlayerLayer = AVPlayerLayer()
     /// instace for custom slider
-    public let slider = CustomSlider(frame: CGRect(x: 0, y: 0, width: 200, height: 30))
-    public let timeLabels = TimeLabels(frame: CGRect(x: 0, y: 0, width: 200, height: 30))
+    public let slider = CustomSlider()
+    public let timeLabels = TimeLabels()
     
-    let sliderTimeContainer = SliderTimeLabelView(frame: CGRect(x: 0, y: 0, width: 200, height: 30))
+    let sliderTimeContainer = SliderTimeLabelView()
     
     public let playPauseButton = PlayPauseButton()
     public let forwardButton = ForwardBackwardButton()
     public let backwardButton = ForwardBackwardButton()
     public let muteButton = MuteButton()
+    public let lockControls = LockControlsButton()
     
     /// colors
     public var playerTint: UIColor?
@@ -104,7 +105,7 @@ public class VideoPlayerView: UIViewController {
     }
  
     @IBAction func closePlayerTapped(_ sender: UIButton) {
-        avPlayerLayer.player = nil
+        avPlayerLayer.player?.replaceCurrentItem(with: nil)
         self.dismiss(animated: true)
     }
     

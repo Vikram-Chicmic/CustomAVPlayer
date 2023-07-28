@@ -25,34 +25,49 @@ extension VideoPlayerView {
         
         self.videoContainer.layer.addSublayer(avPlayerLayer)
         
+        addControlsToSubview()
+        setControlConstraints()
+    }
+    
+    func addControlsToSubview() {
         self.view.addSubview(playPauseButton)
         self.view.addSubview(backwardButton)
         self.view.addSubview(forwardButton)
         self.view.addSubview(muteButton)
-        
-        playPauseButton.center = videoContainer.center
+        self.view.addSubview(lockControls)
+    }
+    
+    func setControlConstraints() {
+        playPauseButton.center = view.center
         
         backwardButton.translatesAutoresizingMaskIntoConstraints = false
+        backwardButton.size = backwardButton.size
         backwardButton.trailingAnchor.constraint(equalTo: playPauseButton.leadingAnchor, constant: -48).isActive = true
         backwardButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         
         forwardButton.translatesAutoresizingMaskIntoConstraints = false
-        forwardButton.leadingAnchor.constraint(equalTo: playPauseButton.trailingAnchor, constant: 48).isActive = true
+        forwardButton.size = forwardButton.size
+        forwardButton.leadingAnchor.constraint(equalTo: playPauseButton.trailingAnchor, constant: 38).isActive = true
         forwardButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         
         muteButton.translatesAutoresizingMaskIntoConstraints = false
-        muteButton.heightAnchor.constraint(equalToConstant: CGFloat(muteButton.size.rawValue)).isActive = true
-        muteButton.widthAnchor.constraint(equalToConstant: CGFloat(muteButton.size.rawValue)).isActive = true
+        muteButton.size = muteButton.size
         muteButton.topAnchor.constraint(equalTo: closePlayerButton.topAnchor, constant: 0).isActive = true
         muteButton.bottomAnchor.constraint(equalTo: closePlayerButton.bottomAnchor, constant: 0).isActive = true
-        muteButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16).isActive = true
+        muteButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -24).isActive = true
+        
+        lockControls.translatesAutoresizingMaskIntoConstraints = false
+        lockControls.size = lockControls.size
+        lockControls.topAnchor.constraint(equalTo: closePlayerButton.topAnchor, constant: 0).isActive = true
+        lockControls.bottomAnchor.constraint(equalTo: closePlayerButton.bottomAnchor, constant: 0).isActive = true
+        lockControls.trailingAnchor.constraint(equalTo: muteButton.leadingAnchor, constant: -24).isActive = true
     }
     
     func startAvPlayer() {
-        let player = AVPlayer(url: url)
+        avPlayerLayer.player = AVPlayer(url: url)
         
         let interval = CMTime(value: 1, timescale: 1)
-        player.addPeriodicTimeObserver(forInterval: interval, queue: DispatchQueue.main, using: { (progressTime) in
+        avPlayerLayer.player?.addPeriodicTimeObserver(forInterval: interval, queue: DispatchQueue.main, using: { (progressTime) in
             let seconds = CMTimeGetSeconds(progressTime)
             self.timeLabels.setCurrentTime(value: Helper.getTimeString(seconds: seconds))
             if !self.slider.isTracking() {
@@ -60,18 +75,19 @@ extension VideoPlayerView {
             }
         })
         
-        let seconds = CMTimeGetSeconds(player.currentItem?.asset.duration ?? CMTime(seconds: .zero, preferredTimescale: .zero))
+        let seconds = CMTimeGetSeconds(avPlayerLayer.player?.currentItem?.asset.duration ?? CMTime(seconds: .zero, preferredTimescale: .zero))
         timeLabels.setDuration(value: Helper.getTimeString(seconds: seconds))
         slider.maximumValue = Float(seconds)
         
-        playPauseButton.avPlayer = player
-        forwardButton.avPlayer = player
+        playPauseButton.avPlayer = avPlayerLayer.player
+        forwardButton.avPlayer = avPlayerLayer.player
         forwardButton.isForward = true
-        backwardButton.avPlayer = player
+        backwardButton.avPlayer = avPlayerLayer.player
         backwardButton.isForward = false
-        muteButton.avPlayer = player
+        muteButton.avPlayer = avPlayerLayer.player
+        lockControls.avPlayer = avPlayerLayer.player
         
-        avPlayerLayer.player = player
+        avPlayerLayer.player = avPlayerLayer.player
         
         slider.addTarget(self, action: #selector(self.playbackSliderValueChanged),for: .valueChanged)
         

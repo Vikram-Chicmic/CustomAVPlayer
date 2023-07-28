@@ -7,10 +7,10 @@
 
 import Foundation
 
-public enum ButtonSize: Int {
-    case small  = 20
-    case medium = 50
-    case large  = 70
+public enum ButtonSize: Double {
+    case small  = 24
+    case medium = 48
+    case large  = 72
 }
 
 public enum PlayButtonImage: String {

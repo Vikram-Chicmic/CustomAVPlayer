@@ -13,11 +13,6 @@ extension VideoPlayerView {
         resetZoomButton.setImage(icon, for: .normal)
     }
     
-    // MARK: - show/hide components
-//    func timerViewShowHide() {
-//        timeStackView.isHidden = timerViewIsHidden
-//    }
-    
     // MARK: - change color
     func setPlayerTint(color: UIColor) {
         setIconColor(color: color)
@@ -31,19 +26,21 @@ extension VideoPlayerView {
     
     func setIconColor(color: UIColor) {
         resetZoomButton.imageView?.tintColor = color
+        closePlayerButton.imageView?.tintColor = color
         playPauseButton.iconColor = color
+        forwardButton.iconColor = color
+        backwardButton.iconColor = color
+        muteButton.iconColor = color
     }
     
     func setTextColor(color: UIColor) {
         videoTitleLabel.textColor = color
-//        currentTime.textColor = color
-//        duration.textColor = color
+        timeLabels.color = color
     }
     
     // MARK: - change font
     func setTextFont() {
         videoTitleLabel.font = textFont
-//        currentTime.font = textFont
-//        duration.font = textFont
+        timeLabels.font = textFont
     }
 }
