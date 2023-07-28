@@ -14,18 +14,21 @@ public class MuteButton: UIButton {
     public var xCoordinate: Int = 100
     public var yCoordinate: Int = 300
     public var iconColor: UIColor = .white
-    public var avPlayer: AVPlayer?
+    public var avPlayer: AVPlayer? {
+        didSet {
+            setup()
+        }
+    }
     public var muteButtonImage: MuteButtonImage = .speakerSlashFill
     public var unmuteButtonImage: UnmuteButtonImage = .speakerFill
 
     private override init(frame: CGRect) {
         super.init(frame: frame)
-        setup()
     }
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-    public var size: ButtonSize = .medium {
+    public var size: ButtonSize = .small {
         didSet {
             switch size {
             case .small:

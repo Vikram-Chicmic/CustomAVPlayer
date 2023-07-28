@@ -31,6 +31,7 @@ extension VideoPlayerView {
     
     func setIconColor(color: UIColor) {
         resetZoomButton.imageView?.tintColor = color
+        playPauseButton.iconColor = color
     }
     
     func setTextColor(color: UIColor) {

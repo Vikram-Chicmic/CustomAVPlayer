@@ -122,39 +122,9 @@ public class CustomSlider: UISlider {
         self.setThumbImage(UIImage(), for: .normal)
     }
     
-    // slider interactions
-//    public func enableTapGestureJump() {
-//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(sliderTapped(_:)))
-//        self.addGestureRecognizer(tapGesture)
-//    }
-    
     private func setUserInteraction() {
         self.isUserInteractionEnabled = interactionEnabled
     }
-    
-//    @objc func sliderTapped(_ gestureRecognizer: UITapGestureRecognizer) {
-//         // calculate the value of the UISlider based on the location of the tap
-//         let point = gestureRecognizer.location(in: self)
-//         let percentage = Float(point.x / self.frame.width)
-//         let range = self.maximumValue - self.minimumValue
-//         let value = self.minimumValue + range * percentage
-//
-//         // set the value of the UISlider to the calculated value
-//         self.setValue(value, animated: true)
-//     }
-    
-    
-    // MARK: - Function to recognize tap and drag gesture and call function for .valueChanged for seek
-//    public override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
-//          let point = touch.location(in: self)
-//          let percentage = Float(point.x / self.frame.width)
-//          let range = self.maximumValue - self.minimumValue
-//          let value = self.minimumValue + range * percentage
-//          self.setValue(value, animated: true)
-//          sendActions(for: .valueChanged)
-//          return true
-//      }
-  
     
     public override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
          isSliding = true

@@ -19,13 +19,15 @@ public class VideoPlayerView: UIViewController {
     let avPlayerLayer = AVPlayerLayer()
     /// instace for custom slider
     public let slider = CustomSlider(frame: CGRect(x: 0, y: 0, width: 200, height: 30))
+    public let playPauseButton = PlayPauseButton()
+    public let forwardButton = ForwardBackwardButton()
+    public let backwardButton = ForwardBackwardButton()
+    public let muteButton = MuteButton()
     
     /// colors
     public var playerTint: UIColor?
     public var textColor: UIColor = .white
     public var iconColor: UIColor = .white
-    
-    var isSliderDragged = false
     
     /// font
     public var textFont: UIFont = .systemFont(ofSize: 14)
@@ -40,38 +42,37 @@ public class VideoPlayerView: UIViewController {
     @IBOutlet weak var videoContainer: UIView!
     @IBOutlet weak var resetZoomButton: UIButton!
     
-    
+    @IBOutlet weak var closePlayerButton: UIButton!
     @IBOutlet weak var videoTitleLabel: UILabel!
     
     public override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    public override func viewDidAppear(_ animated: Bool) {
+        startAvPlayer()
+    }
+    
+    public override func viewDidLayoutSubviews()
+    {
+        super.viewDidLayoutSubviews()
+        
         setAvPlayerLayer()
         setColors()
         if let playerTint {
             setPlayerTint(color: playerTint)
         }
         setTextFont()
-        
-
     }
 
     public init(url: URL, title: String = "") {
         self.url = url
         self.videoTitle = title
         super.init(nibName: "VideoPlayerView", bundle: Bundle(for: VideoPlayerView.self))
+        self.modalPresentationStyle = .fullScreen
     }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    // MARK: - orientation
-    public override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        if UIDevice.current.orientation.isLandscape {
-            avPlayerLayer.frame = CGRect(origin: .zero, size: size)
-        } else {
-            avPlayerLayer.frame = CGRect(origin: .zero, size: size)
-        }
     }
     
     // MARK: - ib actions
@@ -80,6 +81,12 @@ public class VideoPlayerView: UIViewController {
             CGAffineTransformIdentity, 1, 1
         )
         resetZoomButton.isHidden = true
+        closePlayerButton.isHidden = false
+    }
+ 
+    @IBAction func closePlayerTapped(_ sender: UIButton) {
+        avPlayerLayer.player = nil
+        self.dismiss(animated: true)
     }
     
 }

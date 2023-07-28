@@ -11,10 +11,14 @@ import AVKit
 import AVFoundation
 
 public class PlayPauseButton: UIButton {
-    public var xCoordinate: Int = 170
-    public var yCoordinate: Int = 300
+    public var xCoordinate: Int = 0
+    public var yCoordinate: Int = 0
     public var iconColor: UIColor = .white
-    public var avPlayer: AVPlayer?
+    public var avPlayer: AVPlayer? {
+        didSet {
+            setup()
+        }
+    }
     public var playButtonImage: PlayButtonImage = .playCircle
     public var pauseButtonImage: PauseButtonImage = .pauseCircle
     public var replayButtonImage: ReplayButtonImage = .goforward
@@ -24,7 +28,6 @@ public class PlayPauseButton: UIButton {
     }
     private override init(frame: CGRect) {
         super.init(frame: frame)
-        setup()
     }
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -68,11 +71,9 @@ public class PlayPauseButton: UIButton {
         self.updateStatus()
     }
     private func addObservers() {
-        avPlayer?.addObserver(self, forKeyPath: ControlConstants.rate, options: .new, context: &kvoRateContext)
+        avPlayer?.addObserver(self, forKeyPath: "timeControlStatus", options: [.old, .new], context: nil)
     }
-    private func handleRateChanged() {
-        updateUI()
-    }
+    
     private func updateUI() {
         if isPlaying {
             setBackgroundImage(name: self.pauseButtonImage.rawValue)
@@ -83,16 +84,10 @@ public class PlayPauseButton: UIButton {
         }
     }
     public override func observeValue(forKeyPath keyPath: String?,
-                                      of object: Any?,
-                                      change: [NSKeyValueChangeKey: Any]?,
-                                      context: UnsafeMutableRawPointer?) {
-        guard let context = context else { return }
-        switch context {
-        case &kvoRateContext:
-            handleRateChanged()
-        default:
-            break
-        }
+                               of object: Any?,
+                               change: [NSKeyValueChangeKey : Any]?,
+                               context: UnsafeMutableRawPointer?) {
+        updateUI()
     }
     private func setBackgroundImage(name: String) {
         UIGraphicsBeginImageContext(frame.size)
