@@ -2,7 +2,7 @@
 //  IconSize.swift
 //  CustomAVPlayer
 //
-//  Created by Nitin on 7/26/23.
+//  Created by Himanshu on 7/26/23.
 //
 
 import Foundation

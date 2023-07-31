@@ -11,6 +11,7 @@
 		6A6026052A6F919A002A4759 /* CustomAVPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A6025FA2A6F919A002A4759 /* CustomAVPlayer.framework */; };
 		6A60260A2A6F919A002A4759 /* CustomAVPlayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A6026092A6F919A002A4759 /* CustomAVPlayerTests.swift */; };
 		6A60260B2A6F919A002A4759 /* CustomAVPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 6A6025FD2A6F919A002A4759 /* CustomAVPlayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6A9DE8682A77DCB70030146B /* VideoPlayerView+TouchGestures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9DE8672A77DCB70030146B /* VideoPlayerView+TouchGestures.swift */; };
 		6AACE9622A7115BF00155C76 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AACE9612A7115BF00155C76 /* Helper.swift */; };
 		6AC4777A2A70E51500358257 /* VideoPlayerView+AVPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC477792A70E51500358257 /* VideoPlayerView+AVPlayer.swift */; };
 		6AC4777C2A70E53E00358257 /* VideoPlayerView+Accessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC4777B2A70E53E00358257 /* VideoPlayerView+Accessibility.swift */; };
@@ -46,6 +47,7 @@
 		6A6025FE2A6F919A002A4759 /* CustomAVPlayer.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = CustomAVPlayer.docc; sourceTree = "<group>"; };
 		6A6026042A6F919A002A4759 /* CustomAVPlayerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CustomAVPlayerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A6026092A6F919A002A4759 /* CustomAVPlayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAVPlayerTests.swift; sourceTree = "<group>"; };
+		6A9DE8672A77DCB70030146B /* VideoPlayerView+TouchGestures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VideoPlayerView+TouchGestures.swift"; sourceTree = "<group>"; };
 		6AACE9612A7115BF00155C76 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		6AC477792A70E51500358257 /* VideoPlayerView+AVPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VideoPlayerView+AVPlayer.swift"; sourceTree = "<group>"; };
 		6AC4777B2A70E53E00358257 /* VideoPlayerView+Accessibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VideoPlayerView+Accessibility.swift"; sourceTree = "<group>"; };
@@ -154,6 +156,7 @@
 			children = (
 				6AC477792A70E51500358257 /* VideoPlayerView+AVPlayer.swift */,
 				6AC4777B2A70E53E00358257 /* VideoPlayerView+Accessibility.swift */,
+				6A9DE8672A77DCB70030146B /* VideoPlayerView+TouchGestures.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -377,6 +380,7 @@
 				6AC4777E2A70E55C00358257 /* VideoPlayerView.swift in Sources */,
 				933AE59B2A71173900FB2285 /* ForwardBackwardButton.swift in Sources */,
 				933AE59A2A71173900FB2285 /* PlayPauseButton.swift in Sources */,
+				6A9DE8682A77DCB70030146B /* VideoPlayerView+TouchGestures.swift in Sources */,
 				933AE59E2A71173900FB2285 /* LockControlsButton.swift in Sources */,
 				93EE98612A7278250073D844 /* TimeLabels.swift in Sources */,
 				933AE59C2A71173900FB2285 /* ControlButtons.swift in Sources */,

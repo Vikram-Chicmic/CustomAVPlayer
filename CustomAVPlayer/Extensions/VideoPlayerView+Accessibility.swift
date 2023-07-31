@@ -8,12 +8,15 @@
 import UIKit
 
 extension VideoPlayerView {
+    
     // MARK: - change button icon
+    
     func setResetZoomIcon(icon: UIImage) {
         resetZoomButton.setImage(icon, for: .normal)
     }
     
     // MARK: - change color
+    
     func setPlayerTint(color: UIColor) {
         setIconColor(color: color)
         setTextColor(color: color)
@@ -39,6 +42,7 @@ extension VideoPlayerView {
     }
     
     // MARK: - change font
+    
     func setTextFont() {
         videoTitleLabel.font = textFont
         timeLabels.font = textFont

@@ -66,14 +66,14 @@ public class ForwardBackwardButton: UIButton {
     private func updateStatus() {
         if self.isForward {
             Helper.animateSeekButtons(button: self, rotationStart: 0, rotationCompletion: 2 * .pi)
-            if Int((avPlayer?.currentItem?.duration.seconds)!) - Int((avPlayer?.currentTime().seconds)!) > Int(self.buffer) {
+            if Double((avPlayer?.currentItem?.duration.seconds)!) - Double((avPlayer?.currentTime().seconds)!) > self.buffer {
                 avPlayer?.seek(to: CMTime(seconds: (avPlayer?.currentTime().seconds)! + self.buffer, preferredTimescale: 1))
             } else {
                 avPlayer?.seek(to: (avPlayer?.currentItem!.duration)!)
             }
         } else {
             Helper.animateSeekButtons(button: self, rotationStart: 2 * .pi, rotationCompletion: 0)
-            if Int((avPlayer?.currentTime().seconds)!) > Int(self.buffer) {
+            if Double((avPlayer?.currentTime().seconds)!) > self.buffer {
                 avPlayer?.seek(to: CMTime(seconds: (avPlayer?.currentTime().seconds)! - self.buffer, preferredTimescale: 1))
             } else {
                 avPlayer?.seek(to: CMTime.zero)
@@ -86,7 +86,7 @@ public class ForwardBackwardButton: UIButton {
     }
     
     private func addObservers() {
-        avPlayer?.addObserver(self, forKeyPath: ControlConstants.rate, options: .new, context: &kvoRateContext)
+        avPlayer?.addObserver(self, forKeyPath: ConstantString.rate, options: .new, context: &kvoRateContext)
     }
     
     public override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {

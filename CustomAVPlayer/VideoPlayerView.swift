@@ -9,96 +9,117 @@ import UIKit
 import AVFoundation
 
 public class VideoPlayerView: UIViewController {
+    
+    // MARK: - outlets
+    
+    @IBOutlet weak var videoContainer: UIView!
+    @IBOutlet weak var resetZoomButton: UIButton!
+    @IBOutlet weak var closePlayerButton: UIButton!
+    @IBOutlet weak var videoTitleLabel: UILabel!
 
     // MARK: - properties
+    
     /// required values
     var url: URL
     var videoTitle: String
+    
+    // MARK: - views
     
     /// instace for av player layer
     let avPlayerLayer = AVPlayerLayer()
     /// instace for custom slider
     public let slider = CustomSlider()
     public let timeLabels = TimeLabels()
-    
+    /// container for slider and timeLabels
     let sliderTimeContainer = SliderTimeLabelView()
     
+    // MARK: - player buttons
+    
+    /// control buttons
     public let playPauseButton = PlayPauseButton()
     public let forwardButton = ForwardBackwardButton()
     public let backwardButton = ForwardBackwardButton()
     public let muteButton = MuteButton()
-    public let lockControls = LockControlsButton()
+    public var lockControlsButton = UIButton()
+    
+    // MARK: - check booleans
+    
+    /// lock controls
+    var controlsLocked = false
+    /// hide controls
+    var controlsHidden: Bool = false {
+        didSet {
+            // use did set to hide controls after 5 seconds
+            if self.controlsHidden {
+                workItemControls = DispatchWorkItem {
+                    self.showHideControls()
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now()+5, execute: workItemControls!)
+            }
+        }
+    }
+    
+    // MARK: - player properties
     
     /// colors
     public var playerTint: UIColor?
     public var textColor: UIColor = .white
     public var iconColor: UIColor = .white
-    
-    private var controlsHidden: Bool = true {
-        didSet {
-            self.showHideControls()
-            if !controlsHidden {
-                DispatchQueue.main.asyncAfter(deadline: .now()+3) {
-                    if !self.controlsHidden {
-                        self.controlsHidden = true
-                        self.showHideControls()
-                    }
-                }
-            }
-        }
-    }
-    
     /// font
     public var textFont: UIFont = .systemFont(ofSize: 14)
-    
     /// hide/show
     var timerViewIsHidden: Bool = false
+    /// slider position
+    var sliderPosition: SliderPosition = .defaultPosition
     
-    /// slider
-    public var sliderPosition: SliderPosition = .defaultPosition
+    // MARK: - dispatch item
     
-    // MARK: - outlets
-    @IBOutlet weak var videoContainer: UIView!
-    @IBOutlet weak var resetZoomButton: UIButton!
+    /// dispatch work item to hide view controls
+    var workItemControls: DispatchWorkItem?
     
-    @IBOutlet weak var closePlayerButton: UIButton!
-    @IBOutlet weak var videoTitleLabel: UILabel!
+    // MARK: - initializers
     
+    /// Parameterized initializer to instantiate VideoPlayerview xib, and assign value of url and title of video,
+    /// - Parameters:
+    ///   - url: url of the media item.
+    ///   - title: title(optional) of media item.
     public init(url: URL, title: String = "") {
         self.url = url
         self.videoTitle = title
-        super.init(nibName: "VideoPlayerView", bundle: Bundle(for: VideoPlayerView.self))
+        super.init(nibName: ConstantString.videoPlayerView, bundle: Bundle(for: VideoPlayerView.self))
         self.modalPresentationStyle = .fullScreen
     }
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(ConstantString.fatalErrorLoadingNib)
     }
+    
+    // MARK: - lifecycle methods
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(seekVideoOnDoubleTap))
-        let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(videoContainerTapped))
-        
-        doubleTapGesture.numberOfTapsRequired = 2
-        singleTapGesture.require(toFail: doubleTapGesture)
-        
-        singleTapGesture.numberOfTapsRequired = 1
-        
-        self.videoContainer.addGestureRecognizer(singleTapGesture)
-        self.videoContainer.addGestureRecognizer(doubleTapGesture)
     }
     
     public override func viewDidAppear(_ animated: Bool) {
+        // add tap gestures to video container
+        addTapGesturesToVideoContainer()
+        
+        // start av player with given media url.
         startAvPlayer()
-        controlsHidden = false
+        
+        // set up lock controls button
+        setLockControlsButton()
+        
+        // hide the controls
+        // this will trigger the didSet property and the controls will be
+        // hidden after 5 seconds, if no videoContainer is not tapped.
+        controlsHidden = true
     }
     
     public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
+        // set up av player layer and color, tint, or font
         setAvPlayerLayer()
-        
         setColors()
         if let playerTint {
             setPlayerTint(color: playerTint)
@@ -106,70 +127,14 @@ public class VideoPlayerView: UIViewController {
         setTextFont()
     }
     
-    @objc
-    func seekVideoOnDoubleTap(touch: UITapGestureRecognizer) {
-        let touchPoint = touch.location(in: self.view)
-        let player = avPlayerLayer.player
-        if touchPoint.x > 550 {
-            Helper.animateSeekButtons(button: forwardButton, rotationStart: 0, rotationCompletion: 2 * .pi)
-            DispatchQueue.main.asyncAfter(deadline: .now()+0.3) {
-                self.forwardButton.isHidden = self.controlsHidden
-            }
-            player?.seek(to: CMTime(seconds: (player?.currentTime().seconds)! + forwardButton.buffer, preferredTimescale: 1))
-        }
-        
-        if touchPoint.x < 300 {
-            Helper.animateSeekButtons(button: backwardButton, rotationStart: 2 * .pi, rotationCompletion: 0)
-            DispatchQueue.main.asyncAfter(deadline: .now()+0.3) {
-                self.backwardButton.isHidden = self.controlsHidden
-            }
-            player?.seek(to: CMTime(seconds: (player?.currentTime().seconds)! - forwardButton.buffer, preferredTimescale: 1))
-        }
-    }
-    
-    @objc
-    func videoContainerTapped(touch: UITapGestureRecognizer) {
-        controlsHidden = !controlsHidden
-    }
-    
-    func showHideControls() {
-        setView(view: playPauseButton)
-        setView(view: backwardButton)
-        setView(view: forwardButton)
-        
-        setView(view: closePlayerButton)
-        setView(view: muteButton)
-        setView(view: lockControls)
-        
-        setView(view: sliderTimeContainer)
-    }
-    
-    func setView(view: UIView) {
-        UIView.transition(with: self.view, duration: 0.3, options: .transitionCrossDissolve) {
-            view.isHidden = self.controlsHidden
-        }
-    }
-    
-    func setUpBottomView() {
-        sliderTimeContainer.addFirstView(timeLabels)
-        sliderTimeContainer.addSecondView(slider)
-        
-        self.view.addSubview(sliderTimeContainer)
-        sliderTimeContainer.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            sliderTimeContainer.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 24),
-            sliderTimeContainer.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -24),
-            sliderTimeContainer.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -24)
-        ])
-    }
-    
     // MARK: - ib actions
+    
     @IBAction func resetZoomTapped(_ sender: UIButton) {
         self.videoContainer.transform = CGAffineTransformScale(
             CGAffineTransformIdentity, 1, 1
         )
         resetZoomButton.isHidden = true
-        closePlayerButton.isHidden = false
+        closePlayerButton.isHidden = controlsHidden && self.playPauseButton.isHidden
     }
  
     @IBAction func closePlayerTapped(_ sender: UIButton) {

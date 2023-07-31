@@ -21,7 +21,7 @@ class SliderTimeLabelView: UIStackView {
     }
     
     required init(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(ConstantString.fatalErrorLoadingNib)
     }
     
     // MARK: - Private Setup

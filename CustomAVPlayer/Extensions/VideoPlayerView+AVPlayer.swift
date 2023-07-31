@@ -10,32 +10,62 @@ import AVFoundation
 
 extension VideoPlayerView {
     
-    // MARK: - ui setup for av player
+    // MARK: - ui setup for avplayer
+    
+    // method to set up av player
     func setAvPlayerLayer() {
+        // set av player frame
         avPlayerLayer.frame = CGRect(origin: .zero, size: self.view.bounds.size)
         
+        // add title to video if videoTitle is not empty
         if !videoTitle.isEmpty {
             videoTitleLabel.isHidden = false
             videoTitleLabel.text = videoTitle
         }
         
+        // add av player to videoContainer view
+        // this is necessary for pinch to zoom video gesture.
         self.videoContainer.layer.addSublayer(avPlayerLayer)
         
         addControlsToSubview()
-        
         setControlConstraints()
-        
         setUpBottomView()
     }
     
+    // method to add button controls as subviews
     func addControlsToSubview() {
         self.view.addSubview(playPauseButton)
         self.view.addSubview(backwardButton)
         self.view.addSubview(forwardButton)
         self.view.addSubview(muteButton)
-        self.view.addSubview(lockControls)
+        self.view.addSubview(lockControlsButton)
     }
     
+    /// show hide view with animation
+    func setView(view: UIView) {
+        UIView.transition(with: self.view, duration: 0.3, options: .transitionCrossDissolve) {
+            view.isHidden = self.controlsHidden
+        }
+    }
+    
+    /// set up bottom view which contains
+    /// a slider and time labels for video player
+    func setUpBottomView() {
+        // timeLabels - show video current time and duration
+        sliderTimeContainer.addFirstView(timeLabels)
+        // slider - slider for video player
+        sliderTimeContainer.addSecondView(slider)
+        
+        self.view.addSubview(sliderTimeContainer)
+        sliderTimeContainer.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            sliderTimeContainer.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 24),
+            sliderTimeContainer.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -24),
+            sliderTimeContainer.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -24)
+        ])
+    }
+    
+    /// method to set constrainst for views and controls
     func setControlConstraints() {
         playPauseButton.center = view.center
         
@@ -49,22 +79,39 @@ extension VideoPlayerView {
         forwardButton.leadingAnchor.constraint(equalTo: playPauseButton.trailingAnchor, constant: 48).isActive = true
         forwardButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         
-        lockControls.translatesAutoresizingMaskIntoConstraints = false
-        lockControls.size = lockControls.size
-        lockControls.topAnchor.constraint(equalTo: closePlayerButton.topAnchor, constant: 0).isActive = true
-        lockControls.bottomAnchor.constraint(equalTo: closePlayerButton.bottomAnchor, constant: 0).isActive = true
-        lockControls.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -25).isActive = true
-        
         muteButton.translatesAutoresizingMaskIntoConstraints = false
         muteButton.size = muteButton.size
         muteButton.topAnchor.constraint(equalTo: closePlayerButton.topAnchor, constant: 0).isActive = true
         muteButton.bottomAnchor.constraint(equalTo: closePlayerButton.bottomAnchor, constant: 0).isActive = true
-        muteButton.trailingAnchor.constraint(equalTo: lockControls.leadingAnchor, constant: -24).isActive = true
+        muteButton.trailingAnchor.constraint(equalTo: lockControlsButton.leadingAnchor, constant: -24).isActive = true
     }
     
+    /// set lock control button to view
+    func setLockControlsButton() {
+        Helper.setBackgroundImage(name: LockControlsImage.lock.rawValue, button: lockControlsButton, iconColor: .systemBackground, size: ButtonSize.small.rawValue)
+        lockControlsButton.addTarget(self, action: #selector(lockControls), for: .touchUpInside)
+    
+        lockControlsButton.translatesAutoresizingMaskIntoConstraints = false
+        lockControlsButton.heightAnchor.constraint(equalToConstant: 24).isActive = true
+        lockControlsButton.widthAnchor.constraint(equalToConstant: 24).isActive = true
+        lockControlsButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -24).isActive = true
+        lockControlsButton.topAnchor.constraint(equalTo: closePlayerButton.topAnchor).isActive = true
+    }
+    
+    // MARK: - start avplayer
+    
+    /// method to initialize and start playing video on avplayer
     func startAvPlayer() {
         avPlayerLayer.player = AVPlayer(url: url)
         
+        // set durationLabel in labels view
+        // and set max value for slider
+        let seconds = CMTimeGetSeconds(self.avPlayerLayer.player?.currentItem?.asset.duration ?? CMTime(seconds: .zero, preferredTimescale: .zero))
+        slider.maximumValue = Float(seconds)
+        self.timeLabels.setDuration(value: Helper.getTimeString(seconds: seconds))
+        
+        // add interval to update the currentTime label in labels view
+        // and update value of slider
         let interval = CMTime(value: 1, timescale: 1)
         avPlayerLayer.player?.addPeriodicTimeObserver(forInterval: interval, queue: DispatchQueue.main, using: { (progressTime) in
             let seconds = CMTimeGetSeconds(progressTime)
@@ -74,67 +121,20 @@ extension VideoPlayerView {
             }
         })
         
-        let seconds = CMTimeGetSeconds(self.avPlayerLayer.player?.currentItem?.asset.duration ?? CMTime(seconds: .zero, preferredTimescale: .zero))
-        slider.maximumValue = Float(seconds)
-        self.timeLabels.setDuration(value: Helper.getTimeString(seconds: seconds))
-        
+        // initializer required properties for the views
         playPauseButton.avPlayer = avPlayerLayer.player
         forwardButton.avPlayer = avPlayerLayer.player
         forwardButton.isForward = true
         backwardButton.avPlayer = avPlayerLayer.player
         backwardButton.isForward = false
         muteButton.avPlayer = avPlayerLayer.player
-        lockControls.avPlayer = avPlayerLayer.player
         
-        avPlayerLayer.player = avPlayerLayer.player
-        
+        // value changed target for slider
         slider.addTarget(self, action: #selector(self.playbackSliderValueChanged), for: .valueChanged)
         
         setPinchToZoomGesture()
-        
+
+        // play
         avPlayerLayer.player?.play()
-    }
-    
-    @objc func playbackSliderValueChanged(_ playbackSlider: UISlider, event: UISlider.State) {
-            
-            let seconds: Int64 = Int64(slider.value)
-            let targetTime: CMTime = CMTimeMake(value: seconds, timescale: 1)
-            
-            avPlayerLayer.player?.seek(to: targetTime)
-        }
-    
-    // MARK: - slider gestures
-    @objc func sliderValueDidChange() {
-        let value = slider.value
-        avPlayerLayer.player?.seek(to: CMTime(seconds: Double(value), preferredTimescale: .zero))
-    }
-    
-    // MARK: - av player ui interactions
-    func setPinchToZoomGesture() {
-        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(pinchedView))
-        self.videoContainer.isUserInteractionEnabled = true
-        self.videoContainer.addGestureRecognizer(pinchGesture)
-    }
-    
-    // MARK: - target methods
-    @objc func pinchedView(sender: UIPinchGestureRecognizer) {
-        guard let view = sender.view else { return }
-        
-        if sender.scale > 0.75 && sender.scale < 4.0 {
-            closePlayerButton.isHidden = true
-            resetZoomButton.isHidden = false
-            view.transform = CGAffineTransformScale(
-                CGAffineTransformIdentity, sender.scale, sender.scale
-            )
-        }
-        
-        // bounce back when sender's state is ended and sender's scale is less than 1
-        if sender.state == .ended && sender.scale < 1 {
-            resetZoomButton.isHidden = true
-            closePlayerButton.isHidden = false
-            view.transform = CGAffineTransformScale(
-                CGAffineTransformIdentity, 1, 1
-            )
-        }
     }
 }

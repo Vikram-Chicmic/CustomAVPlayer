@@ -77,7 +77,7 @@ public class PlayPauseButton: UIButton {
     }
     
     private func addObservers() {
-        avPlayer?.addObserver(self, forKeyPath: "timeControlStatus", options: [.old, .new], context: nil)
+        avPlayer?.addObserver(self, forKeyPath: ConstantString.timeControlStatus, options: [.old, .new], context: nil)
     }
     
     public override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
