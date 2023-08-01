@@ -44,7 +44,7 @@ extension VideoPlayerView {
         let player = avPlayerLayer.player
         
         // animate button
-        Helper.animateSeekButtons(button: button, rotationStart: rotationStart, rotationCompletion: rotationEnd)
+        Helper.animateButton(button: button, rotationStartFrom: rotationStart, rotationEndTo: rotationEnd)
         
         DispatchQueue.main.asyncAfter(deadline: .now()+0.3) {
             button.isHidden = self.controlsHidden && self.playPauseButton.isHidden
@@ -74,13 +74,13 @@ extension VideoPlayerView {
             
             setView(view: sliderTimeContainer)
             
-            setView(view: lockControlsButton)
+            setView(view: lockButton)
             
             if !videoTitle.isEmpty {
                 setView(view: videoTitleLabel)
             }
         } else {
-            setView(view: lockControlsButton)
+            setView(view: lockButton)
         }
     }
     
@@ -138,7 +138,7 @@ extension VideoPlayerView {
         // for false value call showHideControls()
         // and set the controlHidden to true.
                 
-        if controlsHidden && !lockControlsButton.isHidden {
+        if controlsHidden && !lockButton.isHidden {
             workItemControls?.cancel()
             self.showHideControls()
         } else {
@@ -150,34 +150,25 @@ extension VideoPlayerView {
         }
     }
     
-    // MARK: - button tap action
-    
-    @objc
-    func lockControls() {
-        if controlsLocked {
-            Helper.setBackgroundImage(name: LockControlsImage.lockSlash.rawValue, button: lockControlsButton, iconColor: .systemBackground, size: ButtonSize.small.rawValue)
-            controlsLocked = false
-            controlsHidden = false
-            // reset
-            self.showHideControls()
-            self.controlsHidden = true
-        } else {
-            Helper.setBackgroundImage(name: LockControlsImage.lock.rawValue, button: lockControlsButton, iconColor: .systemBackground, size: ButtonSize.small.rawValue)
-            controlsLocked = true
-            controlsHidden = true
-            hideControls()
-        }
-    }
-    
     // MARK: - slider
     
     @objc
     func playbackSliderValueChanged(_ playbackSlider: UISlider, event: UISlider.State) {
-            
+        
+//        if slider.isTracking() && workItemControls != nil {
+//
+//            workItemControls?.cancel()
+//            workItemControls = nil
+//        }
+        
         let seconds: Int64 = Int64(slider.value)
         let targetTime: CMTime = CMTimeMake(value: seconds, timescale: 1)
         
         avPlayerLayer.player?.seek(to: targetTime)
+        
+//        if !slider.isTracking() {
+//            controlsHidden = true
+//        }
     }
     @objc
     func sliderValueDidChange() {

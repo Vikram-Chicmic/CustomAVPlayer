@@ -34,6 +34,7 @@ extension VideoPlayerView {
         forwardButton.iconColor = color
         backwardButton.iconColor = color
         muteButton.iconColor = color
+        lockButton.iconColor = color
     }
     
     func setTextColor(color: UIColor) {

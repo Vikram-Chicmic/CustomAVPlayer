@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -12,7 +13,10 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="VideoPlayerView" customModule="CustomAVPlayer" customModuleProvider="target">
             <connections>
                 <outlet property="closePlayerButton" destination="BGX-SC-LiX" id="PJ9-gs-EXn"/>
+                <outlet property="lockButton" destination="ors-nX-gll" id="kEg-8p-FPz"/>
+                <outlet property="muteButton" destination="lu4-Rf-KMy" id="XI3-EU-CUE"/>
                 <outlet property="resetZoomButton" destination="6dW-Fb-Kem" id="XHq-Vm-3Cr"/>
+                <outlet property="slider" destination="fE4-MB-r5e" id="oM3-JC-ft5"/>
                 <outlet property="videoContainer" destination="OvJ-hR-fGh" id="wew-u3-alT"/>
                 <outlet property="videoTitleLabel" destination="k9U-i8-i6U" id="JAK-cO-KlK"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -27,20 +31,6 @@
                     <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
-                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6dW-Fb-Kem" userLabel="resetZoom">
-                    <rect key="frame" x="16" y="83" width="49" height="34.333333333333343"/>
-                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                    <state key="normal" image="square.dashed" catalog="system">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </state>
-                    <buttonConfiguration key="configuration" style="plain" image="square.dashed" catalog="system">
-                        <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage"/>
-                        <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </buttonConfiguration>
-                    <connections>
-                        <action selector="resetZoomTapped:" destination="-1" eventType="touchUpInside" id="ROK-Rw-e5L"/>
-                    </connections>
-                </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BGX-SC-LiX" userLabel="closePlayer">
                     <rect key="frame" x="17.000000000000004" y="83" width="46.333333333333343" height="34.333333333333343"/>
                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -62,6 +52,75 @@
                     <color key="textColor" systemColor="systemGray4Color"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6dW-Fb-Kem" userLabel="resetZoom">
+                    <rect key="frame" x="16" y="83" width="49" height="34.333333333333343"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <state key="normal" image="square.dashed" catalog="system">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <buttonConfiguration key="configuration" style="plain" image="square.dashed" catalog="system">
+                        <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage"/>
+                        <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </buttonConfiguration>
+                    <connections>
+                        <action selector="resetZoomTapped:" destination="-1" eventType="touchUpInside" id="ROK-Rw-e5L"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lu4-Rf-KMy" userLabel="muteButton" customClass="MuteButton" customModule="CustomAVPlayer" customModuleProvider="target">
+                    <rect key="frame" x="313" y="83" width="24" height="14"/>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="plain"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="image" keyPath="iconMute" value="volume.slash" catalog="system"/>
+                        <userDefinedRuntimeAttribute type="image" keyPath="iconUnmute" value="volume.2" catalog="system"/>
+                        <userDefinedRuntimeAttribute type="color" keyPath="iconColor">
+                            <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="muteButtonTapped:" destination="-1" eventType="touchUpInside" id="vbx-di-keT"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ors-nX-gll" userLabel="lockButton" customClass="LockControlsButton" customModule="CustomAVPlayer" customModuleProvider="target">
+                    <rect key="frame" x="353" y="83" width="24" height="14"/>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="plain"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="image" keyPath="iconMute" value="square.and.arrow.up.circle" catalog="system"/>
+                        <userDefinedRuntimeAttribute type="image" keyPath="iconUnmute">
+                            <imageReference key="value" image="square.and.arrow.up.on.square" catalog="system" symbolScale="large"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="image" keyPath="iconLocked" value="lock.fill" catalog="system"/>
+                        <userDefinedRuntimeAttribute type="image" keyPath="iconUnlocked" value="lock.slash.fill" catalog="system"/>
+                        <userDefinedRuntimeAttribute type="color" keyPath="iconColor">
+                            <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="lockButtonTapped:" destination="-1" eventType="touchUpInside" id="jR9-kE-V5W"/>
+                    </connections>
+                </button>
+                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="fE4-MB-r5e" customClass="CustomSlider" customModule="CustomAVPlayer" customModuleProvider="target">
+                    <rect key="frame" x="22" y="764" width="349" height="31"/>
+                    <color key="thumbTintColor" red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="color" keyPath="progressBarColor">
+                            <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="thumbColor">
+                            <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="hideThumb" value="NO"/>
+                        <userDefinedRuntimeAttribute type="image" keyPath="thumbImage" value="circle.fill" catalog="system"/>
+                        <userDefinedRuntimeAttribute type="number" keyPath="thumbHeight">
+                            <real key="value" value="0.0"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="thumbWidth">
+                            <real key="value" value="0.0"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="sameForAllState" value="YES"/>
+                    </userDefinedRuntimeAttributes>
+                </slider>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="labelColor"/>
@@ -69,20 +128,45 @@
                 <constraint firstAttribute="trailing" secondItem="OvJ-hR-fGh" secondAttribute="trailing" id="3ec-kD-w6k"/>
                 <constraint firstItem="k9U-i8-i6U" firstAttribute="bottom" secondItem="6dW-Fb-Kem" secondAttribute="bottom" id="4C5-Z8-KhF"/>
                 <constraint firstItem="OvJ-hR-fGh" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="5P8-R6-Phr"/>
+                <constraint firstItem="lu4-Rf-KMy" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="24" id="E8y-a6-LyN"/>
                 <constraint firstAttribute="bottom" secondItem="OvJ-hR-fGh" secondAttribute="bottom" id="HWJ-pF-KDU"/>
                 <constraint firstItem="OvJ-hR-fGh" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="L2r-87-EN3"/>
                 <constraint firstItem="BGX-SC-LiX" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="17" id="Rn9-MX-ojk"/>
+                <constraint firstItem="ors-nX-gll" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="24" id="VoV-cP-4r7"/>
+                <constraint firstItem="fE4-MB-r5e" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="24" id="X6S-ik-IJY"/>
+                <constraint firstItem="ors-nX-gll" firstAttribute="leading" secondItem="lu4-Rf-KMy" secondAttribute="trailing" constant="16" id="Xba-GF-ElR"/>
                 <constraint firstItem="k9U-i8-i6U" firstAttribute="top" secondItem="6dW-Fb-Kem" secondAttribute="top" id="YOh-Ol-9CG"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="fE4-MB-r5e" secondAttribute="trailing" constant="24" id="aIt-ds-mTx"/>
                 <constraint firstItem="6dW-Fb-Kem" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="24" id="cEW-h7-ypC"/>
                 <constraint firstItem="6dW-Fb-Kem" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="eXw-xP-VdH"/>
                 <constraint firstItem="BGX-SC-LiX" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="24" id="ndz-Ff-8IR"/>
                 <constraint firstItem="k9U-i8-i6U" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="qye-jm-KbT"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="ors-nX-gll" secondAttribute="trailing" constant="16" id="sIr-Y8-Xc9"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="fE4-MB-r5e" secondAttribute="bottom" constant="24" id="voQ-Wn-Iqy"/>
             </constraints>
             <point key="canvasLocation" x="140" y="21"/>
         </view>
     </objects>
+    <designables>
+        <designable name="fE4-MB-r5e">
+            <size key="intrinsicContentSize" width="-1" height="30"/>
+        </designable>
+        <designable name="lu4-Rf-KMy">
+            <size key="intrinsicContentSize" width="24" height="14"/>
+        </designable>
+        <designable name="ors-nX-gll">
+            <size key="intrinsicContentSize" width="24" height="14"/>
+        </designable>
+    </designables>
     <resources>
+        <image name="circle.fill" catalog="system" width="128" height="123"/>
+        <image name="lock.fill" catalog="system" width="125" height="128"/>
+        <image name="lock.slash.fill" catalog="system" width="121" height="128"/>
+        <image name="square.and.arrow.up.circle" catalog="system" width="128" height="123"/>
+        <image name="square.and.arrow.up.on.square" catalog="system" width="119" height="128"/>
         <image name="square.dashed" catalog="system" width="128" height="114"/>
+        <image name="volume.2" catalog="system" width="128" height="88"/>
+        <image name="volume.slash" catalog="system" width="118" height="128"/>
         <image name="xmark" catalog="system" width="128" height="113"/>
         <systemColor name="labelColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -8,53 +8,65 @@
 import UIKit
 import AVFoundation
 
+@IBDesignable
 public class MuteButton: UIButton {
     
-    public var iconColor: UIColor = .white
-    
-    var avPlayer: AVPlayer? {
+    var currentIcon: UIImage? {
         didSet {
-            setup()
+            self.setImage(currentIcon?.withTintColor(iconColor), for: .normal)
         }
     }
     
-    public var muteButtonImage: MuteButtonImage = .speakerSlash
-    public var unmuteButtonImage: UnmuteButtonImage = .speaker
-    public var size: ButtonSize = .small {
+    @IBInspectable
+    public var iconMute: UIImage = UIImage(systemName: "speaker.slash")!
+    
+    @IBInspectable
+    public var iconUnmute: UIImage = UIImage(systemName: "speaker")! {
         didSet {
-            setIconSize()
+            currentIcon = iconUnmute
         }
     }
+    
+    @IBInspectable
+    public var iconColor: UIColor = .white {
+        didSet {
+            self.tintColor = iconColor
+        }
+    }
+    
+    @IBInspectable
+    public var buttonHeight: CGFloat = 24 {
+        didSet {
+            self.heightAnchor.constraint(equalToConstant: buttonHeight).isActive = true
+        }
+    }
+    
+    @IBInspectable
+    public var buttonWidth: CGFloat = 24 {
+        didSet {
+            self.widthAnchor.constraint(equalToConstant: buttonWidth).isActive = true
+        }
+    }
+    
+    // MARK: - initializers
     
     private override init(frame: CGRect) {
         super.init(frame: frame)
+        setup()
     }
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        setup()
     }
+    
+    // MARK: - setup
     
     public func setup() {
-        self.addTarget(self, action: #selector(handleTapGesture), for: .touchUpInside)
-        setIconSize()
-        updateUI()
-    }
-    
-    private func setIconSize() {
-        self.heightAnchor.constraint(equalToConstant: size.rawValue).isActive = true
-        self.widthAnchor.constraint(equalToConstant: size.rawValue).isActive = true
-    }
-    
-    private func updateStatus() {
-        avPlayer?.isMuted.toggle()
-        updateUI()
-    }
-    
-    @objc func handleTapGesture(_ sender: UITapGestureRecognizer) {
-        self.updateStatus()
-    }
-    
-    private func updateUI() {
-        guard let muted = avPlayer?.isMuted else { return }
-        Helper.setBackgroundImage(name: muted ? muteButtonImage.rawValue : unmuteButtonImage.rawValue, button: self, iconColor: iconColor, size: size.rawValue)
+        self.setTitle("", for: .normal)
+        self.currentIcon = iconUnmute
+        self.imageView?.tintColor = iconColor
+        
+        self.heightAnchor.constraint(equalToConstant: buttonHeight).isActive = true
+        self.widthAnchor.constraint(equalToConstant: buttonWidth).isActive = true
     }
 }

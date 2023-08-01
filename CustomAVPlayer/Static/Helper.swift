@@ -25,7 +25,7 @@ class Helper {
     ///   - button: button to set image for
     ///   - iconColor: color of the icon
     ///   - size: size in double
-    static func setBackgroundImage(name: String, button: UIButton, iconColor: UIColor, size: Double) {
+    static func setButtonImage(name: String, button: UIButton, iconColor: UIColor, size: Double) {
         let image = UIImage(systemName: name)
         button.setImage(image, for: .normal)
         button.imageView?.tintColor = iconColor
@@ -39,17 +39,17 @@ class Helper {
     /// method to animate seek button
     /// - Parameters:
     ///   - button: forward or backward button
-    ///   - rotationStart: start position for animation
-    ///   - rotationCompletion: end position for animation
-    static func animateSeekButtons(button: UIButton, rotationStart: CGFloat, rotationCompletion: CGFloat) {
+    ///   - rotationStartFrom: start position for animation
+    ///   - rotationEndTo: end position for animation
+    static func animateButton(button: UIButton, rotationStartFrom: CGFloat, rotationEndTo: CGFloat) {
         // before starting animation make the button visible
         if button.isHidden {
             button.isHidden = false
         }
         let animation = CABasicAnimation(keyPath: ConstantString.transformRotation)
         animation.duration = 0.3
-        animation.fromValue = rotationStart
-        animation.toValue = rotationCompletion
+        animation.fromValue = rotationStartFrom
+        animation.toValue = rotationEndTo
         button.layer.add(animation, forKey: nil)
     }
 }

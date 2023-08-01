@@ -15,8 +15,13 @@ public class VideoPlayerView: UIViewController {
     @IBOutlet weak var videoContainer: UIView!
     @IBOutlet weak var resetZoomButton: UIButton!
     @IBOutlet weak var closePlayerButton: UIButton!
+    @IBOutlet weak var muteButton: MuteButton!
+    @IBOutlet weak var lockButton: LockControlsButton!
+    
     @IBOutlet weak var videoTitleLabel: UILabel!
-
+    
+    @IBOutlet weak var slider: CustomSlider!
+    
     // MARK: - properties
     
     /// required values
@@ -27,8 +32,7 @@ public class VideoPlayerView: UIViewController {
     
     /// instace for av player layer
     let avPlayerLayer = AVPlayerLayer()
-    /// instace for custom slider
-    public let slider = CustomSlider()
+    /// instance for time labels
     public let timeLabels = TimeLabels()
     /// container for slider and timeLabels
     let sliderTimeContainer = SliderTimeLabelView()
@@ -39,8 +43,6 @@ public class VideoPlayerView: UIViewController {
     public let playPauseButton = PlayPauseButton()
     public let forwardButton = ForwardBackwardButton()
     public let backwardButton = ForwardBackwardButton()
-    public let muteButton = MuteButton()
-    public var lockControlsButton = UIButton()
     
     // MARK: - check booleans
     
@@ -106,9 +108,6 @@ public class VideoPlayerView: UIViewController {
         // start av player with given media url.
         startAvPlayer()
         
-        // set up lock controls button
-        setLockControlsButton()
-        
         // hide the controls
         // this will trigger the didSet property and the controls will be
         // hidden after 5 seconds, if no videoContainer is not tapped.
@@ -140,6 +139,28 @@ public class VideoPlayerView: UIViewController {
     @IBAction func closePlayerTapped(_ sender: UIButton) {
         avPlayerLayer.player?.replaceCurrentItem(with: nil)
         self.dismiss(animated: true)
+    }
+    
+    @IBAction func lockButtonTapped(_ sender: UIButton) {
+        if controlsLocked {
+            controlsLocked = false
+            controlsHidden = false
+            // reset
+            self.showHideControls()
+            self.controlsHidden = true
+        } else {
+            controlsLocked = true
+            controlsHidden = true
+            hideControls()
+        }
+        
+        lockButton.currentIcon = controlsLocked ? lockButton.iconLocked : lockButton.iconUnlocked
+    }
+    
+    @IBAction func muteButtonTapped(_ sender: Any) {
+        avPlayerLayer.player?.isMuted.toggle()
+        guard let muted = avPlayerLayer.player?.isMuted else { return }
+        muteButton.currentIcon = muted ? muteButton.iconMute : muteButton.iconUnmute
     }
     
 }

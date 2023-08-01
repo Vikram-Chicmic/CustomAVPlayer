@@ -37,8 +37,6 @@ extension VideoPlayerView {
         self.view.addSubview(playPauseButton)
         self.view.addSubview(backwardButton)
         self.view.addSubview(forwardButton)
-        self.view.addSubview(muteButton)
-        self.view.addSubview(lockControlsButton)
     }
     
     /// show hide view with animation
@@ -78,24 +76,6 @@ extension VideoPlayerView {
         forwardButton.size = forwardButton.size
         forwardButton.leadingAnchor.constraint(equalTo: playPauseButton.trailingAnchor, constant: 48).isActive = true
         forwardButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        
-        muteButton.translatesAutoresizingMaskIntoConstraints = false
-        muteButton.size = muteButton.size
-        muteButton.topAnchor.constraint(equalTo: closePlayerButton.topAnchor, constant: 0).isActive = true
-        muteButton.bottomAnchor.constraint(equalTo: closePlayerButton.bottomAnchor, constant: 0).isActive = true
-        muteButton.trailingAnchor.constraint(equalTo: lockControlsButton.leadingAnchor, constant: -24).isActive = true
-    }
-    
-    /// set lock control button to view
-    func setLockControlsButton() {
-        Helper.setBackgroundImage(name: LockControlsImage.lock.rawValue, button: lockControlsButton, iconColor: .systemBackground, size: ButtonSize.small.rawValue)
-        lockControlsButton.addTarget(self, action: #selector(lockControls), for: .touchUpInside)
-    
-        lockControlsButton.translatesAutoresizingMaskIntoConstraints = false
-        lockControlsButton.heightAnchor.constraint(equalToConstant: 24).isActive = true
-        lockControlsButton.widthAnchor.constraint(equalToConstant: 24).isActive = true
-        lockControlsButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -24).isActive = true
-        lockControlsButton.topAnchor.constraint(equalTo: closePlayerButton.topAnchor).isActive = true
     }
     
     // MARK: - start avplayer
@@ -127,7 +107,6 @@ extension VideoPlayerView {
         forwardButton.isForward = true
         backwardButton.avPlayer = avPlayerLayer.player
         backwardButton.isForward = false
-        muteButton.avPlayer = avPlayerLayer.player
         
         // value changed target for slider
         slider.addTarget(self, action: #selector(self.playbackSliderValueChanged), for: .valueChanged)

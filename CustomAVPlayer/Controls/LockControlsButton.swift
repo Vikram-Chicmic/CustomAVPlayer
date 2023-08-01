@@ -5,54 +5,67 @@
 //  Created by Chicmic on 25/07/23.
 //
 
-import Foundation
 import UIKit
-import AVKit
 import AVFoundation
 
+@IBDesignable
 public class LockControlsButton: UIButton {
-    
-    public var iconColor: UIColor = .white
-    
-    var avPlayer: AVPlayer? {
+    var currentIcon: UIImage? {
         didSet {
-            setup()
+            self.setImage(currentIcon?.withTintColor(iconColor), for: .normal)
         }
     }
-    public var lockButton: LockControlsImage = .lock
-    public var size: ButtonSize = .small {
+    
+    @IBInspectable
+    public var iconLocked: UIImage = UIImage(systemName: "lock.slash")!
+    
+    @IBInspectable
+    public var iconUnlocked: UIImage = UIImage(systemName: "lock")! {
         didSet {
-            setIconSize()
+            currentIcon = iconUnlocked
+        }
+    }
+    
+    @IBInspectable
+    public var iconColor: UIColor = .white {
+        didSet {
+            self.tintColor = iconColor
+        }
+    }
+    
+    @IBInspectable
+    public var buttonHeight: CGFloat = 24 {
+        didSet {
+            self.heightAnchor.constraint(equalToConstant: buttonHeight).isActive = true
+        }
+    }
+    
+    @IBInspectable
+    public var buttonWidth: CGFloat = 24 {
+        didSet {
+            self.widthAnchor.constraint(equalToConstant: buttonWidth).isActive = true
         }
     }
 
+    // MARK: - initializers
+    
     private override init(frame: CGRect) {
         super.init(frame: frame)
+        setup()
     }
-    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-    }
-    private func setIconSize() {
-        self.heightAnchor.constraint(equalToConstant: size.rawValue).isActive = true
-        self.widthAnchor.constraint(equalToConstant: size.rawValue).isActive = true
+        setup()
     }
     
-    private func updateStatus() {
-        updateUI()
-    }
+    // MARK: - setup
     
     public func setup() {
-        self.addTarget(self, action: #selector(handleTapGesture), for: .touchUpInside)
-        setIconSize()
-        updateUI()
-    }
-    
-    @objc func handleTapGesture(_ sender: UITapGestureRecognizer) {
-        self.updateStatus()
-    }
-    
-    private func updateUI() {
-        Helper.setBackgroundImage(name: lockButton.rawValue, button: self, iconColor: iconColor, size: size.rawValue)
+        self.setTitle("", for: .normal)
+        self.currentIcon = iconLocked
+        self.imageView?.tintColor = iconColor
+        
+        self.heightAnchor.constraint(equalToConstant: buttonHeight).isActive = true
+        self.widthAnchor.constraint(equalToConstant: buttonHeight).isActive = true
     }
 }
