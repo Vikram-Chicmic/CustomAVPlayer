@@ -51,21 +51,10 @@ public class LockControlsButton: UIButton {
     
     private override init(frame: CGRect) {
         super.init(frame: frame)
-        setup()
+        Helper.setupButtonView(button: self, icon: iconLocked, color: iconColor, height: buttonHeight, width: buttonWidth)
     }
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        setup()
-    }
-    
-    // MARK: - setup
-    
-    public func setup() {
-        self.setTitle("", for: .normal)
-        self.currentIcon = iconLocked
-        self.imageView?.tintColor = iconColor
-        
-        self.heightAnchor.constraint(equalToConstant: buttonHeight).isActive = true
-        self.widthAnchor.constraint(equalToConstant: buttonHeight).isActive = true
+        Helper.setupButtonView(button: self, icon: iconLocked, color: iconColor, height: buttonHeight, width: buttonWidth)
     }
 }

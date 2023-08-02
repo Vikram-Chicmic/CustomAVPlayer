@@ -20,7 +20,11 @@ public class PlayPauseButton: UIButton {
     public var iconPlay: UIImage = UIImage(systemName: "play.fill")!
     
     @IBInspectable
-    public var iconPause: UIImage = UIImage(systemName: "pause.fill")!
+    public var iconPause: UIImage = UIImage(systemName: "pause.fill")! {
+        didSet {
+            currentIcon = iconPause
+        }
+    }
     
     @IBInspectable
     public var iconReplay: UIImage = UIImage(systemName: "goforward")!
@@ -50,21 +54,10 @@ public class PlayPauseButton: UIButton {
     
     private override init(frame: CGRect) {
         super.init(frame: frame)
-        setup()
+        Helper.setupButtonView(button: self, icon: iconPause, color: iconColor, height: buttonHeight, width: buttonWidth)
     }
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        setup()
-    }
-    
-    // MARK: - setup
-    
-    public func setup() {
-        self.setTitle("", for: .normal)
-        self.currentIcon = iconPause
-        self.imageView?.tintColor = iconColor
-        
-        self.heightAnchor.constraint(equalToConstant: buttonHeight).isActive = true
-        self.widthAnchor.constraint(equalToConstant: buttonWidth).isActive = true
+        Helper.setupButtonView(button: self, icon: iconPause, color: iconColor, height: buttonHeight, width: buttonWidth)
     }
 }

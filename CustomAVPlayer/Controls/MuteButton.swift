@@ -11,7 +11,7 @@ import AVFoundation
 @IBDesignable
 public class MuteButton: UIButton {
     
-    var currentIcon: UIImage? {
+    public var currentIcon: UIImage? {
         didSet {
             self.setImage(currentIcon?.withTintColor(iconColor), for: .normal)
         }
@@ -52,21 +52,10 @@ public class MuteButton: UIButton {
     
     private override init(frame: CGRect) {
         super.init(frame: frame)
-        setup()
+        Helper.setupButtonView(button: self, icon: iconUnmute, color: iconColor, height: buttonHeight, width: buttonWidth)
     }
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        setup()
-    }
-    
-    // MARK: - setup
-    
-    public func setup() {
-        self.setTitle("", for: .normal)
-        self.currentIcon = iconUnmute
-        self.imageView?.tintColor = iconColor
-        
-        self.heightAnchor.constraint(equalToConstant: buttonHeight).isActive = true
-        self.widthAnchor.constraint(equalToConstant: buttonWidth).isActive = true
+        Helper.setupButtonView(button: self, icon: iconUnmute, color: iconColor, height: buttonHeight, width: buttonWidth)
     }
 }

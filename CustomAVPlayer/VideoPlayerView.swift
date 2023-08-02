@@ -161,10 +161,12 @@ public class VideoPlayerView: UIViewController {
         
         if player?.timeControlStatus == .playing {
             player?.pause()
-        } else if player?.currentItem?.currentTime() == player?.currentItem?.duration {
-            player?.seek(to: CMTime.zero)
-            player?.play()
         } else {
+            if player?.currentItem?.currentTime() == player?.currentItem?.duration {
+                player?.seek(to: CMTime.zero)
+                forwardButton.isHidden = false
+                backwardButton.isHidden = false
+            }
             player?.play()
         }
         

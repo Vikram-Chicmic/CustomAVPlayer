@@ -35,4 +35,20 @@ class Helper {
         animation.toValue = rotationEndTo
         button.layer.add(animation, forKey: nil)
     }
+    
+    /// method to setup custom button views
+    /// - Parameters:
+    ///   - button: instance of button to set up
+    ///   - icon: icon for button image
+    ///   - color: button image tint color
+    ///   - height: button height
+    ///   - width: button width
+    static func setupButtonView(button: UIButton, icon: UIImage, color: UIColor, height: CGFloat, width: CGFloat) {
+        button.setTitle("", for: .normal)
+        
+        button.setImage(icon.withTintColor(color), for: .normal)
+        
+        button.heightAnchor.constraint(equalToConstant: height).isActive = true
+        button.widthAnchor.constraint(equalToConstant: width).isActive = true
+    }
 }

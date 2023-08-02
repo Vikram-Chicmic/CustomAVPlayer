@@ -52,21 +52,10 @@ public class ForwardBackwardButton: UIButton {
     
     private override init(frame: CGRect) {
         super.init(frame: frame)
-        setup()
+        Helper.setupButtonView(button: self, icon: icon, color: iconColor, height: buttonHeight, width: buttonWidth)
     }
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        setup()
-    }
-    
-    // MARK: - setup
-    
-    public func setup() {
-        self.setTitle("", for: .normal)
-        self.setImage(icon.withTintColor(iconColor), for: .normal)
-        self.imageView?.tintColor = iconColor
-        
-        self.heightAnchor.constraint(equalToConstant: buttonHeight).isActive = true
-        self.widthAnchor.constraint(equalToConstant: buttonWidth).isActive = true
+        Helper.setupButtonView(button: self, icon: icon, color: iconColor, height: buttonHeight, width: buttonWidth)
     }
 }
