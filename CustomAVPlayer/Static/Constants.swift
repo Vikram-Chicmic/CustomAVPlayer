@@ -9,8 +9,6 @@ import Foundation
 
 struct ConstantString {
     
-    static let rate = "rate"
-    
     static let videoPlayerView = "VideoPlayerView"
     
     static let fatalErrorLoadingNib = "init(coder:) has not been implemented"

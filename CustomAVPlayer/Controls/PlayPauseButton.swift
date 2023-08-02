@@ -10,77 +10,61 @@ import AVFoundation
 
 public class PlayPauseButton: UIButton {
     
-    public var iconColor: UIColor = .white
-    
-    var avPlayer: AVPlayer? {
+    var currentIcon: UIImage? {
         didSet {
-            setup()
+            self.setImage(currentIcon?.withTintColor(iconColor), for: .normal)
         }
     }
     
-    public var playButtonImage: PlayButtonImage = .playFill
-    public var pauseButtonImage: PauseButtonImage = .pauseFill
-    public var replayButtonImage: ReplayButtonImage = .goforward
-    public var size: ButtonSize = .medium {
+    @IBInspectable
+    public var iconPlay: UIImage = UIImage(systemName: "play.fill")!
+    
+    @IBInspectable
+    public var iconPause: UIImage = UIImage(systemName: "pause.fill")!
+    
+    @IBInspectable
+    public var iconReplay: UIImage = UIImage(systemName: "goforward")!
+    
+    @IBInspectable
+    public var iconColor: UIColor = .white {
         didSet {
-            setIconSize()
+            self.tintColor = iconColor
         }
     }
     
-    private var kvoRateContext = 0
-    
-    private var isPlaying: Bool {
-        return avPlayer?.rate != 0 && avPlayer?.error == nil
+    @IBInspectable
+    public var buttonHeight: CGFloat = 74 {
+        didSet {
+            self.heightAnchor.constraint(equalToConstant: buttonHeight).isActive = true
+        }
     }
+    
+    @IBInspectable
+    public var buttonWidth: CGFloat = 74 {
+        didSet {
+            self.widthAnchor.constraint(equalToConstant: buttonWidth).isActive = true
+        }
+    }
+    
+    // MARK: - initializers
     
     private override init(frame: CGRect) {
         super.init(frame: frame)
+        setup()
     }
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        setup()
     }
+    
+    // MARK: - setup
     
     public func setup() {
-        self.addTarget(self, action: #selector(handleTapGesture), for: .touchUpInside)
-        setIconSize()
-        updateUI()
-        addObservers()
-    }
-    
-    private func setIconSize() {
-        self.frame.size = CGSize(width: size.rawValue, height: size.rawValue)
-    }
-    
-    private func updateStatus() {
-        if isPlaying {
-            avPlayer?.pause()
-        } else {
-            if avPlayer?.currentTime() == avPlayer?.currentItem?.duration {
-                avPlayer?.seek(to: CMTime.zero)
-            }
-            avPlayer?.play()
-        }
-    }
-    
-    private func updateUI() {
-        if isPlaying {
-            Helper.setButtonImage(name: self.pauseButtonImage.rawValue, button: self, iconColor: iconColor, size: size.rawValue)
-        } else if avPlayer?.currentTime() == avPlayer?.currentItem?.duration {
-            Helper.setButtonImage(name: self.replayButtonImage.rawValue, button: self, iconColor: iconColor, size: size.rawValue)
-        } else {
-            Helper.setButtonImage(name: self.playButtonImage.rawValue, button: self, iconColor: iconColor, size: size.rawValue)
-        }
-    }
-    
-    @objc func handleTapGesture(_ sender: UITapGestureRecognizer) {
-        self.updateStatus()
-    }
-    
-    private func addObservers() {
-        avPlayer?.addObserver(self, forKeyPath: ConstantString.timeControlStatus, options: [.old, .new], context: nil)
-    }
-    
-    public override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
-        updateUI()
+        self.setTitle("", for: .normal)
+        self.currentIcon = iconPause
+        self.imageView?.tintColor = iconColor
+        
+        self.heightAnchor.constraint(equalToConstant: buttonHeight).isActive = true
+        self.widthAnchor.constraint(equalToConstant: buttonWidth).isActive = true
     }
 }

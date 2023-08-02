@@ -19,23 +19,6 @@ class Helper {
         return "\(minutString):\(secondString)"
     }
     
-    /// method to set backround image to the button
-    /// - Parameters:
-    ///   - name: name of image
-    ///   - button: button to set image for
-    ///   - iconColor: color of the icon
-    ///   - size: size in double
-    static func setButtonImage(name: String, button: UIButton, iconColor: UIColor, size: Double) {
-        let image = UIImage(systemName: name)
-        button.setImage(image, for: .normal)
-        button.imageView?.tintColor = iconColor
-        // note: set content mode to .scaleToFill
-        // - makes the image occupy available space and fill the view.
-        // - using other result in clipping of image or unwanted size.
-        button.imageView?.contentMode = .scaleToFill
-        button.imageEdgeInsets = UIEdgeInsets(top: size, left: size, bottom: size, right: size)
-    }
-    
     /// method to animate seek button
     /// - Parameters:
     ///   - button: forward or backward button

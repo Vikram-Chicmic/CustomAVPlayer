@@ -34,26 +34,6 @@ extension VideoPlayerView {
         self.videoContainer.addGestureRecognizer(doubleTapGesture)
     }
     
-    /// method to seek forward or backward after double tap gestures
-    /// - Parameters:
-    ///   - button: forward or backward button
-    ///   - seek: double value indicating the seek buffer
-    ///   - rotationStart: for animation start of button icon
-    ///   - rotationEnd: for animation end of button icon
-    func seekAfterDoubleTap(button: ForwardBackwardButton, seek: Double, rotationStart: Double, rotationEnd: Double) {
-        let player = avPlayerLayer.player
-        
-        // animate button
-        Helper.animateButton(button: button, rotationStartFrom: rotationStart, rotationEndTo: rotationEnd)
-        
-        DispatchQueue.main.asyncAfter(deadline: .now()+0.3) {
-            button.isHidden = self.controlsHidden && self.playPauseButton.isHidden
-        }
-        
-        // seek player to current + buffer time
-        player?.seek(to: CMTime(seconds: (player?.currentTime().seconds)! + seek, preferredTimescale: 1))
-    }
-    
     // show hide controls
     func showHideControls() {
         
@@ -76,9 +56,6 @@ extension VideoPlayerView {
             
             setView(view: lockButton)
             
-            if !videoTitle.isEmpty {
-                setView(view: videoTitleLabel)
-            }
         } else {
             setView(view: lockButton)
         }
@@ -91,9 +68,6 @@ extension VideoPlayerView {
         setView(view: closePlayerButton)
         setView(view: muteButton)
         setView(view: sliderTimeContainer)
-        if !videoTitle.isEmpty {
-            setView(view: videoTitleLabel)
-        }
     }
     
     // MARK: - gesture actions
@@ -117,11 +91,11 @@ extension VideoPlayerView {
             
             // forward
             if touchPoint.x > viewMid {
-                seekAfterDoubleTap(button: forwardButton, seek: 5, rotationStart: 0, rotationEnd: 2 * .pi)
+                forwardButton.sendActions(for: .touchUpInside)
             }
             // back
             if touchPoint.x < viewMid {
-                seekAfterDoubleTap(button: backwardButton, seek: -5, rotationStart: 2 * .pi, rotationEnd: 0)
+                backwardButton.sendActions(for: .touchUpInside)
             }
         }
     }

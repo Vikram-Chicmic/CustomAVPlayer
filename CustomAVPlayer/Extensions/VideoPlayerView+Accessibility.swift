@@ -38,14 +38,12 @@ extension VideoPlayerView {
     }
     
     func setTextColor(color: UIColor) {
-        videoTitleLabel.textColor = color
         timeLabels.color = color
     }
     
     // MARK: - change font
     
     func setTextFont() {
-        videoTitleLabel.font = textFont
         timeLabels.font = textFont
     }
 }

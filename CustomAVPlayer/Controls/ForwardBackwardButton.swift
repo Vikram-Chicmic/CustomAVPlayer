@@ -10,96 +10,63 @@ import AVFoundation
 
 public class ForwardBackwardButton: UIButton {
     
-    public var iconColor: UIColor = .white
+    @IBInspectable
+    private var seekTime: Double = 5.0
     
-    var avPlayer: AVPlayer? {
+    var buffer: Double {
+        return isForward ? self.seekTime : -(self.seekTime)
+    }
+    
+    @IBInspectable
+    public var isForward: Bool = true
+    
+    @IBInspectable
+    public var icon: UIImage = UIImage(systemName: "goforward.5")! {
         didSet {
-            setup()
+            self.setImage(icon.withTintColor(iconColor), for: .normal)
         }
     }
     
-    public var forwardButton: ForwardButtonImage = .forwardButton
-    public var backwardButton: BackwardButtonImage = .backwardButton
-    public var size: ButtonSize = .small {
+    @IBInspectable
+    public var iconColor: UIColor = .white {
         didSet {
-            setIconSize()
+            self.tintColor = iconColor
         }
     }
     
-    private var kvoRateContext = 0
-    public var buffer: Double = 5.0
-    
-    public var isForward: Bool = true {
+    @IBInspectable
+    public var buttonHeight: CGFloat = 24 {
         didSet {
-            updateUI()
+            self.heightAnchor.constraint(equalToConstant: buttonHeight).isActive = true
         }
     }
     
-    private var showButton: Bool {
-        return avPlayer?.currentTime() != avPlayer?.currentItem?.duration
+    @IBInspectable
+    public var buttonWidth: CGFloat = 24 {
+        didSet {
+            self.widthAnchor.constraint(equalToConstant: buttonWidth).isActive = true
+        }
     }
+    
+    // MARK: - initializers
     
     private override init(frame: CGRect) {
         super.init(frame: frame)
+        setup()
     }
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        setup()
     }
+    
+    // MARK: - setup
     
     public func setup() {
-        self.addTarget(self, action: #selector(handleTapGesture), for: .touchUpInside)
-        self.contentMode = .scaleAspectFit
-        setIconSize()
-        addObservers()
-        updateUI()
-    }
-    
-    private func handleRateChanged() {
-        self.isHidden = !showButton
-    }
-    
-    private func setIconSize() {
-        self.heightAnchor.constraint(equalToConstant: size.rawValue).isActive = true
-        self.widthAnchor.constraint(equalToConstant: size.rawValue).isActive = true
-    }
-    
-    private func updateStatus() {
-        if self.isForward {
-            Helper.animateButton(button: self, rotationStartFrom: 0, rotationEndTo: 2 * .pi)
-            if Double((avPlayer?.currentItem?.duration.seconds)!) - Double((avPlayer?.currentTime().seconds)!) > self.buffer {
-                avPlayer?.seek(to: CMTime(seconds: (avPlayer?.currentTime().seconds)! + self.buffer, preferredTimescale: 1))
-            } else {
-                avPlayer?.seek(to: (avPlayer?.currentItem!.duration)!)
-            }
-        } else {
-            Helper.animateButton(button: self, rotationStartFrom: 2 * .pi, rotationEndTo: 0)
-            if Double((avPlayer?.currentTime().seconds)!) > self.buffer {
-                avPlayer?.seek(to: CMTime(seconds: (avPlayer?.currentTime().seconds)! - self.buffer, preferredTimescale: 1))
-            } else {
-                avPlayer?.seek(to: CMTime.zero)
-            }
-        }
-    }
-    
-    @objc func handleTapGesture(_ sender: UITapGestureRecognizer) {
-        self.updateStatus()
-    }
-    
-    private func addObservers() {
-        avPlayer?.addObserver(self, forKeyPath: ConstantString.rate, options: .new, context: &kvoRateContext)
-    }
-    
-    public override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
-        guard let context = context else { return }
-        switch context {
-        case &kvoRateContext:
-            handleRateChanged()
-        default:
-            break
-        }
-    }
-    
-    private func updateUI() {
-        Helper.setButtonImage(name: isForward ? forwardButton.rawValue : backwardButton.rawValue, button: self, iconColor: iconColor, size: size.rawValue)
+        self.setTitle("", for: .normal)
+        self.setImage(icon.withTintColor(iconColor), for: .normal)
+        self.imageView?.tintColor = iconColor
+        
+        self.heightAnchor.constraint(equalToConstant: buttonHeight).isActive = true
+        self.widthAnchor.constraint(equalToConstant: buttonWidth).isActive = true
     }
 }

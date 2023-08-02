@@ -18,7 +18,9 @@ public class VideoPlayerView: UIViewController {
     @IBOutlet weak var muteButton: MuteButton!
     @IBOutlet weak var lockButton: LockControlsButton!
     
-    @IBOutlet weak var videoTitleLabel: UILabel!
+    @IBOutlet weak var playPauseButton: PlayPauseButton!
+    @IBOutlet weak var forwardButton: ForwardBackwardButton!
+    @IBOutlet weak var backwardButton: ForwardBackwardButton!
     
     @IBOutlet weak var slider: CustomSlider!
     
@@ -26,7 +28,6 @@ public class VideoPlayerView: UIViewController {
     
     /// required values
     var url: URL
-    var videoTitle: String
     
     // MARK: - views
     
@@ -36,13 +37,6 @@ public class VideoPlayerView: UIViewController {
     public let timeLabels = TimeLabels()
     /// container for slider and timeLabels
     let sliderTimeContainer = SliderTimeLabelView()
-    
-    // MARK: - player buttons
-    
-    /// control buttons
-    public let playPauseButton = PlayPauseButton()
-    public let forwardButton = ForwardBackwardButton()
-    public let backwardButton = ForwardBackwardButton()
     
     // MARK: - check booleans
     
@@ -84,10 +78,8 @@ public class VideoPlayerView: UIViewController {
     /// Parameterized initializer to instantiate VideoPlayerview xib, and assign value of url and title of video,
     /// - Parameters:
     ///   - url: url of the media item.
-    ///   - title: title(optional) of media item.
-    public init(url: URL, title: String = "") {
+    public init(url: URL) {
         self.url = url
-        self.videoTitle = title
         super.init(nibName: ConstantString.videoPlayerView, bundle: Bundle(for: VideoPlayerView.self))
         self.modalPresentationStyle = .fullScreen
     }
@@ -163,4 +155,42 @@ public class VideoPlayerView: UIViewController {
         muteButton.currentIcon = muted ? muteButton.iconMute : muteButton.iconUnmute
     }
     
+    @IBAction func playPauseButtonTapped(_ sender: Any) {
+        
+        let player = avPlayerLayer.player
+        
+        if player?.timeControlStatus == .playing {
+            player?.pause()
+        } else if player?.currentItem?.currentTime() == player?.currentItem?.duration {
+            player?.seek(to: CMTime.zero)
+            player?.play()
+        } else {
+            player?.play()
+        }
+        
+    }
+    
+    @IBAction func forwardButtonTapped(_ sender: Any) {
+        seekVideo(button: forwardButton, rotationStartFrom: 0, rotationEndTo: 2 * .pi)
+    }
+    
+    @IBAction func backwardButtonTapped(_ sender: Any) {
+        seekVideo(button: backwardButton, rotationStartFrom: 2 * .pi, rotationEndTo: 0)
+    }
+    
+    private func seekVideo(button: ForwardBackwardButton, rotationStartFrom: CGFloat, rotationEndTo: CGFloat) {
+        let avPlayer = avPlayerLayer.player
+        
+        Helper.animateButton(button: button, rotationStartFrom: rotationStartFrom, rotationEndTo: rotationEndTo)
+        
+        if Double((avPlayer?.currentItem?.duration.seconds)!) - Double((avPlayer?.currentTime().seconds)!) > button.buffer {
+            avPlayer?.seek(to: CMTime(seconds: (avPlayer?.currentTime().seconds)! + button.buffer, preferredTimescale: 1))
+        } else {
+            avPlayer?.seek(to: (avPlayer?.currentItem!.duration)!)
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now()+0.3) {
+            button.isHidden = self.controlsHidden && self.playPauseButton.isHidden
+        }
+    }
 }

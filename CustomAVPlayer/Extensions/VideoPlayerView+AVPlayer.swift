@@ -17,26 +17,13 @@ extension VideoPlayerView {
         // set av player frame
         avPlayerLayer.frame = CGRect(origin: .zero, size: self.view.bounds.size)
         
-        // add title to video if videoTitle is not empty
-        if !videoTitle.isEmpty {
-            videoTitleLabel.isHidden = false
-            videoTitleLabel.text = videoTitle
-        }
+        avPlayerLayer.player?.addObserver(self, forKeyPath: ConstantString.timeControlStatus, options: [.old, .new], context: nil)
         
         // add av player to videoContainer view
         // this is necessary for pinch to zoom video gesture.
         self.videoContainer.layer.addSublayer(avPlayerLayer)
         
-        addControlsToSubview()
-        setControlConstraints()
         setUpBottomView()
-    }
-    
-    // method to add button controls as subviews
-    func addControlsToSubview() {
-        self.view.addSubview(playPauseButton)
-        self.view.addSubview(backwardButton)
-        self.view.addSubview(forwardButton)
     }
     
     /// show hide view with animation
@@ -63,21 +50,6 @@ extension VideoPlayerView {
         ])
     }
     
-    /// method to set constrainst for views and controls
-    func setControlConstraints() {
-        playPauseButton.center = view.center
-        
-        backwardButton.translatesAutoresizingMaskIntoConstraints = false
-        backwardButton.size = backwardButton.size
-        backwardButton.trailingAnchor.constraint(equalTo: playPauseButton.leadingAnchor, constant: -48).isActive = true
-        backwardButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        
-        forwardButton.translatesAutoresizingMaskIntoConstraints = false
-        forwardButton.size = forwardButton.size
-        forwardButton.leadingAnchor.constraint(equalTo: playPauseButton.trailingAnchor, constant: 48).isActive = true
-        forwardButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-    }
-    
     // MARK: - start avplayer
     
     /// method to initialize and start playing video on avplayer
@@ -101,13 +73,6 @@ extension VideoPlayerView {
             }
         })
         
-        // initializer required properties for the views
-        playPauseButton.avPlayer = avPlayerLayer.player
-        forwardButton.avPlayer = avPlayerLayer.player
-        forwardButton.isForward = true
-        backwardButton.avPlayer = avPlayerLayer.player
-        backwardButton.isForward = false
-        
         // value changed target for slider
         slider.addTarget(self, action: #selector(self.playbackSliderValueChanged), for: .valueChanged)
         
@@ -115,5 +80,22 @@ extension VideoPlayerView {
 
         // play
         avPlayerLayer.player?.play()
+    }
+    
+    // MARK: av player observers
+    
+    public override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
+        
+        let player = avPlayerLayer.player
+        
+        if player?.rate != 0 && player?.error == nil {
+            playPauseButton.currentIcon = playPauseButton.iconPause
+        } else if player?.currentItem?.currentTime() == player?.currentItem?.duration {
+            forwardButton.isHidden = true
+            backwardButton.isHidden = true
+            playPauseButton.currentIcon = playPauseButton.iconReplay
+        } else {
+            playPauseButton.currentIcon = playPauseButton.iconPlay
+        }
     }
 }
