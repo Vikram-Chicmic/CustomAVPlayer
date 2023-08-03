@@ -319,7 +319,7 @@ public class VideoPlayerView: UIView {
         if controlsLocked {
             controlsLocked = false
             controlsHidden = false
-            // reset
+            // Reset
             self.showHideControls()
             self.controlsHidden = true
         } else {
@@ -327,7 +327,6 @@ public class VideoPlayerView: UIView {
             controlsHidden = true
             hideControls()
         }
-
         lockButton.setImage(controlsLocked ? lockIcon : unlockIcon, for: .normal)
     }
 
