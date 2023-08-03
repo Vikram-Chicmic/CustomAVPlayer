@@ -9,41 +9,19 @@ import UIKit
 
 extension VideoPlayerView {
     
-    // MARK: - change button icon
-    
-    func setResetZoomIcon(icon: UIImage) {
-        resetZoomButton.setImage(icon, for: .normal)
-    }
-    
     // MARK: - change color
     
-    func setPlayerTint(color: UIColor) {
-        setIconColor(color: color)
-        setTextColor(color: color)
-    }
-    
-    func setColors() {
-        setIconColor(color: iconColor)
-        setTextColor(color: textColor)
-    }
-    
-    func setIconColor(color: UIColor) {
-        resetZoomButton.imageView?.tintColor = color
-        closePlayerButton.imageView?.tintColor = color
-        playPauseButton.iconColor = color
-        forwardButton.iconColor = color
-        backwardButton.iconColor = color
-        muteButton.iconColor = color
-        lockButton.iconColor = color
-    }
-    
-    func setTextColor(color: UIColor) {
-        timeLabels.color = color
-    }
-    
-    // MARK: - change font
-    
-    func setTextFont() {
-        timeLabels.font = textFont
+    func setPlayerTint(color: UIColor?) {
+        zoomButton.imageView?.tintColor = color
+        closeButton.imageView?.tintColor = color
+        
+        playPauseButton.imageView?.tintColor = color
+        forwardButton.imageView?.tintColor = color
+        backwardButton.imageView?.tintColor = color
+        muteButton.imageView?.tintColor = color
+        lockButton.imageView?.tintColor = color
+        
+        timeLabels.currentTime.textColor = color
+        timeLabels.duration.textColor = color
     }
 }

@@ -8,45 +8,250 @@
 import UIKit
 import AVFoundation
 
-public class VideoPlayerView: UIViewController {
+extension UIButton {
+    func setButtonSize(size: CGFloat) {
+        let cgSize = CGSize(width: size, height: size)
+        self.frame.size = cgSize
+    }
+}
+
+@IBDesignable
+public class VideoPlayerView: UIView {
     
-    // MARK: - outlets
-    
+    // MARK: - Outlets
+
     @IBOutlet weak var videoContainer: UIView!
-    @IBOutlet weak var resetZoomButton: UIButton!
-    @IBOutlet weak var closePlayerButton: UIButton!
-    @IBOutlet weak var muteButton: MuteButton!
-    @IBOutlet weak var lockButton: LockControlsButton!
-    
-    @IBOutlet weak var playPauseButton: PlayPauseButton!
-    @IBOutlet weak var forwardButton: ForwardBackwardButton!
-    @IBOutlet weak var backwardButton: ForwardBackwardButton!
-    
+
+    @IBOutlet weak var zoomButton: UIButton!
+    @IBOutlet weak var closeButton: UIButton!
+
+    @IBOutlet weak var muteButton: UIButton!
+    @IBOutlet weak var lockButton: UIButton!
+
+    @IBOutlet weak var playPauseButton: UIButton!
+    @IBOutlet weak var forwardButton: UIButton!
+    @IBOutlet weak var backwardButton: UIButton!
+
     @IBOutlet weak var slider: CustomSlider!
     
-    // MARK: - properties
+    // MARK: - IB Inspectable
     
-    /// required values
-    var url: URL
+    // Globals
+    @IBInspectable
+    var controlsDisabled: Bool = false {
+        didSet {
+            if controlsDisabled {
+                controlsHidden = true
+            }
+        }
+    }
+    @IBInspectable
+    var playerTint: UIColor? {
+        didSet {
+            setPlayerTint(color: playerTint)
+        }
+    }
     
-    // MARK: - views
+    // Zoom Button
+    @IBInspectable
+    var zoomIcon: UIImage = UIImage(systemName: "square.dashed")! {
+        didSet {
+            self.zoomButton.setImage(self.zoomIcon, for: .normal)
+        }
+    }
+    @IBInspectable
+    var zoomIconTint: UIColor = .white {
+        didSet {
+            self.zoomButton.tintColor = self.zoomIconTint
+        }
+    }
+    @IBInspectable
+    var zoomIconSize: CGFloat = 24 {
+        didSet {
+            zoomButton.setButtonSize(size: zoomIconSize)
+        }
+    }
+
+    // Close Button
+    @IBInspectable
+    var closeIcon: UIImage = UIImage(systemName: "xmark")! {
+        didSet {
+            self.closeButton.setImage(self.closeIcon, for: .normal)
+        }
+    }
+    @IBInspectable
+    var closeIconTint: UIColor = .white {
+        didSet {
+            self.closeButton.tintColor = self.closeIconTint
+        }
+    }
+    @IBInspectable
+    var closeIconSize: CGFloat = 24 {
+        didSet {
+            closeButton.setButtonSize(size: closeIconSize)
+        }
+    }
+
+    // Mute Button
+    @IBInspectable
+    var muteVideo: Bool = false
+    @IBInspectable
+    var muteIcon: UIImage = UIImage(systemName: "speaker.slash")! {
+        didSet {
+            if muteVideo {
+                self.muteButton.setImage(self.muteIcon, for: .normal)
+            }
+        }
+    }
+    @IBInspectable
+    var unmuteIcon: UIImage = UIImage(systemName: "volume.3")! {
+        didSet {
+            if !muteVideo {
+                self.muteButton.setImage(self.unmuteIcon, for: .normal)
+            }
+        }
+    }
+    @IBInspectable
+    var muteIconTint: UIColor = .white {
+        didSet {
+            self.muteButton.tintColor = self.muteIconTint
+        }
+    }
+    @IBInspectable
+    var muteIconSize: CGFloat = 24 {
+        didSet {
+            muteButton.setButtonSize(size: muteIconSize)
+        }
+    }
+    @IBInspectable
+    var hideMuteButton: Bool = false {
+        didSet {
+            self.muteButton.isHidden = hideMuteButton
+        }
+    }
+
+    // Lock Button
+    @IBInspectable
+    var controlsLocked: Bool = false
+    @IBInspectable
+    var lockIcon: UIImage = UIImage(systemName: "lock")! {
+        didSet {
+            if controlsLocked {
+                self.lockButton.setImage(self.lockIcon, for: .normal)
+            }
+        }
+    }
+    @IBInspectable
+    var unlockIcon: UIImage = UIImage(systemName: "lock.slash")! {
+        didSet {
+            if !controlsLocked {
+                self.lockButton.setImage(self.unlockIcon, for: .normal)
+            }
+        }
+    }
+    @IBInspectable
+    var lockIconTint: UIColor = .white {
+        didSet {
+            self.lockButton.tintColor = self.lockIconTint
+        }
+    }
+    @IBInspectable
+    var lockIconSize: CGFloat = 24 {
+        didSet {
+            lockButton.setButtonSize(size: lockIconSize)
+        }
+    }
+    @IBInspectable
+    var hideLockButton: Bool = false {
+        didSet {
+            self.lockButton.isHidden = hideLockButton
+        }
+    }
+
+    // Play/Pause Button
+    var playPauseIcon: UIImage? {
+        didSet {
+            self.playPauseButton.setImage(self.playPauseIcon, for: .normal)
+        }
+    }
+    @IBInspectable
+    var playIcon: UIImage = UIImage(systemName: "play.fill")!
+    @IBInspectable
+    var pauseIcon: UIImage = UIImage(systemName: "pause.fill")!
+    @IBInspectable
+    var replayIcon: UIImage = UIImage(systemName: "goforward")!
+    @IBInspectable
+    var playPauseIconTint: UIColor = .white {
+        didSet {
+            self.playPauseButton.tintColor = self.playPauseIconTint
+        }
+    }
+    @IBInspectable
+    var playPauseIconSize: CGFloat = 54 {
+        didSet {
+            playPauseButton.setButtonSize(size: playPauseIconSize)
+        }
+    }
+
+    // Seek Buttons
+    @IBInspectable
+    var seekTime: Double = 5.0
+    @IBInspectable
+    var forwardIcon: UIImage = UIImage(systemName: "goforward.5")! {
+        didSet {
+            self.forwardButton.setImage(self.forwardIcon, for: .normal)
+        }
+    }
+    @IBInspectable
+    var backwardIcon: UIImage = UIImage(systemName: "gobackward.5")! {
+        didSet {
+            self.backwardButton.setImage(self.backwardIcon, for: .normal)
+        }
+    }
+    @IBInspectable
+    var seekIconTint: UIColor = .white {
+        didSet {
+            self.forwardButton.tintColor = self.seekIconTint
+            self.backwardButton.tintColor = self.seekIconTint
+        }
+    }
+    @IBInspectable
+    var seekIconSize: CGFloat = 24 {
+        didSet {
+            forwardButton.setButtonSize(size: seekIconSize)
+            backwardButton.setButtonSize(size: seekIconSize)
+        }
+    }
+    @IBInspectable
+    var hideForwardButton: Bool = false {
+        didSet {
+            self.forwardButton.isHidden = self.hideForwardButton
+        }
+    }
+    @IBInspectable
+    var hideBackwardButton: Bool = false {
+        didSet {
+            self.backwardButton.isHidden = self.hideBackwardButton
+        }
+    }
+
     
-    /// instace for av player layer
+    // MARK: - Properties
+
+    // AVPlayerLayer's intance
     let avPlayerLayer = AVPlayerLayer()
-    /// instance for time labels
-    public let timeLabels = TimeLabels()
-    /// container for slider and timeLabels
+
+    // TimeLabels instance
+    let timeLabels = TimeLabels()
+    // Container view for TimeLabels and slider
     let sliderTimeContainer = SliderTimeLabelView()
-    
-    // MARK: - check booleans
-    
-    /// lock controls
-    var controlsLocked = false
-    /// hide controls
+
+    // Computed property for control button's visibility
     var controlsHidden: Bool = false {
         didSet {
-            // use did set to hide controls after 5 seconds
-            if self.controlsHidden {
+            if controlsDisabled {
+                self.showHideControls()
+            } else if self.controlsHidden {
                 workItemControls = DispatchWorkItem {
                     self.showHideControls()
                 }
@@ -54,85 +259,62 @@ public class VideoPlayerView: UIViewController {
             }
         }
     }
-    
-    // MARK: - player properties
-    
-    /// colors
-    public var playerTint: UIColor?
-    public var textColor: UIColor = .white
-    public var iconColor: UIColor = .white
-    /// font
-    public var textFont: UIFont = .systemFont(ofSize: 14)
-    /// hide/show
-    var timerViewIsHidden: Bool = false
-    /// slider position
-    var sliderPosition: SliderPosition = .defaultPosition
-    
-    // MARK: - dispatch item
-    
-    /// dispatch work item to hide view controls
     var workItemControls: DispatchWorkItem?
     
-    // MARK: - initializers
+    // MARK: - Initializers
     
-    /// Parameterized initializer to instantiate VideoPlayerview xib, and assign value of url and title of video,
-    /// - Parameters:
-    ///   - url: url of the media item.
-    public init(url: URL) {
-        self.url = url
-        super.init(nibName: ConstantString.videoPlayerView, bundle: Bundle(for: VideoPlayerView.self))
-        self.modalPresentationStyle = .fullScreen
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        commonInit()
     }
+
     required init?(coder aDecoder: NSCoder) {
-        fatalError(ConstantString.fatalErrorLoadingNib)
+        super.init(coder: aDecoder)
+        commonInit()
     }
-    
-    // MARK: - lifecycle methods
-    
-    public override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
-    public override func viewDidAppear(_ animated: Bool) {
-        // add tap gestures to video container
+
+    private func commonInit() {
+        guard let contentView = loadViewFromNib() else { return }
+        contentView.frame = bounds
+        contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        addSubview(contentView)
+        
+        // Remove default title from buttons
+        removeButtonTitles()
+        
+        // Add tap gestures to video container
         addTapGesturesToVideoContainer()
-        
-        // start av player with given media url.
-        startAvPlayer()
-        
-        // hide the controls
-        // this will trigger the didSet property and the controls will be
-        // hidden after 5 seconds, if no videoContainer is not tapped.
-        controlsHidden = true
+    }
+
+    private func loadViewFromNib() -> UIView? {
+        let nibName = String(describing: type(of: self))
+        print(nibName)
+        let bundle = Bundle(for: type(of: self))
+        let nib = UINib(nibName: nibName, bundle: bundle)
+        return nib.instantiate(withOwner: self, options: nil).first as? UIView
     }
     
-    public override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
+    public override func layoutSubviews() {
+        super.layoutSubviews()
         
-        // set up av player layer and color, tint, or font
+        // Set AVPlayerLayer in view
         setAvPlayerLayer()
-        setColors()
-        if let playerTint {
-            setPlayerTint(color: playerTint)
-        }
-        setTextFont()
     }
-    
-    // MARK: - ib actions
-    
+
+    // MARK: - IB Actions
+
     @IBAction func resetZoomTapped(_ sender: UIButton) {
         self.videoContainer.transform = CGAffineTransformScale(
             CGAffineTransformIdentity, 1, 1
         )
-        resetZoomButton.isHidden = true
-        closePlayerButton.isHidden = controlsHidden && self.playPauseButton.isHidden
+        zoomButton.isHidden = true
+        closeButton.isHidden = controlsHidden && self.playPauseButton.isHidden
     }
- 
+
     @IBAction func closePlayerTapped(_ sender: UIButton) {
         avPlayerLayer.player?.replaceCurrentItem(with: nil)
-        self.dismiss(animated: true)
     }
-    
+
     @IBAction func lockButtonTapped(_ sender: UIButton) {
         if controlsLocked {
             controlsLocked = false
@@ -145,20 +327,19 @@ public class VideoPlayerView: UIViewController {
             controlsHidden = true
             hideControls()
         }
-        
-        lockButton.currentIcon = controlsLocked ? lockButton.iconLocked : lockButton.iconUnlocked
+
+        lockButton.setImage(controlsLocked ? lockIcon : unlockIcon, for: .normal)
     }
-    
+
     @IBAction func muteButtonTapped(_ sender: Any) {
         avPlayerLayer.player?.isMuted.toggle()
         guard let muted = avPlayerLayer.player?.isMuted else { return }
-        muteButton.currentIcon = muted ? muteButton.iconMute : muteButton.iconUnmute
+        muteButton.setImage(muted ? muteIcon : unmuteIcon, for: .normal)
     }
-    
+
     @IBAction func playPauseButtonTapped(_ sender: Any) {
-        
         let player = avPlayerLayer.player
-        
+
         if player?.timeControlStatus == .playing {
             player?.pause()
         } else {
@@ -169,30 +350,13 @@ public class VideoPlayerView: UIViewController {
             }
             player?.play()
         }
-        
     }
-    
+
     @IBAction func forwardButtonTapped(_ sender: Any) {
-        seekVideo(button: forwardButton, rotationStartFrom: 0, rotationEndTo: 2 * .pi)
+        seekVideo(button: forwardButton, rotationStartFrom: 0, rotationEndTo: 2 * .pi, seek: seekTime)
     }
-    
+
     @IBAction func backwardButtonTapped(_ sender: Any) {
-        seekVideo(button: backwardButton, rotationStartFrom: 2 * .pi, rotationEndTo: 0)
-    }
-    
-    private func seekVideo(button: ForwardBackwardButton, rotationStartFrom: CGFloat, rotationEndTo: CGFloat) {
-        let avPlayer = avPlayerLayer.player
-        
-        Helper.animateButton(button: button, rotationStartFrom: rotationStartFrom, rotationEndTo: rotationEndTo)
-        
-        if Double((avPlayer?.currentItem?.duration.seconds)!) - Double((avPlayer?.currentTime().seconds)!) > button.buffer {
-            avPlayer?.seek(to: CMTime(seconds: (avPlayer?.currentTime().seconds)! + button.buffer, preferredTimescale: 1))
-        } else {
-            avPlayer?.seek(to: (avPlayer?.currentItem!.duration)!)
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now()+0.3) {
-            button.isHidden = self.controlsHidden && self.playPauseButton.isHidden
-        }
+        seekVideo(button: backwardButton, rotationStartFrom: 2 * .pi, rotationEndTo: 0, seek: -(seekTime))
     }
 }

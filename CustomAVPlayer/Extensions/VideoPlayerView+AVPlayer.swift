@@ -15,7 +15,7 @@ extension VideoPlayerView {
     // method to set up av player
     func setAvPlayerLayer() {
         // set av player frame
-        avPlayerLayer.frame = CGRect(origin: .zero, size: self.view.bounds.size)
+        avPlayerLayer.frame = CGRect(origin: .zero, size: self.bounds.size)
         
         avPlayerLayer.player?.addObserver(self, forKeyPath: ConstantString.timeControlStatus, options: [.old, .new], context: nil)
         
@@ -28,7 +28,7 @@ extension VideoPlayerView {
     
     /// show hide view with animation
     func setView(view: UIView) {
-        UIView.transition(with: self.view, duration: 0.3, options: .transitionCrossDissolve) {
+        UIView.transition(with: self, duration: 0.3, options: .transitionCrossDissolve) {
             view.isHidden = self.controlsHidden
         }
     }
@@ -41,20 +41,21 @@ extension VideoPlayerView {
         // slider - slider for video player
         sliderTimeContainer.addSecondView(slider)
         
-        self.view.addSubview(sliderTimeContainer)
+        self.addSubview(sliderTimeContainer)
         sliderTimeContainer.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            sliderTimeContainer.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 24),
-            sliderTimeContainer.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -24),
-            sliderTimeContainer.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -24)
+            sliderTimeContainer.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 24),
+            sliderTimeContainer.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -24),
+            sliderTimeContainer.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -24)
         ])
     }
     
     // MARK: - start avplayer
     
     /// method to initialize and start playing video on avplayer
-    func startAvPlayer() {
-        avPlayerLayer.player = AVPlayer(url: url)
+    public func startAvPlayer(videoURL: URL) {
+        
+        avPlayerLayer.player = AVPlayer(url: videoURL)
         
         // set durationLabel in labels view
         // and set max value for slider
@@ -80,6 +81,11 @@ extension VideoPlayerView {
 
         // play
         avPlayerLayer.player?.play()
+        
+        // hide the controls
+        // this will trigger the didSet property and the controls will be
+        // hidden after 5 seconds, if no videoContainer is not tapped.
+        controlsHidden = true
     }
     
     // MARK: av player observers
@@ -89,13 +95,15 @@ extension VideoPlayerView {
         let player = avPlayerLayer.player
         
         if player?.rate != 0 && player?.error == nil {
-            playPauseButton.currentIcon = playPauseButton.iconPause
+            playPauseIcon = pauseIcon
         } else if player?.currentItem?.currentTime() == player?.currentItem?.duration {
             forwardButton.isHidden = true
             backwardButton.isHidden = true
-            playPauseButton.currentIcon = playPauseButton.iconReplay
+            playPauseButton.isHidden = false
+            workItemControls?.cancel()
+            playPauseIcon = replayIcon
         } else {
-            playPauseButton.currentIcon = playPauseButton.iconPlay
+            playPauseIcon = playIcon
         }
     }
 }

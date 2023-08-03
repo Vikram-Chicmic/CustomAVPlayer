@@ -11,8 +11,8 @@ import UIKit
 public class TimeLabels: UIStackView {
     
     // MARK: - properties
-    private let currentTime: UILabel = UILabel()
-    private let duration: UILabel = UILabel()
+    let currentTime: UILabel = UILabel()
+    let duration: UILabel = UILabel()
     
     public var font: UIFont = UIFont.systemFont(ofSize: 14) {
         didSet {
