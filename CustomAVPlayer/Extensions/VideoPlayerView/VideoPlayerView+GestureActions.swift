@@ -74,12 +74,8 @@ extension VideoPlayerView {
         let avPlayer = avPlayerLayer.player
 
         Helper.animateButton(button: button, rotationStartFrom: rotationStartFrom, rotationEndTo: rotationEndTo)
-
-        if Double((avPlayer?.currentItem?.duration.seconds)!) - Double((avPlayer?.currentTime().seconds)!) > seekTime {
-            avPlayer?.seek(to: CMTime(seconds: (avPlayer?.currentTime().seconds)! + seek, preferredTimescale: 1))
-        } else {
-            avPlayer?.seek(to: (avPlayer?.currentItem!.duration)!)
-        }
+        
+        avPlayer?.seek(to: CMTime(seconds: (avPlayer?.currentTime().seconds)! + seek, preferredTimescale: 1))
 
         DispatchQueue.main.asyncAfter(deadline: .now()+0.3) {
             button.isHidden = self.controlsHidden && self.playPauseButton.isHidden

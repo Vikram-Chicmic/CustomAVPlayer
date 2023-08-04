@@ -50,7 +50,11 @@ class CustomSlider: UISlider {
         
         setValue(value, animated: true)
         sendActions(for: .valueChanged)
-//        setThumbImage(image: thumbImage ?? UIImage(), state: thumbState ?? .normal,width: thumbWidth*0.5, height: thumbHeight*0.5, color: thumbColor.withAlphaComponent(0.7))
+        
+        UIView.animate(withDuration: 0.3) {
+            self.transform = CGAffineTransform.identity.scaledBy(x: 1, y: 1.5)
+        }
+        
         return true
     }
     
@@ -58,7 +62,10 @@ class CustomSlider: UISlider {
     public override func endTracking(_ touch: UITouch?, with event: UIEvent?) {
         isSliding = false
         super.endTracking(touch, with: event)
-//        setThumbImage(image: thumbImage ?? UIImage(), state: thumbState ?? .normal,width: thumbWidth, height: thumbHeight, color: thumbColor)
+
+        UIView.animate(withDuration: 0.3) {
+            self.transform = CGAffineTransform.identity.scaledBy(x: 1, y: 1)
+        }
     }
     
     // MARK: - Getter/Setter

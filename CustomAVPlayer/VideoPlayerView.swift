@@ -261,9 +261,9 @@ public class VideoPlayerView: UIView {
     }
     
     // Time Labels
-    @IBInspectable public var timeLabelsHidden: Bool = false {
+    @IBInspectable public var hideTimeLabels: Bool = false {
         didSet {
-            self.timeLabelsStack.isHidden = timeLabelsHidden
+            self.timeLabelsStack.isHidden = hideTimeLabels
         }
     }
     @IBInspectable public var timeLabelsTint: UIColor = .white {

@@ -72,11 +72,16 @@ extension VideoPlayerView {
         let targetTime: CMTime = CMTimeMake(value: seconds, timescale: 1)
 
         avPlayerLayer.player?.seek(to: targetTime)
+        
+        if avPlayerLayer.player?.currentTime() != avPlayerLayer.player?.currentItem?.duration {
+            playPauseIcon = playIcon
+        }
     }
     
     @objc
     func sliderValueDidChange() {
         let value = slider.value
         avPlayerLayer.player?.seek(to: CMTime(seconds: Double(value), preferredTimescale: .zero))
+       
     }
 }

@@ -53,8 +53,10 @@ extension VideoPlayerView {
         } else {
             if player?.currentItem?.currentTime() == player?.currentItem?.duration {
                 player?.seek(to: CMTime.zero)
-                forwardButton.isHidden = false
-                backwardButton.isHidden = false
+                if !controlsDisabled {
+                    forwardButton.isHidden = false
+                    backwardButton.isHidden = false
+                }
             }
             player?.play()
         }
