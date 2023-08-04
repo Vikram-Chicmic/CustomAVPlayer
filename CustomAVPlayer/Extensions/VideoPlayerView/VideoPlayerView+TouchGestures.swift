@@ -25,7 +25,7 @@ extension VideoPlayerView {
         guard let view = sender.view else { return }
 
         // Do not function when controls are locked
-        if !controlsLocked {
+        if !controlsDisabled && !controlsLocked {
             if sender.scale > 0.75 && sender.scale < 4.0 {
                 closeButton.isHidden = true
                 zoomButton.isHidden = false
@@ -46,6 +46,7 @@ extension VideoPlayerView {
     
     /// Add double tap and single tap gesture to videoContainer
     func addTapGesturesToVideoContainer() {
+        let longTapGestures = UILongPressGestureRecognizer(target: self, action: #selector(pauseOnLongPress))
         // Initializer and assign UITapGestureRecognizer to video container
         // doubleTapGesture - for video seek (forward or backward)
         let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(seekVideoOnDoubleTap))
@@ -58,6 +59,16 @@ extension VideoPlayerView {
         
         self.videoContainer.addGestureRecognizer(singleTapGesture)
         self.videoContainer.addGestureRecognizer(doubleTapGesture)
+        self.videoContainer.addGestureRecognizer(longTapGestures)
+    }
+    
+    @objc
+    func pauseOnLongPress(touch: UILongPressGestureRecognizer) {
+        if touch.state == .began {
+            avPlayerLayer.player?.pause()
+        } else {
+            avPlayerLayer.player?.play()
+        }
     }
     
     @objc
@@ -67,7 +78,7 @@ extension VideoPlayerView {
         // Double tap on left side will seek avplayer back 5 seconds.
         // ------------
         // Double tap on right size will seek avplayer forward 5 seconds.
-        if zoomButton.isHidden && !controlsLocked
+        if !controlsDisabled && zoomButton.isHidden && !controlsLocked
             && avPlayerLayer.player?.currentItem?.currentTime() != avPlayerLayer.player?.currentItem?.duration {
             
             // Get touch location

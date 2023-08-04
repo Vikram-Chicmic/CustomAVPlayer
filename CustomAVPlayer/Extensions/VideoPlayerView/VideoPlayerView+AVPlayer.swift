@@ -61,6 +61,12 @@ extension VideoPlayerView {
             playPauseButton.isHidden = false
             workItemControls?.cancel()
             playPauseIcon = replayIcon
+            
+            if controlsDisabled {
+                // video replay
+                avPlayerLayer.player?.seek(to: .zero)
+                avPlayerLayer.player?.play()
+            }
         } else {
             playPauseIcon = playIcon
         }
