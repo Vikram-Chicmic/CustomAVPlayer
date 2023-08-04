@@ -13,25 +13,28 @@
             <connections>
                 <outlet property="backwardButton" destination="L8V-bT-RiN" id="nzW-Jq-i6o"/>
                 <outlet property="closeButton" destination="BGX-SC-LiX" id="iOa-qN-xU2"/>
+                <outlet property="endTimeLabel" destination="ce0-SP-Qtl" id="aJc-MK-YXu"/>
                 <outlet property="forwardButton" destination="uRP-5m-qeK" id="zsq-rq-Q3t"/>
                 <outlet property="lockButton" destination="ors-nX-gll" id="SRa-G8-iCe"/>
                 <outlet property="muteButton" destination="lu4-Rf-KMy" id="5y2-p9-NGz"/>
                 <outlet property="playPauseButton" destination="MAn-fa-pBh" id="eWg-Va-DYS"/>
                 <outlet property="slider" destination="fE4-MB-r5e" id="spN-2e-IHI"/>
+                <outlet property="startTimeLabel" destination="rON-gJ-hB1" id="qJU-gx-JAl"/>
+                <outlet property="timeLabelsStack" destination="Gtw-Zr-IjF" id="S0o-TV-d1A"/>
                 <outlet property="videoContainer" destination="OvJ-hR-fGh" id="wew-u3-alT"/>
                 <outlet property="zoomButton" destination="6dW-Fb-Kem" id="0xX-lA-wF2"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" ambiguous="YES" id="i5M-Pr-FkT">
+        <view clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P2O-h7-P6F" userLabel="videoPlayer">
-                    <rect key="frame" x="0.0" y="0.0" width="249" height="852"/>
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                     <subviews>
                         <view clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OvJ-hR-fGh" userLabel="videoContainer">
-                            <rect key="frame" x="0.0" y="0.0" width="249" height="852"/>
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BGX-SC-LiX" userLabel="closePlayer">
@@ -59,7 +62,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lu4-Rf-KMy" userLabel="muteButton">
-                            <rect key="frame" x="119.33333333333333" y="83" width="58.333333333333329" height="34.333333333333343"/>
+                            <rect key="frame" x="263.33333333333331" y="83" width="58.333333333333314" height="34.333333333333343"/>
                             <state key="normal" title="Button"/>
                             <buttonConfiguration key="configuration" style="plain" image="volume.3" catalog="system">
                                 <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -69,7 +72,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ors-nX-gll" userLabel="lockButton">
-                            <rect key="frame" x="177.66666666666666" y="83" width="47.333333333333343" height="34.333333333333343"/>
+                            <rect key="frame" x="321.66666666666669" y="83" width="47.333333333333314" height="34.333333333333343"/>
                             <state key="normal" title="Button"/>
                             <buttonConfiguration key="configuration" style="plain" image="lock.slash" catalog="system">
                                 <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -79,7 +82,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L8V-bT-RiN" userLabel="backwardButton">
-                            <rect key="frame" x="23.999999999999996" y="399" width="49.666666666666657" height="54"/>
+                            <rect key="frame" x="96" y="399" width="49.666666666666657" height="54"/>
                             <buttonConfiguration key="configuration" style="plain" image="gobackward.5" catalog="system">
                                 <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </buttonConfiguration>
@@ -88,7 +91,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MAn-fa-pBh" userLabel="playPauseButton">
-                            <rect key="frame" x="97.666666666666671" y="399" width="54.000000000000014" height="54"/>
+                            <rect key="frame" x="169.66666666666666" y="399" width="54" height="54"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="54" id="6jF-Jj-1eI"/>
                                 <constraint firstAttribute="height" constant="54" id="qCK-LQ-5Sk"/>
@@ -103,7 +106,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uRP-5m-qeK" userLabel="forwardButton">
-                            <rect key="frame" x="175.66666666666666" y="399" width="49.666666666666657" height="54"/>
+                            <rect key="frame" x="247.66666666666666" y="399" width="49.666666666666657" height="54"/>
                             <state key="normal" title="Button"/>
                             <buttonConfiguration key="configuration" style="plain" image="goforward.5" catalog="system">
                                 <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -112,55 +115,58 @@
                                 <action selector="forwardButtonTapped:" destination="-1" eventType="touchUpInside" id="Wto-V9-oHb"/>
                             </connections>
                         </button>
-                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="fE4-MB-r5e" customClass="CustomSlider" customModule="CustomAVPlayer" customModuleProvider="target">
-                            <rect key="frame" x="23" y="764" width="204" height="31"/>
+                        <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="Gtw-Zr-IjF" userLabel="timeLabels">
+                            <rect key="frame" x="24" y="743" width="345" height="17"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rON-gJ-hB1" userLabel="startTime">
+                                    <rect key="frame" x="0.0" y="0.0" width="39" height="17"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ce0-SP-Qtl" userLabel="endTime">
+                                    <rect key="frame" x="306" y="0.0" width="39" height="17"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
+                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="fE4-MB-r5e" userLabel="slider" customClass="CustomSlider" customModule="CustomAVPlayer" customModuleProvider="target">
+                            <rect key="frame" x="22" y="764" width="349" height="31"/>
                             <color key="thumbTintColor" red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="color" keyPath="progressBarColor">
-                                    <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </userDefinedRuntimeAttribute>
-                                <userDefinedRuntimeAttribute type="color" keyPath="thumbColor">
-                                    <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </userDefinedRuntimeAttribute>
-                                <userDefinedRuntimeAttribute type="boolean" keyPath="hideThumb" value="NO"/>
-                                <userDefinedRuntimeAttribute type="image" keyPath="thumbImage" value="circle.fill" catalog="system"/>
-                                <userDefinedRuntimeAttribute type="number" keyPath="thumbHeight">
-                                    <real key="value" value="0.0"/>
-                                </userDefinedRuntimeAttribute>
-                                <userDefinedRuntimeAttribute type="number" keyPath="thumbWidth">
-                                    <real key="value" value="0.0"/>
-                                </userDefinedRuntimeAttribute>
-                                <userDefinedRuntimeAttribute type="boolean" keyPath="sameForAllState" value="YES"/>
-                            </userDefinedRuntimeAttributes>
                         </slider>
                     </subviews>
                     <viewLayoutGuide key="safeArea" id="24D-cD-8gS"/>
                     <constraints>
+                        <constraint firstItem="24D-cD-8gS" firstAttribute="trailing" secondItem="fE4-MB-r5e" secondAttribute="trailing" constant="24" id="0pC-WT-qo1"/>
                         <constraint firstItem="MAn-fa-pBh" firstAttribute="leading" secondItem="L8V-bT-RiN" secondAttribute="trailing" constant="24" id="1Y9-7e-eG2"/>
+                        <constraint firstItem="24D-cD-8gS" firstAttribute="bottom" secondItem="fE4-MB-r5e" secondAttribute="bottom" constant="24" id="5uA-K7-VNF"/>
+                        <constraint firstItem="fE4-MB-r5e" firstAttribute="top" secondItem="Gtw-Zr-IjF" secondAttribute="bottom" constant="4" id="6Kg-mI-W0O"/>
                         <constraint firstItem="lu4-Rf-KMy" firstAttribute="top" secondItem="6dW-Fb-Kem" secondAttribute="top" id="7XI-aN-Fif"/>
                         <constraint firstItem="MAn-fa-pBh" firstAttribute="centerY" secondItem="P2O-h7-P6F" secondAttribute="centerY" id="7gg-gp-VbS"/>
                         <constraint firstItem="MAn-fa-pBh" firstAttribute="trailing" secondItem="uRP-5m-qeK" secondAttribute="leading" constant="-24" id="BCY-JJ-3AI"/>
-                        <constraint firstItem="24D-cD-8gS" firstAttribute="bottom" secondItem="fE4-MB-r5e" secondAttribute="bottom" constant="24" id="BG9-P0-Vfp"/>
-                        <constraint firstItem="ors-nX-gll" firstAttribute="trailing" secondItem="fE4-MB-r5e" secondAttribute="trailing" id="EPI-e3-Tt6"/>
                         <constraint firstItem="6dW-Fb-Kem" firstAttribute="leading" secondItem="24D-cD-8gS" secondAttribute="leading" constant="24" id="Fen-Xk-nBN"/>
                         <constraint firstItem="MAn-fa-pBh" firstAttribute="centerX" secondItem="P2O-h7-P6F" secondAttribute="centerX" id="JCx-lk-vml"/>
                         <constraint firstAttribute="trailing" secondItem="OvJ-hR-fGh" secondAttribute="trailing" id="QGD-If-HU5"/>
                         <constraint firstItem="lu4-Rf-KMy" firstAttribute="bottom" secondItem="6dW-Fb-Kem" secondAttribute="bottom" id="ROd-ge-hFj"/>
                         <constraint firstItem="MAn-fa-pBh" firstAttribute="bottom" secondItem="L8V-bT-RiN" secondAttribute="bottom" id="TXk-vF-zec"/>
                         <constraint firstItem="BGX-SC-LiX" firstAttribute="leading" secondItem="24D-cD-8gS" secondAttribute="leading" constant="25" id="Ty1-hY-OkO"/>
-                        <constraint firstItem="BGX-SC-LiX" firstAttribute="leading" secondItem="fE4-MB-r5e" secondAttribute="leading" id="USU-Cm-7pL"/>
                         <constraint firstAttribute="bottom" secondItem="OvJ-hR-fGh" secondAttribute="bottom" id="VUA-Bz-rwx"/>
                         <constraint firstItem="uRP-5m-qeK" firstAttribute="top" secondItem="MAn-fa-pBh" secondAttribute="top" id="W2f-sT-5ha"/>
                         <constraint firstItem="BGX-SC-LiX" firstAttribute="top" secondItem="24D-cD-8gS" secondAttribute="top" constant="24" id="WDb-Ny-cCx"/>
+                        <constraint firstItem="fE4-MB-r5e" firstAttribute="leading" secondItem="24D-cD-8gS" secondAttribute="leading" constant="24" id="YvF-DZ-cyn"/>
                         <constraint firstItem="ors-nX-gll" firstAttribute="leading" secondItem="lu4-Rf-KMy" secondAttribute="trailing" id="bGK-Zy-l28"/>
                         <constraint firstItem="24D-cD-8gS" firstAttribute="trailing" secondItem="ors-nX-gll" secondAttribute="trailing" constant="24" id="bPy-gN-MbZ"/>
                         <constraint firstItem="OvJ-hR-fGh" firstAttribute="leading" secondItem="P2O-h7-P6F" secondAttribute="leading" id="dFo-NH-hTJ"/>
                         <constraint firstItem="MAn-fa-pBh" firstAttribute="bottom" secondItem="uRP-5m-qeK" secondAttribute="bottom" id="dtX-lN-zqh"/>
                         <constraint firstItem="6dW-Fb-Kem" firstAttribute="top" secondItem="24D-cD-8gS" secondAttribute="top" constant="24" id="kiF-Sc-2Yx"/>
+                        <constraint firstItem="fE4-MB-r5e" firstAttribute="trailing" secondItem="Gtw-Zr-IjF" secondAttribute="trailing" id="lWR-jS-R2j"/>
                         <constraint firstItem="L8V-bT-RiN" firstAttribute="top" secondItem="MAn-fa-pBh" secondAttribute="top" id="mH0-qh-Ja1"/>
                         <constraint firstItem="ors-nX-gll" firstAttribute="top" secondItem="6dW-Fb-Kem" secondAttribute="top" id="tcR-lN-YXM"/>
                         <constraint firstItem="ors-nX-gll" firstAttribute="bottom" secondItem="6dW-Fb-Kem" secondAttribute="bottom" id="v1q-75-UM2"/>
                         <constraint firstItem="OvJ-hR-fGh" firstAttribute="top" secondItem="P2O-h7-P6F" secondAttribute="top" id="vCC-3P-zPW"/>
+                        <constraint firstItem="Gtw-Zr-IjF" firstAttribute="leading" secondItem="fE4-MB-r5e" secondAttribute="leading" id="yaW-CH-v05"/>
                     </constraints>
                 </view>
             </subviews>
@@ -175,13 +181,7 @@
             <point key="canvasLocation" x="139.69465648854961" y="20.422535211267608"/>
         </view>
     </objects>
-    <designables>
-        <designable name="fE4-MB-r5e">
-            <size key="intrinsicContentSize" width="200" height="30"/>
-        </designable>
-    </designables>
     <resources>
-        <image name="circle.fill" catalog="system" width="128" height="123"/>
         <image name="gobackward.5" catalog="system" width="119" height="128"/>
         <image name="goforward.5" catalog="system" width="119" height="128"/>
         <image name="lock.slash" catalog="system" width="121" height="128"/>

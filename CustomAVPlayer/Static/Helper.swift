@@ -10,7 +10,7 @@ import UIKit
 
 class Helper {
     
-    /// method to get time in mm:ss time format
+    /// Method to get time in mm:ss time format
     /// - Parameter seconds: seconds in float
     /// - Returns: string value
     static func getTimeString(seconds: Float64) -> String {
@@ -19,7 +19,7 @@ class Helper {
         return "\(minutString):\(secondString)"
     }
     
-    /// method to animate seek button
+    /// Method to animate seek button
     /// - Parameters:
     ///   - button: forward or backward button
     ///   - rotationStartFrom: start position for animation
