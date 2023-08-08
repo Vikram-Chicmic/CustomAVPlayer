@@ -13,6 +13,8 @@
             <connections>
                 <outlet property="backwardButton" destination="L8V-bT-RiN" id="nzW-Jq-i6o"/>
                 <outlet property="closeButton" destination="BGX-SC-LiX" id="iOa-qN-xU2"/>
+                <outlet property="collectionView" destination="KVX-CI-x0e" id="d84-ad-Aua"/>
+                <outlet property="contentView" destination="i5M-Pr-FkT" id="PN6-vZ-csS"/>
                 <outlet property="endTimeLabel" destination="ce0-SP-Qtl" id="aJc-MK-YXu"/>
                 <outlet property="forwardButton" destination="uRP-5m-qeK" id="zsq-rq-Q3t"/>
                 <outlet property="lockButton" destination="ors-nX-gll" id="SRa-G8-iCe"/>
@@ -22,6 +24,7 @@
                 <outlet property="startTimeLabel" destination="rON-gJ-hB1" id="qJU-gx-JAl"/>
                 <outlet property="timeLabelsStack" destination="Gtw-Zr-IjF" id="S0o-TV-d1A"/>
                 <outlet property="videoContainer" destination="OvJ-hR-fGh" id="wew-u3-alT"/>
+                <outlet property="videoPlayer" destination="P2O-h7-P6F" id="IkK-Ua-H2O"/>
                 <outlet property="zoomButton" destination="6dW-Fb-Kem" id="0xX-lA-wF2"/>
             </connections>
         </placeholder>
@@ -30,7 +33,7 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P2O-h7-P6F" userLabel="videoPlayer">
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P2O-h7-P6F" userLabel="videoPlayer">
                     <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                     <subviews>
                         <view clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OvJ-hR-fGh" userLabel="videoContainer">
@@ -169,6 +172,17 @@
                         <constraint firstItem="Gtw-Zr-IjF" firstAttribute="leading" secondItem="fE4-MB-r5e" secondAttribute="leading" id="yaW-CH-v05"/>
                     </constraints>
                 </view>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="none" id="KVX-CI-x0e">
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="SPg-Un-sIi">
+                        <size key="itemSize" width="128" height="128"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
             </subviews>
             <color key="backgroundColor" systemColor="labelColor"/>
             <constraints>
@@ -191,6 +205,9 @@
         <image name="xmark" catalog="system" width="128" height="113"/>
         <systemColor name="labelColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>
 </document>

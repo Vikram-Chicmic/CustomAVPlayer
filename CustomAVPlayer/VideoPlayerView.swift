@@ -12,7 +12,9 @@ import AVFoundation
 public class VideoPlayerView: UIView {
     
     // MARK: - Outlets
-
+    @IBOutlet weak var contentView: UIView!
+    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var videoPlayer: UIView!
     @IBOutlet weak var videoContainer: UIView!
 
     @IBOutlet weak var zoomButton: UIButton!
@@ -34,6 +36,11 @@ public class VideoPlayerView: UIView {
     // MARK: - IB Inspectable
     
     // Globals
+    @IBInspectable public var enableReelView: Bool = false {
+        didSet {
+            controlsDisabled = enableReelView
+        }
+    }
     @IBInspectable public var controlsDisabled: Bool = false {
         didSet {
             if controlsDisabled {
@@ -272,12 +279,12 @@ public class VideoPlayerView: UIView {
             self.endTimeLabel.tintColor = timeLabelsTint
         }
     }
-    @IBInspectable public var timeLabelsFont: UIFont = .systemFont(ofSize: 14) {
-        didSet {
-            self.startTimeLabel.font = timeLabelsFont
-            self.endTimeLabel.font = timeLabelsFont
-        }
-    }
+//    @IBInspectable public var timeLabelsFont: UIFont = .systemFont(ofSize: 14) {
+//        didSet {
+//            self.startTimeLabel.font = timeLabelsFont
+//            self.endTimeLabel.font = timeLabelsFont
+//        }
+//    }
 
     // MARK: - Properties
 
@@ -313,10 +320,24 @@ public class VideoPlayerView: UIView {
     }
 
     private func commonInit() {
-        guard let contentView = loadViewFromNib() else { return }
+        
+        let bundle = Bundle(for: type(of: self))
+        bundle.loadNibNamed("VideoPlayerView", owner: self, options: nil)
+        
+//        guard let contentView = loadViewFromNib() else { return }
         contentView.frame = bounds
         contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         addSubview(contentView)
+
+//        if enableReelView {
+            videoPlayer.isHidden = true
+            collectionView.isHidden = false
+//        } else {
+//            collectionView.isHidden = true
+//            videoPlayer.isHidden = false
+//        }
+        
+        initCollectionView()
         
         // Remove default title from buttons
         removeButtonTitles()
@@ -325,12 +346,28 @@ public class VideoPlayerView: UIView {
         // Set pinch to zoom gesture
         setPinchToZoomGesture()
     }
-
-    private func loadViewFromNib() -> UIView? {
-        let nibName = String(describing: type(of: self))
-        let bundle = Bundle(for: type(of: self))
-        let nib = UINib(nibName: nibName, bundle: bundle)
-        return nib.instantiate(withOwner: self, options: nil).first as? UIView
+    
+    private func initCollectionView() {
+        let nib = UINib(nibName: "ReelCell", bundle: Bundle(for: type(of: self)))
+        collectionView.register(nib, forCellWithReuseIdentifier: "reel")
+        collectionView.dataSource = self
+        
+        // set paging enabled
+        collectionView.isPagingEnabled = true
+        // disable indicators
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.showsHorizontalScrollIndicator = false
+        
+        // intialize layout for collection view
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.itemSize = CGSize(width: self.frame.width, height: self.frame.height)
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
+        
+        // set collection view layout
+        collectionView.setCollectionViewLayout(layout, animated: true)
+        collectionView.contentInsetAdjustmentBehavior = .never
     }
     
     public override func layoutSubviews() {
@@ -339,3 +376,21 @@ public class VideoPlayerView: UIView {
         setAvPlayerLayer()
     }
 }
+
+extension VideoPlayerView: UICollectionViewDelegate, UICollectionViewDataSource {
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "reel", for: indexPath) as? ReelCell else {
+            fatalError("ayo u got error,")
+        }
+        
+        cell.label.text = "Index \(indexPath)"
+        
+        return cell
+    }
+    
+}
+
