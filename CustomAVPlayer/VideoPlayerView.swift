@@ -353,7 +353,7 @@ public class VideoPlayerView: UIView {
         collectionView.dataSource = self
         
         // set paging enabled
-        collectionView.isPagingEnabled = true
+
         // disable indicators
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
@@ -368,6 +368,7 @@ public class VideoPlayerView: UIView {
         // set collection view layout
         collectionView.setCollectionViewLayout(layout, animated: true)
         collectionView.contentInsetAdjustmentBehavior = .never
+        collectionView.isPagingEnabled = true
     }
     
     public override func layoutSubviews() {
@@ -377,20 +378,4 @@ public class VideoPlayerView: UIView {
     }
 }
 
-extension VideoPlayerView: UICollectionViewDelegate, UICollectionViewDataSource {
-    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
-    }
-    
-    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "reel", for: indexPath) as? ReelCell else {
-            fatalError("ayo u got error,")
-        }
-        
-        cell.label.text = "Index \(indexPath)"
-        
-        return cell
-    }
-    
-}
 

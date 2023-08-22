@@ -9,9 +9,9 @@ import UIKit
 
 class ReelCell: UICollectionViewCell {
     
-    @IBOutlet weak var cellView: UIView!
-    @IBOutlet weak var label: UILabel!
 
+    @IBOutlet weak var reelView: VideoPlayerView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
