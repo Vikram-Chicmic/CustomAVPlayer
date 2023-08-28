@@ -346,7 +346,6 @@ public class VideoPlayerView: UIView {
         if enableReelView {
             videoPlayer.isHidden = true
             collectionView.isHidden = false
-            
             initCollectionView()
         } else {
             videoPlayer.isHidden = false
