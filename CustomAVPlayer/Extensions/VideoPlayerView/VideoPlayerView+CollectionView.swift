@@ -8,25 +8,35 @@
 import Foundation
 import UIKit
 
-extension VideoPlayerView: UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
-    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+extension VideoPlayerView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    public func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        // pause video
     }
     
+    public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        // start video
+    }
     
-    
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return videos.count
+    }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "reel", for: indexPath) as? ReelCell else {
             fatalError("ayo u got error,")
         }
         
-        let url = Bundle.main.path(forResource: "demovideo", ofType: "mp4")
-        
-        cell.reelView.startAvPlayer(videoURL: URL(fileURLWithPath: url!))
-        cell.reelView.avPlayerLayer.player?.play()
+        guard let url = URL(string: videos[indexPath.item]) else {
+            return UICollectionViewCell()
+        }
+        cell.backgroundColor = colors[indexPath.item]
+        cell.configureCell(url: url)
         
         return cell
     }
     
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
+    }
 }

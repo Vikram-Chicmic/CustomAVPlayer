@@ -33,14 +33,29 @@ public class VideoPlayerView: UIView {
     
     @IBOutlet weak var timeLabelsStack: UIStackView!
     
+    let videos = [
+        "https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+        "https://storage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+        "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"
+    ]
+
+    // TODO: testing (remove)
+    let colors: [UIColor] = [
+        .red,
+        .blue,
+        .gray,
+        .green,
+        .orange
+    ]
+    
     // MARK: - IB Inspectable
     
     // Globals
-    @IBInspectable public var enableReelView: Bool = false {
-        didSet {
-            controlsDisabled = enableReelView
-        }
-    }
+    // TODO: setup this ??????
+    public var enableReelView: Bool = true
+    
     @IBInspectable public var controlsDisabled: Bool = false {
         didSet {
             if controlsDisabled {
@@ -324,27 +339,26 @@ public class VideoPlayerView: UIView {
         let bundle = Bundle(for: type(of: self))
         bundle.loadNibNamed("VideoPlayerView", owner: self, options: nil)
         
-//        guard let contentView = loadViewFromNib() else { return }
         contentView.frame = bounds
         contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         addSubview(contentView)
-
-//        if enableReelView {
+        
+        if enableReelView {
             videoPlayer.isHidden = true
             collectionView.isHidden = false
-//        } else {
-//            collectionView.isHidden = true
-//            videoPlayer.isHidden = false
-//        }
-        
-        initCollectionView()
-        
-        // Remove default title from buttons
-        removeButtonTitles()
-        // Add tap gestures to video container
-        addTapGesturesToVideoContainer()
-        // Set pinch to zoom gesture
-        setPinchToZoomGesture()
+            
+            initCollectionView()
+        } else {
+            videoPlayer.isHidden = false
+            collectionView.isHidden = true
+            
+            // Remove default title from buttons
+            removeButtonTitles()
+            // Add tap gestures to video container
+            addTapGesturesToVideoContainer()
+            // Set pinch to zoom gesture
+            setPinchToZoomGesture()
+        }
     }
     
     private func initCollectionView() {
@@ -353,6 +367,7 @@ public class VideoPlayerView: UIView {
         collectionView.dataSource = self
         
         // set paging enabled
+        collectionView.isPagingEnabled = true
 
         // disable indicators
         collectionView.showsVerticalScrollIndicator = false
@@ -361,21 +376,21 @@ public class VideoPlayerView: UIView {
         // intialize layout for collection view
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.itemSize = CGSize(width: self.frame.width, height: self.frame.height)
+        layout.itemSize = CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
+        
         
         // set collection view layout
         collectionView.setCollectionViewLayout(layout, animated: true)
         collectionView.contentInsetAdjustmentBehavior = .never
-        collectionView.isPagingEnabled = true
     }
     
     public override func layoutSubviews() {
         super.layoutSubviews()
         // Set AVPlayerLayer in view
-        setAvPlayerLayer()
+        if !enableReelView {
+            setAvPlayerLayer()
+        }
     }
 }
-
-
