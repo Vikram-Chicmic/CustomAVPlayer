@@ -35,7 +35,7 @@ extension VideoPlayerView {
                 self.slider.setValue(Float(seconds), animated: true)
             }
         })
-        
+
         // Add observer for time control status
         avPlayerLayer.player?.addObserver(self, forKeyPath: ConstantString.timeControlStatus, options: [.old, .new], context: nil)
         
@@ -46,6 +46,10 @@ extension VideoPlayerView {
         
         avPlayerLayer.player?.play()
     }
+    
+    public func startReelView(urlStrings: [String]) {
+         self.videos = urlStrings
+     }
     
     // MARK: Observers
     

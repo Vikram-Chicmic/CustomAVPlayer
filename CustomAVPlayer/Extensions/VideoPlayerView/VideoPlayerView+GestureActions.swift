@@ -9,7 +9,11 @@ import Foundation
 import UIKit
 import AVKit
 
-extension VideoPlayerView {
+extension VideoPlayerView: UIGestureRecognizerDelegate {
+    
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+          return true
+      }
     
     /// Method to removet titles from UIButton controls
     func removeButtonTitles() {

@@ -78,29 +78,37 @@ extension VideoPlayerView {
         // Double tap on left side will seek avplayer back 5 seconds.
         // ------------
         // Double tap on right size will seek avplayer forward 5 seconds.
-        if !controlsDisabled && zoomButton.isHidden && !controlsLocked
-            && avPlayerLayer.player?.currentItem?.currentTime() != avPlayerLayer.player?.currentItem?.duration {
-            
-            // Get touch location
-            let touchPoint = touch.location(in: self)
-            
-            // We have to get the position based on x-axis
-            // Get the mid position of frame with x-axis
-            let viewMid = self.frame.midX
-            
-            // Forward
-            if touchPoint.x > viewMid {
-                forwardButton.sendActions(for: .touchUpInside)
-            }
-            // Back
-            if touchPoint.x < viewMid {
-                backwardButton.sendActions(for: .touchUpInside)
+        
+        if !enableReelView {
+            if !controlsDisabled && zoomButton.isHidden && !controlsLocked
+                && avPlayerLayer.player?.currentItem?.currentTime() != avPlayerLayer.player?.currentItem?.duration {
+                
+                // Get touch location
+                let touchPoint = touch.location(in: self)
+                
+                // We have to get the position based on x-axis
+                // Get the mid position of frame with x-axis
+                let viewMid = self.frame.midX
+                
+                // Forward
+                if touchPoint.x > viewMid {
+                    forwardButton.sendActions(for: .touchUpInside)
+                }
+                // Back
+                if touchPoint.x < viewMid {
+                    backwardButton.sendActions(for: .touchUpInside)
+                }
             }
         }
     }
     
     @objc
     func videoContainerTapped(touch: UITapGestureRecognizer) {
+        // IN REEL VIEW
+        // If Reel view then on tap mute unmute
+        
+        
+        // IN NORMAL VIEW
         // On tap of videoContainer, check value of controlsHidden
         // -----------------
         // If true cancel workItemControl and call showHideControls()
@@ -109,16 +117,22 @@ extension VideoPlayerView {
         // -----------------
         // For false value call showHideControls()
         // and set the controlHidden to true.
-                
-        if controlsHidden && !lockButton.isHidden {
-            workItemControls?.cancel()
-            self.showHideControls()
+        
+        if enableReelView {
+            if let player = avPlayerLayer.player {
+                       player.isMuted = !player.isMuted
+                   }
         } else {
-            controlsHidden = !controlsHidden
-        }
-        if !controlsHidden {
-            self.showHideControls()
-            self.controlsHidden = true
+            if controlsHidden && !lockButton.isHidden {
+                workItemControls?.cancel()
+                self.showHideControls()
+            } else {
+                controlsHidden = !controlsHidden
+            }
+            if !controlsHidden {
+                self.showHideControls()
+                self.controlsHidden = true
+            }
         }
     }
 }

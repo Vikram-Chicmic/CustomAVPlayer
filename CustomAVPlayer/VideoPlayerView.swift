@@ -14,8 +14,9 @@ public class VideoPlayerView: UIView {
     // MARK: - Outlets
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
+    // normal player
     @IBOutlet weak var videoPlayer: UIView!
-    @IBOutlet weak var videoContainer: UIView!
+    @IBOutlet weak var videoContainer: UIView! // for gesture recognition
 
     @IBOutlet weak var zoomButton: UIButton!
     @IBOutlet weak var closeButton: UIButton!
@@ -30,16 +31,12 @@ public class VideoPlayerView: UIView {
     @IBOutlet weak var slider: CustomSlider!
     @IBOutlet weak var startTimeLabel: UILabel!
     @IBOutlet weak var endTimeLabel: UILabel!
-    
+
     @IBOutlet weak var timeLabelsStack: UIStackView!
     
-    let videos = [
-        "https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-        "https://storage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
-        "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-        "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-        "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"
-    ]
+    
+    
+    var videos: [String] = []
 
     // TODO: testing (remove)
     let colors: [UIColor] = [
@@ -294,12 +291,6 @@ public class VideoPlayerView: UIView {
             self.endTimeLabel.tintColor = timeLabelsTint
         }
     }
-//    @IBInspectable public var timeLabelsFont: UIFont = .systemFont(ofSize: 14) {
-//        didSet {
-//            self.startTimeLabel.font = timeLabelsFont
-//            self.endTimeLabel.font = timeLabelsFont
-//        }
-//    }
 
     // MARK: - Properties
 
@@ -319,70 +310,79 @@ public class VideoPlayerView: UIView {
     var workItemControls: DispatchWorkItem?
     
     var avPlayerLayer: AVPlayerLayer
-    
-    // MARK: - Initializers
-    
-    override init(frame: CGRect) {
-        avPlayerLayer = AvPlayerManager.shared.avPlayerLayer
-        super.init(frame: frame)
-        commonInit()
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        avPlayerLayer = AvPlayerManager.shared.avPlayerLayer
-        super.init(coder: aDecoder)
-        commonInit()
-    }
-
-    private func commonInit() {
         
-        let bundle = Bundle(for: type(of: self))
-        bundle.loadNibNamed("VideoPlayerView", owner: self, options: nil)
+        // MARK: - Initializers
         
-        contentView.frame = bounds
-        contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        addSubview(contentView)
-        
-        if enableReelView {
-            videoPlayer.isHidden = true
-            collectionView.isHidden = false
-            initCollectionView()
-        } else {
-            videoPlayer.isHidden = false
-            collectionView.isHidden = true
-            
-            // Remove default title from buttons
-            removeButtonTitles()
-            // Add tap gestures to video container
-            addTapGesturesToVideoContainer()
-            // Set pinch to zoom gesture
-            setPinchToZoomGesture()
+        override init(frame: CGRect) {
+            avPlayerLayer = AvPlayerManager.shared.avPlayerLayer
+            super.init(frame: frame)
+            commonInit()
         }
-    }
-    
-    private func initCollectionView() {
-        let nib = UINib(nibName: "ReelCell", bundle: Bundle(for: type(of: self)))
-        collectionView.register(nib, forCellWithReuseIdentifier: "reel")
-        collectionView.dataSource = self
-        
-        // set paging enabled
-        collectionView.isPagingEnabled = true
 
-        // disable indicators
-        collectionView.showsVerticalScrollIndicator = false
-        collectionView.showsHorizontalScrollIndicator = false
+        required init?(coder aDecoder: NSCoder) {
+            avPlayerLayer = AvPlayerManager.shared.avPlayerLayer
+            super.init(coder: aDecoder)
+            commonInit()
+        }
+
+        private func commonInit() {
+            
+            let bundle = Bundle(for: type(of: self))
+            bundle.loadNibNamed("VideoPlayerView", owner: self, options: nil)
+            
+            self.frame = UIScreen.main.bounds
+            collectionView.frame = self.bounds
+            contentView.frame = self.bounds
+            
+            print("Screen size : \(UIScreen.main.bounds)")
+            print("self frame size : \(self.frame)")
+            print("Self bound size : \(self.bounds)")
+            print("collection view frame size : \(collectionView.frame)")
+            print("Content view size : \(contentView.frame)")
+            
+            
+            addSubview(contentView)
+            
+            if enableReelView {
+                videoPlayer.isHidden = true
+                collectionView.isHidden = false
+                initCollectionView()
+            } else {
+                videoPlayer.isHidden = false
+                collectionView.isHidden = true
+                // Remove default title from buttons
+                removeButtonTitles()
+                // Add tap gestures to video container
+                addTapGesturesToVideoContainer()
+                // Set pinch to zoom gesture
+                setPinchToZoomGesture()
+            }
+        }
         
-        // intialize layout for collection view
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        layout.itemSize = CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
-        layout.minimumLineSpacing = 0
-        layout.minimumInteritemSpacing = 0
-        
-        
-        // set collection view layout
-        collectionView.setCollectionViewLayout(layout, animated: true)
-        collectionView.contentInsetAdjustmentBehavior = .never
+        private func initCollectionView() {
+            let nib = UINib(nibName: "ReelCell", bundle: Bundle(for: type(of: self)))
+            collectionView.register(nib, forCellWithReuseIdentifier: "reel")
+            collectionView.dataSource = self
+            collectionView.bounces = false
+
+
+            // set paging enabled
+            collectionView.isPagingEnabled = true
+
+            // disable indicators
+            collectionView.showsVerticalScrollIndicator = false
+            collectionView.showsHorizontalScrollIndicator = false
+            
+            
+            // intialize layout for collection view
+            let layout = UICollectionViewFlowLayout()
+            layout.scrollDirection = .vertical
+            layout.itemSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+            layout.minimumLineSpacing = 0
+            layout.minimumInteritemSpacing = 0
+            // set collection view layout
+            collectionView.setCollectionViewLayout(layout, animated: true)
+            collectionView.contentInsetAdjustmentBehavior = .always
     }
     
     public override func layoutSubviews() {
