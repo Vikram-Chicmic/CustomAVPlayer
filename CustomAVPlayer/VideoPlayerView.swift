@@ -11,6 +11,8 @@ import AVFoundation
 @IBDesignable
 public class VideoPlayerView: UIView {
     
+    let shared = VideoPlayerView()
+    
     // MARK: - Outlets
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
@@ -27,6 +29,8 @@ public class VideoPlayerView: UIView {
     @IBOutlet weak var playPauseButton: UIButton!
     @IBOutlet weak var forwardButton: UIButton!
     @IBOutlet weak var backwardButton: UIButton!
+    
+    var isMuted: Bool = false
 
     @IBOutlet weak var slider: CustomSlider!
     @IBOutlet weak var startTimeLabel: UILabel!
@@ -329,10 +333,17 @@ public class VideoPlayerView: UIView {
             
             let bundle = Bundle(for: type(of: self))
             bundle.loadNibNamed("VideoPlayerView", owner: self, options: nil)
+//
+//            let screenHeight = UIScreen.main.bounds.height
+//            let safeAreaHeight = UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0
+//            let viewHeight = screenHeight - safeAreaHeight
             
-            self.frame = UIScreen.main.bounds
-            collectionView.frame = self.bounds
+//            self.frame.size.height = viewHeight
+//            self.frame = UIScreen.main.bounds
+//            self.frame.size.width = UIScreen.main.bounds.width
+         
             contentView.frame = self.bounds
+            collectionView.frame = self.bounds
             
             print("Screen size : \(UIScreen.main.bounds)")
             print("self frame size : \(self.frame)")
@@ -363,6 +374,7 @@ public class VideoPlayerView: UIView {
             let nib = UINib(nibName: "ReelCell", bundle: Bundle(for: type(of: self)))
             collectionView.register(nib, forCellWithReuseIdentifier: "reel")
             collectionView.dataSource = self
+            collectionView.delegate = self
             collectionView.bounces = false
 
 
