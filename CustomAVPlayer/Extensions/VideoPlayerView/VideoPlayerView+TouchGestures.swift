@@ -107,7 +107,6 @@ extension VideoPlayerView {
         // IN REEL VIEW
         // If Reel view then on tap mute unmute
         
-        
         // IN NORMAL VIEW
         // On tap of videoContainer, check value of controlsHidden
         // -----------------

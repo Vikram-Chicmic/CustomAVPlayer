@@ -11,47 +11,25 @@ import AVFoundation
 @IBDesignable
 public class VideoPlayerView: UIView {
     
-    let shared = VideoPlayerView()
-    
     // MARK: - Outlets
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
     // normal player
     @IBOutlet weak var videoPlayer: UIView!
     @IBOutlet weak var videoContainer: UIView! // for gesture recognition
-
     @IBOutlet weak var zoomButton: UIButton!
     @IBOutlet weak var closeButton: UIButton!
-
     @IBOutlet weak var muteButton: UIButton!
     @IBOutlet weak var lockButton: UIButton!
-
     @IBOutlet weak var playPauseButton: UIButton!
     @IBOutlet weak var forwardButton: UIButton!
     @IBOutlet weak var backwardButton: UIButton!
-    
-    var isMuted: Bool = false
-
     @IBOutlet weak var slider: CustomSlider!
     @IBOutlet weak var startTimeLabel: UILabel!
     @IBOutlet weak var endTimeLabel: UILabel!
-
     @IBOutlet weak var timeLabelsStack: UIStackView!
     
-    
-    
     var videos: [String] = []
-
-    // TODO: testing (remove)
-    let colors: [UIColor] = [
-        .red,
-        .blue,
-        .gray,
-        .green,
-        .orange
-    ]
-    
-    // MARK: - IB Inspectable
     
     // Globals
     // TODO: setup this ??????
@@ -333,25 +311,15 @@ public class VideoPlayerView: UIView {
             
             let bundle = Bundle(for: type(of: self))
             bundle.loadNibNamed("VideoPlayerView", owner: self, options: nil)
-//
-//            let screenHeight = UIScreen.main.bounds.height
-//            let safeAreaHeight = UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0
-//            let viewHeight = screenHeight - safeAreaHeight
-            
-//            self.frame.size.height = viewHeight
-//            self.frame = UIScreen.main.bounds
-//            self.frame.size.width = UIScreen.main.bounds.width
-         
+
             contentView.frame = self.bounds
             collectionView.frame = self.bounds
-            
             print("Screen size : \(UIScreen.main.bounds)")
             print("self frame size : \(self.frame)")
             print("Self bound size : \(self.bounds)")
             print("collection view frame size : \(collectionView.frame)")
             print("Content view size : \(contentView.frame)")
-            
-            
+
             addSubview(contentView)
             
             if enableReelView {
@@ -377,7 +345,6 @@ public class VideoPlayerView: UIView {
             collectionView.delegate = self
             collectionView.bounces = false
 
-
             // set paging enabled
             collectionView.isPagingEnabled = true
 
@@ -385,11 +352,11 @@ public class VideoPlayerView: UIView {
             collectionView.showsVerticalScrollIndicator = false
             collectionView.showsHorizontalScrollIndicator = false
             
-            
             // intialize layout for collection view
             let layout = UICollectionViewFlowLayout()
             layout.scrollDirection = .vertical
-            layout.itemSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+//            layout.itemSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+//            layout.itemSize = 
             layout.minimumLineSpacing = 0
             layout.minimumInteritemSpacing = 0
             // set collection view layout
@@ -404,4 +371,18 @@ public class VideoPlayerView: UIView {
             setAvPlayerLayer()
         }
     }
+    
+    var mute = false
+    // Shared mute state
+        var isMuted: Bool = false {
+            didSet {
+                self.mute = isMuted
+                // Update mute state for all cells
+//                collectionView.visibleCells.forEach { cell in
+//                    if let reelCell = cell as? ReelCell {
+//                        reelCell.updateMuteState(isMuted: isMuted)
+//                    }
+//                }
+            }
+        }
 }

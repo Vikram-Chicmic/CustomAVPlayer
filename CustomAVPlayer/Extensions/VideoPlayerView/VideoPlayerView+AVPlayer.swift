@@ -14,6 +14,7 @@ extension VideoPlayerView {
     
     /// Method to set AVPlayerLayer in videoContainer view
     func setAvPlayerLayer() {
+        
         avPlayerLayer.frame = CGRect(origin: .zero, size: self.bounds.size)
         // Add avPlayerLayer to videoContainer view
         self.videoContainer.layer.addSublayer(avPlayerLayer)
