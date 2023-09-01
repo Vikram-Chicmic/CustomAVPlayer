@@ -9,12 +9,13 @@ class ReelCell: UICollectionViewCell {
 
     // Slider and UI elements
     let sliderContainer = UIView()
+    var muteIconContainer = UIView()
+    var muteIcon = UIButton()
+    var videoPlayerView: VideoPlayerView?
     var slider: CustomSlider?
     let muteLabel = UILabel()
-
     // Track mute state
     var isMuted: Bool = false
-
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -23,24 +24,47 @@ class ReelCell: UICollectionViewCell {
         self.layer.addSublayer(playerLayer)
 
         // Add tap gesture recognizer for mute/unmute
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleMute))
-        tapGesture.numberOfTapsRequired = 1
-        self.addGestureRecognizer(tapGesture)
-
+        configureTapFunciton()
         // Add long press gesture recognizer for pause
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(pauseOnLongPress))
         self.addGestureRecognizer(longPressGesture)
-
-        // Add mute label for testing purposes
-        configureMuteLabel()
+        print(".......",player?.isMuted)
         playerLayer.player?.play()
     }
     override func layoutSubviews() {
-        DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             self.configureSlider()
+            if let videoPlayerView = self.videoPlayerView {
+                if videoPlayerView.tapFunctionForReel == .playPause && videoPlayerView.showMuteForReel {
+                    self.configureMuteIcon()
+                }
+            }
+          }
         }
+    
+    // MARK: - Configure MuteUnmute
+    private func configureMuteIcon() {
+        guard let player = player else {
+            return
         }
-
+        muteIconContainer.translatesAutoresizingMaskIntoConstraints =  false
+        self.addSubview(muteIconContainer)
+        if let muteicon = videoPlayerView?.muteButton {
+            self.muteIcon = muteicon
+        }
+        muteIcon.setTitle("", for: .normal)
+        muteIconContainer.addSubview(muteIcon)
+        NSLayoutConstraint.activate([
+            muteIconContainer.topAnchor.constraint(equalTo: self.topAnchor, constant: 8),
+            muteIconContainer.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -8),
+            muteIconContainer.heightAnchor.constraint(equalToConstant: 30),
+            muteIconContainer.widthAnchor.constraint(equalToConstant: 30),
+            muteIcon.centerYAnchor.constraint(equalTo: muteIconContainer.centerYAnchor),
+            muteIcon.centerXAnchor.constraint(equalTo: muteIconContainer.centerXAnchor)
+        ])
+        muteIcon.addTarget(self, action: #selector(toggleMute), for: .touchUpInside)
+    }
+    
     // MARK: - Slider Configuration
     private func configureSlider() {
         guard let slider = slider else { return }
@@ -61,20 +85,6 @@ class ReelCell: UICollectionViewCell {
             slider.leadingAnchor.constraint(equalTo: sliderContainer.leadingAnchor),
             slider.trailingAnchor.constraint(equalTo: sliderContainer.trailingAnchor),
             slider.bottomAnchor.constraint(equalTo: sliderContainer.bottomAnchor)
-        ])
-    }
-
-    // MARK: - Mute Label Configuration
-    private func configureMuteLabel() {
-        muteLabel.text = "Mute"
-        muteLabel.textColor = .white
-        muteLabel.font = UIFont.systemFont(ofSize: 20)
-        muteLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(muteLabel)
-
-        NSLayoutConstraint.activate([
-            muteLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            muteLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
     }
 
@@ -114,8 +124,8 @@ class ReelCell: UICollectionViewCell {
 
     // MARK: - Video Configuration
     func configureCell(url: URL) {
-        if let videoPlayerView = superview as? VideoPlayerView {
-            player?.isMuted = videoPlayerView.isMuted
+        if let player = player , let videoPlayerView = videoPlayerView {
+            player.isMuted = videoPlayerView.isMute
         }
         if player == nil {
             player = AVPlayer(url: url)
@@ -129,79 +139,11 @@ class ReelCell: UICollectionViewCell {
             player?.seek(to: .zero)
             player?.play()
         }
-       
+        print(".......", player?.isMuted)
+        configureTapFunciton()
         // Add time observer to update the slider
         addTimeObserver()
     }
-
-    // MARK: - Time Observer
-    private func addTimeObserver() {
-        let interval = CMTime(value: 1, timescale: 1)
-        player?.addPeriodicTimeObserver(forInterval: interval, queue: DispatchQueue.main, using: { [weak self] (progressTime) in
-            guard let self = self else { return }
-            let seconds = CMTimeGetSeconds(progressTime)
-            let duration = CMTimeGetSeconds(self.player?.currentItem?.duration ?? .zero)
-            if duration > 0 {
-                let progress = Float(seconds / duration)
-                self.slider?.setValue(progress, animated: true)
-            }
-        })
-    }
-//    Second, in your sliderValueChanged method, update the video playback time based on the slider's value:
-    @objc func sliderValueChanged() {
-        guard let slider = slider else { return }
-        if let duration = player?.currentItem?.duration {
-            let totalSeconds = CMTimeGetSeconds(duration)
-            let value = Float64(slider.value) * totalSeconds
-            let seekTime = CMTime(value: Int64(value), timescale: 1)
-            player?.seek(to: seekTime, toleranceBefore: .zero, toleranceAfter: .zero)
-        }
-    }
-   
-    // MARK: - Playback Control
-    @objc func playerDidFinishPlaying(notification: NSNotification) {
-        player?.seek(to: .zero)
-        player?.play()
-    }
-
-    func pauseVideo() {
-        player?.pause()
-    }
-
-    func playVideo() {
-        player?.play()
-    }
-
-    func restartVideo() {
-        player?.seek(to: .zero)
-        player?.play()
-    }
-    
-    func updateMuteState(isMuted: Bool) {
-        player?.isMuted = isMuted
-        muteLabel.text = isMuted ? "Unmute" : "Mute"
-    }
-
-    // MARK: - Toggle Mute
-    @objc func toggleMute() {
-        if let player = player {
-            player.isMuted = !player.isMuted
-            muteLabel.text = player.isMuted ? "Unmute" : "Mute"
-            // Update the mute state in the VideoPlayerView
-            if let videoPlayerView = superview as? VideoPlayerView {
-                videoPlayerView.isMuted = player.isMuted
-            }
-        }
-    }
-
-    // MARK: - Pause on Long Press
-    @objc func pauseOnLongPress(_ sender: UILongPressGestureRecognizer) {
-        if sender.state == .began {
-            player?.pause()
-            muteLabel.text = "Paused"
-        } else if sender.state == .ended {
-            player?.play()
-            muteLabel.text = player?.isMuted ?? false ? "Mute" : "Unmute"
-        }
-    }
 }
+
+

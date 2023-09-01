@@ -77,15 +77,27 @@ extension VideoPlayerView {
         }
     }
     
-    @objc
-    func playbackSliderValueChanged(_ playbackSlider: UISlider, event: UISlider.State) {
-        let seconds: Int64 = Int64(slider.value)
-        let targetTime: CMTime = CMTimeMake(value: seconds, timescale: 1)
-
-        avPlayerLayer.player?.seek(to: targetTime)
-        
-        if avPlayerLayer.player?.currentTime() != avPlayerLayer.player?.currentItem?.duration {
-            playPauseIcon = playIcon
+    @objc func playbackSliderValueChanged(_ playbackSlider: UISlider, event: UIEvent) {
+        guard let slider = slider else { return }
+        if let touchEvent = event.allTouches?.first {
+            
+            switch touchEvent.phase {
+            case .began:
+                avPlayerLayer.player?.pause()
+            case .moved:
+                let seconds: Int64 = Int64(round(slider.value))
+                let targetTime: CMTime = CMTimeMake(value: seconds, timescale: 1)
+                avPlayerLayer.player?.seek(to: targetTime)
+            case .ended:
+                // User finished dragging the slider
+                let seconds: Int64 = Int64(slider.value)
+                let targetTime: CMTime = CMTimeMake(value: seconds, timescale: 1)
+                avPlayerLayer.player?.seek(to: targetTime)
+                self.playPauseIcon = playIcon
+                avPlayerLayer.player?.play()
+            default:
+                break
+            }
         }
     }
     

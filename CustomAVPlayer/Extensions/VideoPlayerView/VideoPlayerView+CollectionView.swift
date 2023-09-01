@@ -24,8 +24,8 @@ extension VideoPlayerView: UICollectionViewDelegate, UICollectionViewDataSource,
             guard let url = URL(string: videos[indexPath.row]) else {
                 return
             }
-//            cell.slider = self.slider
             cell.configureCell(url: url)
+            print(".......videopl",self.isMute)
             cell.restartVideo()
         }
     }
@@ -53,8 +53,10 @@ extension VideoPlayerView: UICollectionViewDelegate, UICollectionViewDataSource,
           }
           print("Current index: \(indexPath.section) \(indexPath.item) \(indexPath.row)")
         
-          cell.updateMuteState(isMuted: mute)
+//          cell.updateMuteState(isMuted: isMute)
           cell.slider = self.slider
+          cell.videoPlayerView = self
+          print(".......videoplayer",self.isMute)
           cell.configureCell(url: url)
           
           return cell

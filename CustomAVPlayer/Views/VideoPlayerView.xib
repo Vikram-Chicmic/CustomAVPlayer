@@ -76,30 +76,34 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lu4-Rf-KMy" userLabel="muteButton">
-                            <rect key="frame" x="263.33333333333331" y="83" width="58.333333333333314" height="34.333333333333343"/>
-                            <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="plain" image="volume.3" catalog="system">
-                                <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </buttonConfiguration>
+                            <rect key="frame" x="311.33333333333331" y="83" width="34.333333333333314" height="34.333333333333343"/>
+                            <color key="tintColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" image="volume.3" catalog="system">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
                             <connections>
                                 <action selector="muteButtonTapped:" destination="-1" eventType="touchUpInside" id="6OW-gI-Kr9"/>
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ors-nX-gll" userLabel="lockButton">
-                            <rect key="frame" x="321.66666666666669" y="83" width="47.333333333333314" height="34.333333333333343"/>
-                            <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="plain" image="lock.slash" catalog="system">
-                                <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </buttonConfiguration>
+                            <rect key="frame" x="345.66666666666669" y="83" width="23.333333333333314" height="34.333333333333343"/>
+                            <color key="tintColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" image="lock.slash" catalog="system">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
                             <connections>
                                 <action selector="lockButtonTapped:" destination="-1" eventType="touchUpInside" id="lIY-Mq-wRd"/>
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L8V-bT-RiN" userLabel="backwardButton">
-                            <rect key="frame" x="96" y="399" width="49.666666666666657" height="54"/>
-                            <buttonConfiguration key="configuration" style="plain" image="gobackward.5" catalog="system">
-                                <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </buttonConfiguration>
+                            <rect key="frame" x="120.00000000000001" y="399" width="25.666666666666671" height="54"/>
+                            <color key="tintColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" image="gobackward.5" catalog="system">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
                             <connections>
                                 <action selector="backwardButtonTapped:" destination="-1" eventType="touchUpInside" id="PHQ-ot-cnL"/>
                             </connections>
@@ -110,27 +114,29 @@
                                 <constraint firstAttribute="width" constant="54" id="6jF-Jj-1eI"/>
                                 <constraint firstAttribute="height" constant="54" id="qCK-LQ-5Sk"/>
                             </constraints>
-                            <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="plain" image="play.fill" catalog="system">
-                                <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="34"/>
-                                <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </buttonConfiguration>
+                            <color key="tintColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" image="play.fill" catalog="system">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="34"/>
+                            </state>
                             <connections>
                                 <action selector="playPauseButtonTapped:" destination="-1" eventType="touchUpInside" id="7Vy-cr-lh5"/>
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uRP-5m-qeK" userLabel="forwardButton">
-                            <rect key="frame" x="247.66666666666666" y="399" width="49.666666666666657" height="54"/>
-                            <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="plain" image="goforward.5" catalog="system">
-                                <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </buttonConfiguration>
+                            <rect key="frame" x="247.66666666666666" y="399" width="25.666666666666657" height="54"/>
+                            <color key="tintColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" image="goforward.5" catalog="system">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
                             <connections>
                                 <action selector="forwardButtonTapped:" destination="-1" eventType="touchUpInside" id="Wto-V9-oHb"/>
                             </connections>
                         </button>
                         <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="Gtw-Zr-IjF" userLabel="timeLabels">
-                            <rect key="frame" x="24" y="743" width="345" height="17"/>
+                            <rect key="frame" x="24" y="757" width="345" height="17"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rON-gJ-hB1" userLabel="startTime">
                                     <rect key="frame" x="0.0" y="0.0" width="39" height="17"/>
@@ -147,15 +153,15 @@
                             </subviews>
                         </stackView>
                         <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="fE4-MB-r5e" userLabel="slider" customClass="CustomSlider" customModule="CustomAVPlayer" customModuleProvider="target">
-                            <rect key="frame" x="22" y="764" width="349" height="31"/>
-                            <color key="thumbTintColor" red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <rect key="frame" x="22" y="778" width="349" height="31"/>
+                            <color key="thumbTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </slider>
                     </subviews>
                     <viewLayoutGuide key="safeArea" id="24D-cD-8gS"/>
                     <constraints>
                         <constraint firstItem="24D-cD-8gS" firstAttribute="trailing" secondItem="fE4-MB-r5e" secondAttribute="trailing" constant="24" id="0pC-WT-qo1"/>
                         <constraint firstItem="MAn-fa-pBh" firstAttribute="leading" secondItem="L8V-bT-RiN" secondAttribute="trailing" constant="24" id="1Y9-7e-eG2"/>
-                        <constraint firstItem="24D-cD-8gS" firstAttribute="bottom" secondItem="fE4-MB-r5e" secondAttribute="bottom" constant="24" id="5uA-K7-VNF"/>
+                        <constraint firstItem="24D-cD-8gS" firstAttribute="bottom" secondItem="fE4-MB-r5e" secondAttribute="bottom" constant="10" id="5uA-K7-VNF"/>
                         <constraint firstItem="fE4-MB-r5e" firstAttribute="top" secondItem="Gtw-Zr-IjF" secondAttribute="bottom" constant="4" id="6Kg-mI-W0O"/>
                         <constraint firstItem="lu4-Rf-KMy" firstAttribute="top" secondItem="6dW-Fb-Kem" secondAttribute="top" id="7XI-aN-Fif"/>
                         <constraint firstItem="MAn-fa-pBh" firstAttribute="centerY" secondItem="P2O-h7-P6F" secondAttribute="centerY" id="7gg-gp-VbS"/>

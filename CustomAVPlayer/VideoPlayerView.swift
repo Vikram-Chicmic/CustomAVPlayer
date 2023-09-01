@@ -30,10 +30,18 @@ public class VideoPlayerView: UIView {
     @IBOutlet weak var timeLabelsStack: UIStackView!
     
     var videos: [String] = []
+
+ var enableReelView = false
+@IBInspectable public var useReelFeature: Bool = false {
+        didSet {
+            if useReelFeature {
+               enableReelView = true
+            } else {
+               enableReelView = false
+            }
+        }
+    }
     
-    // Globals
-    // TODO: setup this ??????
-    public var enableReelView: Bool = true
     
     @IBInspectable public var controlsDisabled: Bool = false {
         didSet {
@@ -261,6 +269,31 @@ public class VideoPlayerView: UIView {
         }
     }
     
+    // Gesture Control
+    var touchAndHold = true
+    @IBInspectable public var touchAndHoldToPause: Bool = true {
+        didSet {
+            if enableReelView {
+                touchAndHold = touchAndHoldToPause
+            }
+        }
+    }
+    
+    // Reel View tap function
+   public enum TapFunctionality {
+        case playPause
+        case muteUnmute
+    }
+    
+    var showMuteForReelFunc = true
+    @IBInspectable public var showMuteForReel: Bool = true {
+        didSet {
+            showMuteForReelFunc = showMuteForReel
+        }
+    }
+    public var tapFunctionForReel: TapFunctionality = .muteUnmute
+    
+    
     // Time Labels
     @IBInspectable public var hideTimeLabels: Bool = false {
         didSet {
@@ -297,22 +330,22 @@ public class VideoPlayerView: UIView {
         
         override init(frame: CGRect) {
             avPlayerLayer = AvPlayerManager.shared.avPlayerLayer
+            enableReelView = useReelFeature
             super.init(frame: frame)
             commonInit()
         }
 
         required init?(coder aDecoder: NSCoder) {
             avPlayerLayer = AvPlayerManager.shared.avPlayerLayer
+            enableReelView = useReelFeature
             super.init(coder: aDecoder)
             commonInit()
         }
 
         private func commonInit() {
-            
             let bundle = Bundle(for: type(of: self))
             bundle.loadNibNamed("VideoPlayerView", owner: self, options: nil)
-
-            contentView.frame = self.bounds
+            contentView.frame = self.bounds 
             collectionView.frame = self.bounds
             print("Screen size : \(UIScreen.main.bounds)")
             print("self frame size : \(self.frame)")
@@ -322,20 +355,7 @@ public class VideoPlayerView: UIView {
 
             addSubview(contentView)
             
-            if enableReelView {
-                videoPlayer.isHidden = true
-                collectionView.isHidden = false
-                initCollectionView()
-            } else {
-                videoPlayer.isHidden = false
-                collectionView.isHidden = true
-                // Remove default title from buttons
-                removeButtonTitles()
-                // Add tap gestures to video container
-                addTapGesturesToVideoContainer()
-                // Set pinch to zoom gesture
-                setPinchToZoomGesture()
-            }
+          
         }
         
         private func initCollectionView() {
@@ -355,8 +375,6 @@ public class VideoPlayerView: UIView {
             // intialize layout for collection view
             let layout = UICollectionViewFlowLayout()
             layout.scrollDirection = .vertical
-//            layout.itemSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
-//            layout.itemSize = 
             layout.minimumLineSpacing = 0
             layout.minimumInteritemSpacing = 0
             // set collection view layout
@@ -370,19 +388,22 @@ public class VideoPlayerView: UIView {
         if !enableReelView {
             setAvPlayerLayer()
         }
-    }
-    
-    var mute = false
-    // Shared mute state
-        var isMuted: Bool = false {
-            didSet {
-                self.mute = isMuted
-                // Update mute state for all cells
-//                collectionView.visibleCells.forEach { cell in
-//                    if let reelCell = cell as? ReelCell {
-//                        reelCell.updateMuteState(isMuted: isMuted)
-//                    }
-//                }
+        else {
+            if enableReelView {
+                videoPlayer.isHidden = true
+                collectionView.isHidden = false
+                initCollectionView()
+            } else {
+                videoPlayer.isHidden = false
+                collectionView.isHidden = true
+                // Remove default title from buttons
+                removeButtonTitles()
+                // Add tap gestures to video container
+                addTapGesturesToVideoContainer()
+                // Set pinch to zoom gesture
+                setPinchToZoomGesture()
             }
         }
+    }
+    public var isMute = false
 }
