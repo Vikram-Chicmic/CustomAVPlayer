@@ -7,6 +7,7 @@
 
 import UIKit
 import AVFoundation
+import Darwin
 
 @IBDesignable
 public class VideoPlayerView: UIView {
@@ -341,28 +342,39 @@ public class VideoPlayerView: UIView {
             super.init(coder: aDecoder)
             commonInit()
         }
-
+ 
+    
+    
         private func commonInit() {
             let bundle = Bundle(for: type(of: self))
             bundle.loadNibNamed("VideoPlayerView", owner: self, options: nil)
             self.frame = UIScreen.main.bounds
-//            self.backgroundColor = .green
             contentView.frame = self.frame
             let screenSize = self.frame.size
-                  let safeAreaInsets = UIApplication.shared.windows.first?.safeAreaInsets
-            let adjustedHeight = screenSize.height - (safeAreaInsets?.top ?? 0) 
+            let safeAreaInsets = UIApplication.shared.windows.first?.safeAreaInsets
+            let adjustedHeight = screenSize.height - (safeAreaInsets?.top ?? 0)
+        
+            
             collectionView.frame.size = CGSize(width: screenSize.width, height: adjustedHeight)
+           
             addSubview(contentView)
         }
         
         private func initCollectionView() {
             let nib = UINib(nibName: "ReelCell", bundle: Bundle(for: type(of: self)))
             collectionView.register(nib, forCellWithReuseIdentifier: "reel")
-            collectionView.dataSource = self
             collectionView.delegate = self
+            collectionView.dataSource = self
             collectionView.bounces = false
-           
-
+            collectionView.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                     collectionView.topAnchor.constraint(equalTo: topAnchor),
+                     collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
+                     collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
+                     collectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
+                 ])
+            
+            
             // set paging enabled
             collectionView.isPagingEnabled = true
 //            collectionView.pa
@@ -378,7 +390,6 @@ public class VideoPlayerView: UIView {
             layout.minimumInteritemSpacing = 0
             // set collection view layout
             collectionView.setCollectionViewLayout(layout, animated: true)
-//            collectionView.contentInsetAdjustmentBehavior = .always
     }
     
     public override func layoutSubviews() {
@@ -386,23 +397,21 @@ public class VideoPlayerView: UIView {
         // Set AVPlayerLayer in view
         if !enableReelView {
             setAvPlayerLayer()
+            videoPlayer.isHidden = false
+            collectionView.isHidden = true
+            
+            // Remove default title from buttons
+            removeButtonTitles()
+            // Add tap gestures to video container
+            addTapGesturesToVideoContainer()
+            // Set pinch to zoom gesture
+            setPinchToZoomGesture()
         }
-        else {
-            if enableReelView {
+        else  {
                 videoPlayer.isHidden = true
                 collectionView.isHidden = false
                 initCollectionView()
-            } else {
-                videoPlayer.isHidden = false
-                collectionView.isHidden = true
-                // Remove default title from buttons
-                removeButtonTitles()
-                // Add tap gestures to video container
-                addTapGesturesToVideoContainer()
-                // Set pinch to zoom gesture
-                setPinchToZoomGesture()
             }
         }
-    }
     public var isMute = false
 }

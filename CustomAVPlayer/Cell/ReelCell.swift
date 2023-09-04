@@ -4,7 +4,7 @@ import AVFoundation
 class ReelCell: UICollectionViewCell {
     // Video player properties
     let playerLayer: AVPlayerLayer = AVPlayerLayer()
-    var player: AVPlayer?
+//    var player: AVPlayer?
     var timeObserver: Any?
 
     // Slider and UI elements
@@ -22,16 +22,21 @@ class ReelCell: UICollectionViewCell {
         // Set up the player layer
         playerLayer.frame = self.bounds
         self.layer.addSublayer(playerLayer)
-
+        
         // Add tap gesture recognizer for mute/unmute
         configureTapFunciton()
+        
         // Add long press gesture recognizer for pause
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(pauseOnLongPress))
         self.addGestureRecognizer(longPressGesture)
+        
+        // Call play() after setting up the player
         playerLayer.player?.play()
     }
+
+    
     override func layoutSubviews() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             self.configureSlider()
             if let videoPlayerView = self.videoPlayerView {
                 if videoPlayerView.tapFunctionForReel == .playPause && videoPlayerView.showMuteForReel {
@@ -43,7 +48,7 @@ class ReelCell: UICollectionViewCell {
     
     // MARK: - Configure MuteUnmute
     private func configureMuteIcon() {
-        guard let player = player else {
+        guard let player = playerLayer.player else {
             return
         }
         muteIconContainer.translatesAutoresizingMaskIntoConstraints =  false
@@ -93,18 +98,18 @@ class ReelCell: UICollectionViewCell {
         if let touchEvent = event.allTouches?.first {
             switch touchEvent.phase {
             case .began:
-                player?.pause()
+                playerLayer.player?.pause()
             case .moved:
                 let seconds: Int64 = Int64(slider.value)
                 let targetTime: CMTime = CMTimeMake(value: seconds, timescale: 1)
-                player?.seek(to: targetTime)
+                playerLayer.player?.seek(to: targetTime)
             case .ended:
                 // User finished dragging the slider
                 let seconds: Int64 = Int64(slider.value)
                 let targetTime: CMTime = CMTimeMake(value: seconds, timescale: 1)
-                player?.seek(to: targetTime)
+                playerLayer.player?.seek(to: targetTime)
                 sliderValueChanged()
-                player?.play()
+                playerLayer.player?.play()
             default:
                 break
             }
@@ -112,33 +117,38 @@ class ReelCell: UICollectionViewCell {
     }
     
     override func prepareForReuse() {
-      super.prepareForReuse()
-      playerLayer.player?.pause()
-      super.prepareForReuse()
-      player?.pause()
-      player?.seek(to: .zero)
-      player = nil
-      playerLayer.player = nil
+        super.prepareForReuse()
+        // Pause and reset the player
+        playerLayer.player?.pause()
+        playerLayer.player?.pause()
+        playerLayer.player?.seek(to: .zero)
+        
+        // Remove observers and time observers
+        NotificationCenter.default.removeObserver(self)
+//        removeTimeObserver()
+        
+        // Clear the player and playerLayer
+        playerLayer.player = nil
     }
+
 
     // MARK: - Video Configuration
     func configureCell(url: URL) {
-        if let player = player , let videoPlayerView = videoPlayerView {
+        if let player = playerLayer.player , let videoPlayerView = videoPlayerView {
             player.isMuted = videoPlayerView.isMute
         }
-        if player == nil {
-            player = AVPlayer(url: url)
-            playerLayer.player = player
+        if playerLayer.player == nil {
+            playerLayer.player = AVPlayer(url: url)
             playerLayer.frame = self.bounds
             playerLayer.videoGravity = .resizeAspectFill
             // Add observer for when the video finishes playing
-            NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying), name: .AVPlayerItemDidPlayToEndTime, object: player?.currentItem)
+            NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying), name: .AVPlayerItemDidPlayToEndTime, object: playerLayer.player?.currentItem)
         } else {
             // The cell is being reused; reset the video to the beginning and play it
-            player?.seek(to: .zero)
-            player?.play()
+            playerLayer.player?.seek(to: .zero)
+            playerLayer.player?.play()
         }
-       
+        
         configureTapFunciton()
         // Add time observer to update the slider
         addTimeObserver()

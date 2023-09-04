@@ -12,7 +12,7 @@ import AVFoundation
 extension ReelCell {
     // MARK: - Toggle Mute
     @objc func toggleMute() {
-        if let player = player {
+        if let player = playerLayer.player {
             player.isMuted = !player.isMuted
             muteIcon.setImage(player.isMuted ? videoPlayerView?.muteIcon : videoPlayerView?.unmuteIcon, for: .normal)
             // Update the mute state in the VideoPlayerView
@@ -24,7 +24,7 @@ extension ReelCell {
     
     // MARK - Toggle Play/Pause
     @objc func togglePlayPause() {
-        if let player = player {
+        if let player = playerLayer.player {
             if player.rate == 0.0 {
                 player.play()
             } else {
@@ -37,37 +37,37 @@ extension ReelCell {
     // MARK: - Pause on Long Press
     @objc func pauseOnLongPress(_ sender: UILongPressGestureRecognizer) {
         if sender.state == .began {
-            player?.pause()
+            playerLayer.player?.pause()
             muteLabel.text = "Paused"
         } else if sender.state == .ended {
-            player?.play()
-            muteLabel.text = player?.isMuted ?? false ? "Mute" : "Unmute"
+            playerLayer.player?.play()
+            muteLabel.text = playerLayer.player?.isMuted ?? false ? "Mute" : "Unmute"
         }
     }
     
      // MARK: - Playback Control
      @objc func playerDidFinishPlaying(notification: NSNotification) {
-         player?.seek(to: .zero)
-         player?.play()
+         playerLayer.player?.seek(to: .zero)
+         playerLayer.player?.play()
      }
     
     @objc func sliderValueChanged() {
         guard let slider = slider else { return }
-        if let duration = player?.currentItem?.duration {
+        if let duration = playerLayer.player?.currentItem?.duration {
             let totalSeconds = CMTimeGetSeconds(duration)
             let value = Float64(slider.value) * totalSeconds
             let seekTime = CMTime(value: Int64(value), timescale: 1)
-            player?.seek(to: seekTime, toleranceBefore: .zero, toleranceAfter: .zero)
+            playerLayer.player?.seek(to: seekTime, toleranceBefore: .zero, toleranceAfter: .zero)
         }
     }
     
     // MARK: - Time Observer
      func addTimeObserver() {
         let interval = CMTime(value: 1, timescale: 1)
-        player?.addPeriodicTimeObserver(forInterval: interval, queue: DispatchQueue.main, using: { [weak self] (progressTime) in
+         playerLayer.player?.addPeriodicTimeObserver(forInterval: interval, queue: DispatchQueue.main, using: { [weak self] (progressTime) in
             guard let self = self else { return }
             let seconds = CMTimeGetSeconds(progressTime)
-            let duration = CMTimeGetSeconds(self.player?.currentItem?.duration ?? .zero)
+            let duration = CMTimeGetSeconds(self.playerLayer.player?.currentItem?.duration ?? .zero)
             if duration > 0 {
                 let progress = Float(seconds / duration)
                 self.slider?.setValue(progress, animated: true)
@@ -76,20 +76,20 @@ extension ReelCell {
     }
     
     func pauseVideo() {
-        player?.pause()
+        playerLayer.player?.pause()
     }
 
     func playVideo() {
-        player?.play()
+        playerLayer.player?.play()
     }
 
     func restartVideo() {
-        player?.seek(to: .zero)
-        player?.play()
+        playerLayer.player?.seek(to: .zero)
+        playerLayer.player?.play()
     }
     
     func updateMuteState(isMuted: Bool) {
-        player?.isMuted = isMuted
+        playerLayer.player?.isMuted = isMuted
     }
     
     // MARK: - Tap Function

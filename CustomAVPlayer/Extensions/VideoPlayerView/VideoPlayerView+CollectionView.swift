@@ -32,8 +32,8 @@ extension VideoPlayerView: UICollectionViewDelegate, UICollectionViewDataSource,
     
     public func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if let cell = cell as? ReelCell {
-            cell.player?.pause()
-                  cell.player?.seek(to: .zero)
+            cell.playerLayer.player?.pause()
+                  cell.playerLayer.player?.seek(to: .zero)
         }
     }
 
@@ -42,29 +42,41 @@ extension VideoPlayerView: UICollectionViewDelegate, UICollectionViewDataSource,
       }
 
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        // Capture the index path in a closure to ensure it's retained correctly
+        let configureCellForIndexPath: (IndexPath) -> UICollectionViewCell = { [weak self] capturedIndexPath in
+            guard let self = self else {
+                return UICollectionViewCell()
+            }
+            
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "reel", for: capturedIndexPath) as? ReelCell else {
+                fatalError("Failed to dequeue a ReelCell.")
+            }
+            
+            guard let url = URL(string: self.videos[capturedIndexPath.row]) else {
+                return UICollectionViewCell()
+            }
+            print(">>>Current>>",indexPath, indexPath.row)
+            cell.slider = self.slider
+            cell.videoPlayerView = self
+            cell.configureCell(url: url)
+            return cell
+        }
+        
         // Check if cell is already visible
         if collectionView.indexPathsForVisibleItems.contains(indexPath) {
-            return collectionView.dequeueReusableCell(withReuseIdentifier: "reel", for: indexPath)
+            // Cell is already visible, return the existing cell
+            if let cell = collectionView.cellForItem(at: indexPath) as? ReelCell {
+                return cell
+            }
         }
         
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "reel", for: indexPath) as? ReelCell else {
-            fatalError("Failed to dequeue a ReelCell.")
-        }
-        
-        guard let url = URL(string: videos[indexPath.row]) else {
-            return UICollectionViewCell()
-        }
-        
-        print("Current index: \(indexPath.section) \(indexPath.item) \(indexPath.row)")
-        cell.slider = self.slider
-        cell.videoPlayerView = self
-        cell.configureCell(url: url)
-        return cell
+        // If cell is not visible or not already loaded, use the captured index path
+        return configureCellForIndexPath(indexPath)
     }
 
 
       // Set the size of each cell (row) in the collection view.
       public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-          return self.frame.size
+          return CGSize(width: self.bounds.width, height: self.bounds.height)
       }
   }
