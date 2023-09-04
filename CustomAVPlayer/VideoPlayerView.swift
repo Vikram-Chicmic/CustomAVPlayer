@@ -345,17 +345,14 @@ public class VideoPlayerView: UIView {
         private func commonInit() {
             let bundle = Bundle(for: type(of: self))
             bundle.loadNibNamed("VideoPlayerView", owner: self, options: nil)
-            contentView.frame = self.bounds 
-            collectionView.frame = self.bounds
-            print("Screen size : \(UIScreen.main.bounds)")
-            print("self frame size : \(self.frame)")
-            print("Self bound size : \(self.bounds)")
-            print("collection view frame size : \(collectionView.frame)")
-            print("Content view size : \(contentView.frame)")
-
+            self.frame = UIScreen.main.bounds
+//            self.backgroundColor = .green
+            contentView.frame = self.frame
+            let screenSize = self.frame.size
+                  let safeAreaInsets = UIApplication.shared.windows.first?.safeAreaInsets
+            let adjustedHeight = screenSize.height - (safeAreaInsets?.top ?? 0) 
+            collectionView.frame.size = CGSize(width: screenSize.width, height: adjustedHeight)
             addSubview(contentView)
-            
-          
         }
         
         private func initCollectionView() {
@@ -364,9 +361,11 @@ public class VideoPlayerView: UIView {
             collectionView.dataSource = self
             collectionView.delegate = self
             collectionView.bounces = false
+           
 
             // set paging enabled
             collectionView.isPagingEnabled = true
+//            collectionView.pa
 
             // disable indicators
             collectionView.showsVerticalScrollIndicator = false
@@ -379,7 +378,7 @@ public class VideoPlayerView: UIView {
             layout.minimumInteritemSpacing = 0
             // set collection view layout
             collectionView.setCollectionViewLayout(layout, animated: true)
-            collectionView.contentInsetAdjustmentBehavior = .always
+//            collectionView.contentInsetAdjustmentBehavior = .always
     }
     
     public override func layoutSubviews() {

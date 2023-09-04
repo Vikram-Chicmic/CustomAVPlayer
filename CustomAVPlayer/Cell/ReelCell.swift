@@ -28,7 +28,6 @@ class ReelCell: UICollectionViewCell {
         // Add long press gesture recognizer for pause
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(pauseOnLongPress))
         self.addGestureRecognizer(longPressGesture)
-        print(".......",player?.isMuted)
         playerLayer.player?.play()
     }
     override func layoutSubviews() {
@@ -139,7 +138,7 @@ class ReelCell: UICollectionViewCell {
             player?.seek(to: .zero)
             player?.play()
         }
-        print(".......", player?.isMuted)
+       
         configureTapFunciton()
         // Add time observer to update the slider
         addTimeObserver()
