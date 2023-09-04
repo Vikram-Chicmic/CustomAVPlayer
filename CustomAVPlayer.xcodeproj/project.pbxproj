@@ -7,14 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6A10F7382A7BC58500CE9BD5 /* VideoPlayerView+GestureActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A10F7372A7BC58500CE9BD5 /* VideoPlayerView+GestureActions.swift */; };
 		6A6025FF2A6F919A002A4759 /* CustomAVPlayer.docc in Sources */ = {isa = PBXBuildFile; fileRef = 6A6025FE2A6F919A002A4759 /* CustomAVPlayer.docc */; };
 		6A6026052A6F919A002A4759 /* CustomAVPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A6025FA2A6F919A002A4759 /* CustomAVPlayer.framework */; };
 		6A60260A2A6F919A002A4759 /* CustomAVPlayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A6026092A6F919A002A4759 /* CustomAVPlayerTests.swift */; };
 		6A60260B2A6F919A002A4759 /* CustomAVPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 6A6025FD2A6F919A002A4759 /* CustomAVPlayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6A8BCCF92A6F99F6003A080E /* CustomVideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A8BCCF82A6F99F6003A080E /* CustomVideoPlayer.swift */; };
-		6A8BCCFB2A6F9B5A003A080E /* CustomVideoPlayer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A8BCCFA2A6F9B5A003A080E /* CustomVideoPlayer.storyboard */; };
+		6A9AA2652A7CB529002E6B87 /* VideoPlayerView+IBActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9AA2642A7CB529002E6B87 /* VideoPlayerView+IBActions.swift */; };
+		6A9AA2682A7CD551002E6B87 /* Extension+UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9AA2672A7CD551002E6B87 /* Extension+UIButton.swift */; };
+		6A9AA26A2A7CD59C002E6B87 /* Extension+UISlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9AA2692A7CD59C002E6B87 /* Extension+UISlider.swift */; };
+		6A9AA26F2A7CDE09002E6B87 /* AvPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9AA26E2A7CDE09002E6B87 /* AvPlayerManager.swift */; };
+		6A9DE8682A77DCB70030146B /* VideoPlayerView+TouchGestures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9DE8672A77DCB70030146B /* VideoPlayerView+TouchGestures.swift */; };
+		6AACE9622A7115BF00155C76 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AACE9612A7115BF00155C76 /* Helper.swift */; };
+		6AC4777A2A70E51500358257 /* VideoPlayerView+AVPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC477792A70E51500358257 /* VideoPlayerView+AVPlayer.swift */; };
+		6AC4777C2A70E53E00358257 /* VideoPlayerView+Accessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC4777B2A70E53E00358257 /* VideoPlayerView+Accessibility.swift */; };
+		6AC4777E2A70E55C00358257 /* VideoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC4777D2A70E55C00358257 /* VideoPlayerView.swift */; };
+		6AC477802A70E71900358257 /* VideoPlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6AC4777F2A70E71900358257 /* VideoPlayerView.xib */; };
+		933AE59D2A71173900FB2285 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933AE5972A71173900FB2285 /* Constants.swift */; };
 		9343CD4B2A7011120060F9D8 /* CustomSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9343CD4A2A7011120060F9D8 /* CustomSlider.swift */; };
-		936F9F9F2A6FB017002139CD /* CustomSeekBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936F9F9E2A6FB017002139CD /* CustomSeekBar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,15 +37,28 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		07FDE80E8FD2A03C0BEE5412 /* Pods-CustomAVPlayer-CustomAVPlayerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CustomAVPlayer-CustomAVPlayerTests.debug.xcconfig"; path = "Target Support Files/Pods-CustomAVPlayer-CustomAVPlayerTests/Pods-CustomAVPlayer-CustomAVPlayerTests.debug.xcconfig"; sourceTree = "<group>"; };
+		6A10F7372A7BC58500CE9BD5 /* VideoPlayerView+GestureActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VideoPlayerView+GestureActions.swift"; sourceTree = "<group>"; };
 		6A6025FA2A6F919A002A4759 /* CustomAVPlayer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CustomAVPlayer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A6025FD2A6F919A002A4759 /* CustomAVPlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomAVPlayer.h; sourceTree = "<group>"; };
 		6A6025FE2A6F919A002A4759 /* CustomAVPlayer.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = CustomAVPlayer.docc; sourceTree = "<group>"; };
 		6A6026042A6F919A002A4759 /* CustomAVPlayerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CustomAVPlayerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A6026092A6F919A002A4759 /* CustomAVPlayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAVPlayerTests.swift; sourceTree = "<group>"; };
-		6A8BCCF82A6F99F6003A080E /* CustomVideoPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomVideoPlayer.swift; sourceTree = "<group>"; };
-		6A8BCCFA2A6F9B5A003A080E /* CustomVideoPlayer.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CustomVideoPlayer.storyboard; sourceTree = "<group>"; };
+		6A9AA2642A7CB529002E6B87 /* VideoPlayerView+IBActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VideoPlayerView+IBActions.swift"; sourceTree = "<group>"; };
+		6A9AA2672A7CD551002E6B87 /* Extension+UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIButton.swift"; sourceTree = "<group>"; };
+		6A9AA2692A7CD59C002E6B87 /* Extension+UISlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UISlider.swift"; sourceTree = "<group>"; };
+		6A9AA26E2A7CDE09002E6B87 /* AvPlayerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvPlayerManager.swift; sourceTree = "<group>"; };
+		6A9DE8672A77DCB70030146B /* VideoPlayerView+TouchGestures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VideoPlayerView+TouchGestures.swift"; sourceTree = "<group>"; };
+		6AACE9612A7115BF00155C76 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
+		6AC477792A70E51500358257 /* VideoPlayerView+AVPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VideoPlayerView+AVPlayer.swift"; sourceTree = "<group>"; };
+		6AC4777B2A70E53E00358257 /* VideoPlayerView+Accessibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VideoPlayerView+Accessibility.swift"; sourceTree = "<group>"; };
+		6AC4777D2A70E55C00358257 /* VideoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerView.swift; sourceTree = "<group>"; };
+		6AC4777F2A70E71900358257 /* VideoPlayerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VideoPlayerView.xib; sourceTree = "<group>"; };
+		933AE5972A71173900FB2285 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		9343CD4A2A7011120060F9D8 /* CustomSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSlider.swift; sourceTree = "<group>"; };
-		936F9F9E2A6FB017002139CD /* CustomSeekBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSeekBar.swift; sourceTree = "<group>"; };
+		BB663C6DE198BBDBC2A3F941 /* Pods-CustomAVPlayer-CustomAVPlayerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CustomAVPlayer-CustomAVPlayerTests.release.xcconfig"; path = "Target Support Files/Pods-CustomAVPlayer-CustomAVPlayerTests/Pods-CustomAVPlayer-CustomAVPlayerTests.release.xcconfig"; sourceTree = "<group>"; };
+		E4FAAAEFC2CFC0C5BCDCACE9 /* Pods-CustomAVPlayer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CustomAVPlayer.release.xcconfig"; path = "Target Support Files/Pods-CustomAVPlayer/Pods-CustomAVPlayer.release.xcconfig"; sourceTree = "<group>"; };
+		FDC69F47A6387A9B9AAA2E2C /* Pods-CustomAVPlayer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CustomAVPlayer.debug.xcconfig"; path = "Target Support Files/Pods-CustomAVPlayer/Pods-CustomAVPlayer.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,12 +80,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		318883D2E3EA3154D6E8497A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				FDC69F47A6387A9B9AAA2E2C /* Pods-CustomAVPlayer.debug.xcconfig */,
+				E4FAAAEFC2CFC0C5BCDCACE9 /* Pods-CustomAVPlayer.release.xcconfig */,
+				07FDE80E8FD2A03C0BEE5412 /* Pods-CustomAVPlayer-CustomAVPlayerTests.debug.xcconfig */,
+				BB663C6DE198BBDBC2A3F941 /* Pods-CustomAVPlayer-CustomAVPlayerTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		6A6025F02A6F919A002A4759 = {
 			isa = PBXGroup;
 			children = (
 				6A6025FC2A6F919A002A4759 /* CustomAVPlayer */,
 				6A6026082A6F919A002A4759 /* CustomAVPlayerTests */,
 				6A6025FB2A6F919A002A4759 /* Products */,
+				318883D2E3EA3154D6E8497A /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -79,12 +113,14 @@
 		6A6025FC2A6F919A002A4759 /* CustomAVPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				6A9AA26D2A7CDDF7002E6B87 /* Manager */,
+				93EE985F2A7277ED0073D844 /* Views */,
+				6AACE9602A7115A700155C76 /* Static */,
+				6AC477782A70E4F800358257 /* Extensions */,
 				6A6025FD2A6F919A002A4759 /* CustomAVPlayer.h */,
 				6A6025FE2A6F919A002A4759 /* CustomAVPlayer.docc */,
-				6A8BCCF82A6F99F6003A080E /* CustomVideoPlayer.swift */,
-				6A8BCCFA2A6F9B5A003A080E /* CustomVideoPlayer.storyboard */,
-				936F9F9E2A6FB017002139CD /* CustomSeekBar.swift */,
-				9343CD4A2A7011120060F9D8 /* CustomSlider.swift */,
+				6AC4777F2A70E71900358257 /* VideoPlayerView.xib */,
+				6AC4777D2A70E55C00358257 /* VideoPlayerView.swift */,
 			);
 			path = CustomAVPlayer;
 			sourceTree = "<group>";
@@ -95,6 +131,53 @@
 				6A6026092A6F919A002A4759 /* CustomAVPlayerTests.swift */,
 			);
 			path = CustomAVPlayerTests;
+			sourceTree = "<group>";
+		};
+		6A9AA2662A7CD53C002E6B87 /* VideoPlayerView */ = {
+			isa = PBXGroup;
+			children = (
+				6AC477792A70E51500358257 /* VideoPlayerView+AVPlayer.swift */,
+				6AC4777B2A70E53E00358257 /* VideoPlayerView+Accessibility.swift */,
+				6A9DE8672A77DCB70030146B /* VideoPlayerView+TouchGestures.swift */,
+				6A10F7372A7BC58500CE9BD5 /* VideoPlayerView+GestureActions.swift */,
+				6A9AA2642A7CB529002E6B87 /* VideoPlayerView+IBActions.swift */,
+			);
+			path = VideoPlayerView;
+			sourceTree = "<group>";
+		};
+		6A9AA26D2A7CDDF7002E6B87 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				6A9AA26E2A7CDE09002E6B87 /* AvPlayerManager.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		6AACE9602A7115A700155C76 /* Static */ = {
+			isa = PBXGroup;
+			children = (
+				933AE5972A71173900FB2285 /* Constants.swift */,
+				6AACE9612A7115BF00155C76 /* Helper.swift */,
+			);
+			path = Static;
+			sourceTree = "<group>";
+		};
+		6AC477782A70E4F800358257 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				6A9AA2662A7CD53C002E6B87 /* VideoPlayerView */,
+				6A9AA2672A7CD551002E6B87 /* Extension+UIButton.swift */,
+				6A9AA2692A7CD59C002E6B87 /* Extension+UISlider.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		93EE985F2A7277ED0073D844 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9343CD4A2A7011120060F9D8 /* CustomSlider.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -115,10 +198,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6A60260E2A6F919A002A4759 /* Build configuration list for PBXNativeTarget "CustomAVPlayer" */;
 			buildPhases = (
+				4B38B26E3C3B03C11D513C72 /* [CP] Check Pods Manifest.lock */,
 				6A6025F52A6F919A002A4759 /* Headers */,
 				6A6025F62A6F919A002A4759 /* Sources */,
 				6A6025F72A6F919A002A4759 /* Frameworks */,
 				6A6025F82A6F919A002A4759 /* Resources */,
+				6A074E482A73B7BE007159A7 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -133,6 +218,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6A6026112A6F919A002A4759 /* Build configuration list for PBXNativeTarget "CustomAVPlayerTests" */;
 			buildPhases = (
+				E6E04ADCECDDF25BA7707FD0 /* [CP] Check Pods Manifest.lock */,
 				6A6026002A6F919A002A4759 /* Sources */,
 				6A6026012A6F919A002A4759 /* Frameworks */,
 				6A6026022A6F919A002A4759 /* Resources */,
@@ -189,7 +275,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6A8BCCFB2A6F9B5A003A080E /* CustomVideoPlayer.storyboard in Resources */,
+				6AC477802A70E71900358257 /* VideoPlayerView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,15 +288,88 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		4B38B26E3C3B03C11D513C72 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CustomAVPlayer-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6A074E482A73B7BE007159A7 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+		};
+		E6E04ADCECDDF25BA7707FD0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CustomAVPlayer-CustomAVPlayerTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		6A6025F62A6F919A002A4759 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				936F9F9F2A6FB017002139CD /* CustomSeekBar.swift in Sources */,
+				6A9AA2652A7CB529002E6B87 /* VideoPlayerView+IBActions.swift in Sources */,
+				6AC4777A2A70E51500358257 /* VideoPlayerView+AVPlayer.swift in Sources */,
 				6A6025FF2A6F919A002A4759 /* CustomAVPlayer.docc in Sources */,
-				6A8BCCF92A6F99F6003A080E /* CustomVideoPlayer.swift in Sources */,
+				6A9AA2682A7CD551002E6B87 /* Extension+UIButton.swift in Sources */,
 				9343CD4B2A7011120060F9D8 /* CustomSlider.swift in Sources */,
+				6AACE9622A7115BF00155C76 /* Helper.swift in Sources */,
+				6AC4777C2A70E53E00358257 /* VideoPlayerView+Accessibility.swift in Sources */,
+				6AC4777E2A70E55C00358257 /* VideoPlayerView.swift in Sources */,
+				6A9DE8682A77DCB70030146B /* VideoPlayerView+TouchGestures.swift in Sources */,
+				6A9AA26A2A7CD59C002E6B87 /* Extension+UISlider.swift in Sources */,
+				6A10F7382A7BC58500CE9BD5 /* VideoPlayerView+GestureActions.swift in Sources */,
+				933AE59D2A71173900FB2285 /* Constants.swift in Sources */,
+				6A9AA26F2A7CDE09002E6B87 /* AvPlayerManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -355,6 +514,7 @@
 		};
 		6A60260F2A6F919A002A4759 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FDC69F47A6387A9B9AAA2E2C /* Pods-CustomAVPlayer.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -365,6 +525,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -382,6 +543,7 @@
 		};
 		6A6026102A6F919A002A4759 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E4FAAAEFC2CFC0C5BCDCACE9 /* Pods-CustomAVPlayer.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -392,6 +554,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -409,6 +572,7 @@
 		};
 		6A6026122A6F919A002A4759 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 07FDE80E8FD2A03C0BEE5412 /* Pods-CustomAVPlayer-CustomAVPlayerTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -425,6 +589,7 @@
 		};
 		6A6026132A6F919A002A4759 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BB663C6DE198BBDBC2A3F941 /* Pods-CustomAVPlayer-CustomAVPlayerTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
