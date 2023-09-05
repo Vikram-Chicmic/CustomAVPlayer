@@ -63,7 +63,7 @@ You can install the framework using [CocoaPods](https://cocoapods.org/)
 
 ```ruby
 # Add this to your Podfile
-pod 'CustomVideoPlayerFramework', '~> 1.0'
+pod 'CustomAVPlayer'
 ```
 
 
