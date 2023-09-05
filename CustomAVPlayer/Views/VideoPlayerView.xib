@@ -76,7 +76,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lu4-Rf-KMy" userLabel="muteButton">
-                            <rect key="frame" x="311.33333333333331" y="83" width="34.333333333333314" height="34.333333333333343"/>
+                            <rect key="frame" x="291.33333333333331" y="83" width="34.333333333333314" height="34.333333333333343"/>
                             <color key="tintColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                             <state key="normal" image="volume.3" catalog="system">
@@ -176,7 +176,7 @@
                         <constraint firstItem="uRP-5m-qeK" firstAttribute="top" secondItem="MAn-fa-pBh" secondAttribute="top" id="W2f-sT-5ha"/>
                         <constraint firstItem="BGX-SC-LiX" firstAttribute="top" secondItem="24D-cD-8gS" secondAttribute="top" constant="24" id="WDb-Ny-cCx"/>
                         <constraint firstItem="fE4-MB-r5e" firstAttribute="leading" secondItem="24D-cD-8gS" secondAttribute="leading" constant="24" id="YvF-DZ-cyn"/>
-                        <constraint firstItem="ors-nX-gll" firstAttribute="leading" secondItem="lu4-Rf-KMy" secondAttribute="trailing" id="bGK-Zy-l28"/>
+                        <constraint firstItem="ors-nX-gll" firstAttribute="leading" secondItem="lu4-Rf-KMy" secondAttribute="trailing" constant="20" id="bGK-Zy-l28"/>
                         <constraint firstItem="24D-cD-8gS" firstAttribute="trailing" secondItem="ors-nX-gll" secondAttribute="trailing" constant="24" id="bPy-gN-MbZ"/>
                         <constraint firstItem="OvJ-hR-fGh" firstAttribute="leading" secondItem="P2O-h7-P6F" secondAttribute="leading" id="dFo-NH-hTJ"/>
                         <constraint firstItem="MAn-fa-pBh" firstAttribute="bottom" secondItem="uRP-5m-qeK" secondAttribute="bottom" id="dtX-lN-zqh"/>

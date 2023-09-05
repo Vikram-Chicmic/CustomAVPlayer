@@ -235,13 +235,13 @@ public class VideoPlayerView: UIView {
     // Slider Thumb
     @IBInspectable public var thumbHeight: CGFloat = 20 {
         didSet {
-            slider.setThumbImageSize(image: thumbImage ?? UIImage(), height: thumbHeight, width: thumbWidth, sameForAllState: sameForAllState)
+            slider.setThumbImage(image: thumbImage, width: thumbWidth, height: thumbHeight, color: thumbTint)
         }
     }
     
     @IBInspectable public var thumbWidth: CGFloat = 20 {
         didSet {
-            slider.setThumbImageSize(image: thumbImage ?? UIImage(), height: thumbHeight, width: thumbWidth, sameForAllState: sameForAllState)
+            slider.setThumbImage(image: thumbImage, width: thumbWidth, height: thumbHeight, color: thumbTint, sameForAllState: sameForAllState)
         }
     }
     @IBInspectable public var thumbTint: UIColor = .white {
@@ -249,14 +249,15 @@ public class VideoPlayerView: UIView {
             slider.thumbTintColor = thumbTint
         }
     }
-    @IBInspectable public var thumbImage: UIImage? {
+    @IBInspectable public var thumbImage: UIImage = UIImage(systemName: "circle.fill")! {
         didSet {
-            slider.setThumbImage(image: thumbImage ?? UIImage(), width: thumbWidth, height: thumbHeight)
+            slider.setThumbImage(image: thumbImage, width: thumbWidth, height: thumbHeight, color: thumbTint, sameForAllState: sameForAllState)
         }
     }
     @IBInspectable public var sameForAllState: Bool = true {
         didSet {
-            slider.setThumbImageSize(image: thumbImage ?? UIImage(), height: thumbHeight, width: thumbWidth, sameForAllState: sameForAllState)
+            slider.setThumbImage(image: thumbImage, width: thumbWidth, height: thumbHeight, color: thumbTint, sameForAllState: sameForAllState)
+           
         }
     }
     @IBInspectable public var hideThumb: Bool = false {
