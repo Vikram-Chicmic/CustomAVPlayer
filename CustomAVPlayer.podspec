@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name         = "CustomAVPlayer"
-  spec.version      = "1.0.0"
+  spec.version      = "1.1.0"
   spec.summary      = "A customizable AVPlayer."
   spec.description  = "A framework which can be used to customize all the controls of AVPlayer directly from Storyboard."
   spec.homepage     = "https://github.com/Vikram-Chicmic/ios-video-player.git"
@@ -13,6 +13,5 @@ Pod::Spec.new do |spec|
   spec.resource_bundles = {
   'CustomAVPlayer' => ['CustomAVPlayer/Cell/*.xib', 'CustomAVPlayer/Views/*.xib']
 }
-  spec.frameworks   = "UIKit", "AVFoundation"
   spec.swift_version = "5.0"
 end
