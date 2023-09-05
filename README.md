@@ -4,7 +4,8 @@ Welcome to the Custom Video Player Framework!
 
 ## Table of Contents
 - [Features]
-- [Installation])
+- [Customizations]
+- [Installation]
 - [Usage]
 - [Demo]
 
@@ -27,7 +28,32 @@ Welcome to the Custom Video Player Framework!
 
 * Responsive Support: Timely updates and assistance.
 
+## Customizations
+* Use Reel Feature  (enable reel view)
 
+* ControlsDisabled (to hide controls)
+
+* Change property like size, color , image , hide/unhide for each control :
+     * Zoom icon     
+     * Close icon
+     * Mute icon
+     * Unmute icon
+     * Lock icon
+     * Unlock icon
+     * Play icon
+     * Pause icon
+     * Backward icon
+     * Forward icon
+     * Slider 
+     * Slider Thumb
+     * Time Labels
+
+* Edit Seek Time for forward backward button
+* Gesture Controls:
+     * Single Tap play/pause and mute/unmute for Reel view
+     * Double Tap forward and backward for normal player view
+     * Touch and Hold to pause for reel view
+     * Interaction enable/disable for player
 
 ## Installation
 
@@ -44,21 +70,19 @@ pod 'CustomVideoPlayerFramework', '~> 1.0'
 ## Usage
 
 Here's how you can use the Custom Video Player Framework in your project:
+1. Create a view through storyboard
+2. Set its constraints
+3. Add class to the view to 'VideoPlayerView'
 
-1. Import the framework:
+     ![Screenshot 2023-09-04 at 6 44 06 PM](https://github.com/Vikram-Chicmic/ios-video-player/assets/130149285/4edb74b6-a6e2-4104-8d50-62856c44b069)
+4. Customize the controls as per your requirement through property inspector.
+5. Create outlet of the view in ViewController.
+6.  Import the framework:
 
 ```swift
 import CustomAVPlayer
 ```
-
-2. Create a view through storyboard
-3. Set its constraints
-4. Add class to the view to 'VideoPlayerView'
-
-     ![Screenshot 2023-09-04 at 6 44 06 PM](https://github.com/Vikram-Chicmic/ios-video-player/assets/130149285/4edb74b6-a6e2-4104-8d50-62856c44b069)
-6. Customize the controls as per your requirement through property inspector.
-7. Create outlet of the view in ViewController.
-8. Call the method for normal player with this line of code where videoURL take url as a parameter in normal URL format:
+7. Call the method for normal player with this line of code where videoURL take url as a parameter in normal URL format:
    ```swift
       // for normal video player
         avPlayerView.startAvPlayer(videoURL: URL(string: videoUrl)!)
@@ -69,24 +93,24 @@ import CustomAVPlayer
         avPlayerView.startReelView(urlStrings: urlStrings)
    ```
    ![Screenshot 2023-09-04 at 7 06 45 PM](https://github.com/Vikram-Chicmic/ios-video-player/assets/130149285/a1ca71cf-377a-4321-b5ec-884f43a352e0)
-9. For Reel View choose the tap functionality you want:
+8. For Reel View choose the tap functionality you want:
    ```swift
    // for play-pause function on tap
    avPlayerView.tapFunctionForReel = .playPause
    ```
-     ```swift
+   ```swift
    // for play-pause function on tap
     avPlayerView.tapFunctionForReel = .muteUnmute
-    ```
+   ```
 ## Features
 
 
 
 ## Demo
 ### Normal Player
-<img src="https://github.com/Vikram-Chicmic/ios-video-player/assets/130149285/385c9e0d-0921-4ab0-9772-20980d7df7e4" width="300" >
-
-<img src="https://github.com/Vikram-Chicmic/ios-video-player/assets/130149285/31d0dfd3-5bf7-4313-8c3a-3a13dc0ceb5e" width="600">
+<img src="https://github.com/Vikram-Chicmic/ios-video-player/assets/130149285/62f5c952-e50f-4546-b1db-93bd780ead61" width="300">
+<br><br><br>
+<img src="https://github.com/Vikram-Chicmic/ios-video-player/assets/130149285/f2988495-65b8-432c-bfd5-6a10dcaeeb33" width="300">
 
 
 ### Reel View
