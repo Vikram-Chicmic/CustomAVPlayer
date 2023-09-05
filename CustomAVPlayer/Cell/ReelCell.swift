@@ -48,9 +48,6 @@ class ReelCell: UICollectionViewCell {
     
     // MARK: - Configure MuteUnmute
     private func configureMuteIcon() {
-        guard let player = playerLayer.player else {
-            return
-        }
         muteIconContainer.translatesAutoresizingMaskIntoConstraints =  false
         self.addSubview(muteIconContainer)
         if let muteicon = videoPlayerView?.muteButton {
@@ -131,7 +128,6 @@ class ReelCell: UICollectionViewCell {
         playerLayer.player = nil
     }
 
-
     // MARK: - Video Configuration
     func configureCell(url: URL) {
         if let player = playerLayer.player , let videoPlayerView = videoPlayerView {
@@ -154,5 +150,3 @@ class ReelCell: UICollectionViewCell {
         addTimeObserver()
     }
 }
-
-
