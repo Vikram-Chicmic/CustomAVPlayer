@@ -102,9 +102,6 @@ import CustomAVPlayer
    // for play-pause function on tap
     avPlayerView.tapFunctionForReel = .muteUnmute
    ```
-## Features
-
-
 
 ## Demo
 ### Normal Player
