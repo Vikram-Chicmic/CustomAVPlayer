@@ -63,7 +63,7 @@ You can install the framework using [CocoaPods](https://cocoapods.org/)
 
 ```ruby
 # Add this to your Podfile
-pod 'CustomAVPlayer'
+ pod 'CustomAVPlayer', :git => 'https://github.com/Vikram-Chicmic/ios-video-player.git', :branch => 'feature/reel-functions'
 ```
 
 
