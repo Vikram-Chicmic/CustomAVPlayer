@@ -1,0 +1,6 @@
+framework module Pods_CustomAVPlayer {
+  umbrella header "Pods-CustomAVPlayer-umbrella.h"
+
+  export *
+  module * { export * }
+}
