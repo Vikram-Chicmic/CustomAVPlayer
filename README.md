@@ -72,12 +72,13 @@ You can install the framework using [CocoaPods](https://cocoapods.org/)
 Here's how you can use the Custom Video Player Framework in your project:
 1. Create a view through storyboard
 2. Set its constraints
-3. Add class to the view to 'VideoPlayerView'
+4. Add class to the view to 'VideoPlayerView'
 
      ![Screenshot 2023-09-04 at 6 44 06 PM](https://github.com/Vikram-Chicmic/ios-video-player/assets/130149285/4edb74b6-a6e2-4104-8d50-62856c44b069)
-4. Customize the controls as per your requirement through property inspector.
-5. Create outlet of the view in ViewController.
-6.  Import the framework:
+5. Customize the controls as per your requirement through property inspector.
+6. Set Target to CustomAVPlayer.
+7. Create outlet of the view in ViewController.
+8.  Import the framework:
 
 ```swift
 import CustomAVPlayer
